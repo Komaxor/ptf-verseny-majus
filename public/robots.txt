@@ -1,0 +1,12 @@
+# robots.txt for Promptverseny
+# https://elso.promptverseny.hu
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://elso.promptverseny.hu/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
