@@ -1,21 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getCurrentChallenge, verifyAnswer } from "@/lib/challenge-loader"
-import { markSessionComplete } from "@/lib/chat-logger"
+import { verifyAnswer } from "@/lib/round-loader"
+import { markRoundComplete } from "@/lib/chat-logger"
 import { createServiceClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
-import { COMPETITION_END } from "@/lib/config"
+import { COMPETITION_END, ANSWER_COOLDOWN_MS } from "@/lib/config"
 
-const SECRET_LENGTH = 30
-const RATE_LIMIT_SECONDS = 5
-
-// Hash function for session tokens
-async function hashString(str: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(str)
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
-}
+const MAX_ANSWER_LENGTH = 100
 
 // Get authenticated user from session cookie
 async function getAuthenticatedUser(sessionToken: string | undefined) {
@@ -24,8 +14,8 @@ async function getAuthenticatedUser(sessionToken: string | undefined) {
   try {
     const supabase = await createServiceClient()
     const { data: user, error } = await supabase
-      .from("march_competition_users")
-      .select("id, is_solved, total_passcode_attempts, generated_password")
+      .from("april_competition_users")
+      .select("id, is_solved, total_passcode_attempts")
       .eq("session_token", sessionToken)
       .single()
 
@@ -36,46 +26,16 @@ async function getAuthenticatedUser(sessionToken: string | undefined) {
   }
 }
 
-// Increment user's passcode attempts
-async function incrementUserAttempts(userId: string): Promise<void> {
+async function checkRateLimit(userId: string, round: number): Promise<{ allowed: boolean; waitTime: number }> {
   try {
     const supabase = await createServiceClient()
-    await supabase.rpc("march_increment_user_passcode_attempts", { user_id: userId })
-  } catch (error) {
-    console.error("Failed to increment user attempts:", error)
-  }
-}
-
-// Mark user as solved
-async function markUserSolved(userId: string): Promise<void> {
-  try {
-    const supabase = await createServiceClient()
-    const { error } = await supabase
-      .from("march_competition_users")
-      .update({
-        is_solved: true,
-        solved_at: new Date().toISOString(),
-      })
-      .eq("id", userId)
-      .eq("is_solved", false)
-
-    if (error) {
-      console.error("Failed to mark user solved:", error)
-    }
-  } catch (error) {
-    console.error("Failed to mark user solved:", error)
-  }
-}
-
-async function checkRateLimit(sessionHash: string): Promise<{ allowed: boolean; waitTime: number }> {
-  try {
-    const supabase = await createServiceClient()
-    const cutoffTime = new Date(Date.now() - RATE_LIMIT_SECONDS * 1000).toISOString()
+    const cutoffTime = new Date(Date.now() - ANSWER_COOLDOWN_MS).toISOString()
 
     const { data } = await supabase
-      .from("march_failed_attempts")
+      .from("april_failed_attempts")
       .select("created_at")
-      .eq("session_hash", sessionHash)
+      .eq("user_id", userId)
+      .eq("round", round)
       .gte("created_at", cutoffTime)
       .order("created_at", { ascending: false })
       .limit(1)
@@ -83,7 +43,7 @@ async function checkRateLimit(sessionHash: string): Promise<{ allowed: boolean; 
     if (data && data.length > 0) {
       const lastAttempt = new Date(data[0].created_at).getTime()
       const timeSince = (Date.now() - lastAttempt) / 1000
-      const waitTime = Math.ceil(RATE_LIMIT_SECONDS - timeSince)
+      const waitTime = Math.ceil(ANSWER_COOLDOWN_MS / 1000 - timeSince)
       return { allowed: false, waitTime: Math.max(0, waitTime) }
     }
 
@@ -93,118 +53,92 @@ async function checkRateLimit(sessionHash: string): Promise<{ allowed: boolean; 
   }
 }
 
-async function logFailedAttempt(sessionHash: string, challengeId: string, attemptedSecret: string): Promise<void> {
-  try {
-    const supabase = await createServiceClient()
-    await supabase.from("march_failed_attempts").insert({
-      session_hash: sessionHash,
-      challenge_id: challengeId,
-      attempted_secret: attemptedSecret.substring(0, 100), // Truncate for safety
-    })
-  } catch (error) {
-    console.error("Failed to log attempt:", error)
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
     // Check if competition has ended
     if (new Date() > COMPETITION_END) {
       return NextResponse.json(
-        { success: false, error: "A verseny már véget ért." },
+        { success: false, error: "A verseny mar veget ert." },
         { status: 403 }
       )
     }
 
-    const { passcode, sessionHash: clientSessionHash } = await request.json()
+    const { answer, round, sessionHash } = await request.json()
 
     // Get authenticated user from competition session
     const cookieStore = await cookies()
     const competitionSession = cookieStore.get("competition_session")?.value
     const user = await getAuthenticatedUser(competitionSession)
 
-    if (!passcode || typeof passcode !== "string") {
-      return NextResponse.json({ success: false, error: "A kód megadása kötelező" }, { status: 400 })
+    if (!user) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
     }
 
-    const normalizedPasscode = passcode.trim().toLowerCase()
+    if (!answer || typeof answer !== "string") {
+      return NextResponse.json({ success: false, error: "A valasz megadasa kotelezo" }, { status: 400 })
+    }
 
-    if (normalizedPasscode.length > SECRET_LENGTH) {
+    if (!round || round < 1 || round > 3) {
+      return NextResponse.json({ success: false, error: "Ervenytelen kor" }, { status: 400 })
+    }
+
+    const normalizedAnswer = answer.trim()
+
+    if (normalizedAnswer.length > MAX_ANSWER_LENGTH) {
       return NextResponse.json(
-        { success: false, error: `A kód maximum ${SECRET_LENGTH} karakter lehet` },
+        { success: false, error: `A valasz maximum ${MAX_ANSWER_LENGTH} karakter lehet` },
         { status: 400 },
       )
     }
 
-    if (clientSessionHash) {
-      const { allowed, waitTime } = await checkRateLimit(clientSessionHash)
-      if (!allowed) {
-        return NextResponse.json(
-          { success: false, error: `Kérlek várj ${waitTime} másodpercet a következő próbálkozás előtt`, rateLimited: true, waitTime },
-          { status: 429 },
-        )
+    // Rate limit: 5-second cooldown per round
+    const { allowed, waitTime } = await checkRateLimit(user.id, round)
+    if (!allowed) {
+      return NextResponse.json(
+        { success: false, error: `Kerlek varj ${waitTime} masodpercet a kovetkezo probalkozas elott`, rateLimited: true, waitTime },
+        { status: 429 },
+      )
+    }
+
+    // Increment user's passcode attempts
+    const supabase = await createServiceClient()
+    await supabase.rpc("april_increment_user_passcode_attempts", { p_user_id: user.id })
+
+    // Verify the answer
+    const isCorrect = verifyAnswer(round, normalizedAnswer)
+
+    if (isCorrect) {
+      // Update game state with completion
+      const completedField = `round${round}_completed_at`
+      const answerField = `round${round}_answer`
+      await supabase
+        .from("april_game_state")
+        .update({
+          [completedField]: new Date().toISOString(),
+          [answerField]: normalizedAnswer.substring(0, 100),
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", user.id)
+
+      // Mark the chat session as complete for this round
+      if (sessionHash) {
+        await markRoundComplete(user.id, round, sessionHash)
       }
-    }
 
-    // Load current challenge and verify
-    const challenge = await getCurrentChallenge()
-    const isValid = verifyAnswer(challenge, normalizedPasscode)
-
-    // Always increment user attempts (for competition tracking)
-    if (user) {
-      await incrementUserAttempts(user.id)
-    }
-
-    if (!isValid) {
-      if (clientSessionHash) {
-        await logFailedAttempt(clientSessionHash, challenge.id, normalizedPasscode)
-      }
-      return NextResponse.json({ success: false, error: "Hibás kód" })
-    }
-
-    // Check if user already solved (prevent double submission)
-    if (user?.is_solved) {
-      return NextResponse.json({
-        success: true,
-        challengeId: challenge.id,
-        alreadySolved: true,
+      return NextResponse.json({ success: true })
+    } else {
+      // Log failed attempt
+      await supabase.from("april_failed_attempts").insert({
+        user_id: user.id,
+        session_hash: sessionHash || "unknown",
+        round,
+        attempted_answer: normalizedAnswer.substring(0, 100),
       })
+
+      return NextResponse.json({ success: false, error: "Hibas valasz" })
     }
-
-    // Generate server-side verification token
-    let sessionToken = cookieStore.get("session_token")?.value
-
-    if (!sessionToken) {
-      sessionToken = crypto.randomUUID()
-      cookieStore.set("session_token", sessionToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24,
-      })
-    }
-
-    if (clientSessionHash) {
-      await markSessionComplete(clientSessionHash, challenge.id, user?.generated_password ?? null)
-    }
-
-    // Mark competition user as solved and link session
-    if (user) {
-      await markUserSolved(user.id)
-      if (clientSessionHash) {
-        const supabase = await createServiceClient()
-        await supabase
-          .from("march_user_session_links")
-          .upsert({ user_id: user.id, session_hash: clientSessionHash }, { onConflict: "user_id,session_hash" })
-      }
-    }
-
-    return NextResponse.json({
-      success: true,
-      challengeId: challenge.id,
-    })
   } catch (error) {
     console.error("Verification error:", error)
-    return NextResponse.json({ success: false, error: "Ellenőrzés sikertelen" }, { status: 500 })
+    return NextResponse.json({ success: false, error: "Ellenorzes sikertelen" }, { status: 500 })
   }
 }
