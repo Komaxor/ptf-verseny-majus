@@ -2,15 +2,9 @@ import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import OpenAI from "openai"
 import { createServiceClient } from "@/lib/supabase/server"
-import { COMPETITION_END } from "@/lib/config"
 
 export async function POST(_request: NextRequest) {
   try {
-    // Check if competition has ended
-    if (new Date() > COMPETITION_END) {
-      return NextResponse.json({ error: "A verseny mar veget ert.", granted: false }, { status: 403 })
-    }
-
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ error: "OpenAI API key is not configured", granted: false }, { status: 500 })
     }

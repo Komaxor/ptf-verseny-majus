@@ -3,7 +3,7 @@ import { verifyAnswer } from "@/lib/round-loader"
 import { markRoundComplete } from "@/lib/chat-logger"
 import { createServiceClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
-import { COMPETITION_END, ANSWER_COOLDOWN_MS } from "@/lib/config"
+import { ANSWER_COOLDOWN_MS } from "@/lib/config"
 
 const MAX_ANSWER_LENGTH = 100
 
@@ -55,14 +55,6 @@ async function checkRateLimit(userId: string, round: number): Promise<{ allowed:
 
 export async function POST(request: NextRequest) {
   try {
-    // Check if competition has ended
-    if (new Date() > COMPETITION_END) {
-      return NextResponse.json(
-        { success: false, error: "A verseny mar veget ert." },
-        { status: 403 }
-      )
-    }
-
     const { answer, round, sessionHash } = await request.json()
 
     // Get authenticated user from competition session

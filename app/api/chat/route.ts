@@ -16,7 +16,7 @@ import {
   getMessagesAfterLastClear,
   extractUserIp,
 } from "@/lib/chat-logger"
-import { CHAT_COOLDOWN_MS, COMPETITION_END } from "@/lib/config"
+import { CHAT_COOLDOWN_MS } from "@/lib/config"
 
 export const maxDuration = 60
 
@@ -62,14 +62,6 @@ function getToolDescription(toolName: string): string {
 
 export async function POST(request: NextRequest) {
   const requestStartTime = Date.now()
-
-  // Check if competition has ended
-  if (new Date() > COMPETITION_END) {
-    return new Response(JSON.stringify({ error: "A verseny mar veget ert." }), {
-      status: 403,
-      headers: { "Content-Type": "application/json" },
-    })
-  }
 
   if (!process.env.OPENAI_API_KEY) {
     return new Response(JSON.stringify({ error: "OpenAI API key is not configured" }), {

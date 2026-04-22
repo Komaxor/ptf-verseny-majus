@@ -83,6 +83,15 @@ export async function PATCH(_request: NextRequest) {
     return NextResponse.json({ error: "No valid transition" }, { status: 400 })
   }
 
+  // Verify round completion before allowing round→video transitions
+  const currentRound = PHASE_ROUND[currentPhase];
+  if (currentRound) {
+    const completedField = `round${currentRound}_completed_at`;
+    if (!gameState[completedField]) {
+      return NextResponse.json({ error: "Round not completed" }, { status: 400 });
+    }
+  }
+
   // Build update payload
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const update: Record<string, any> = {

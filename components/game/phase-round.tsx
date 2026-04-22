@@ -28,6 +28,10 @@ export function PhaseRound() {
           <RoundHeader round={round} />
           <ChatInterface />
           <HintPanel round={round} />
+          {/* Mobile: Answer Entry below chat */}
+          <div className="md:hidden">
+            <AnswerEntry round={round} />
+          </div>
         </div>
       </div>
     </div>

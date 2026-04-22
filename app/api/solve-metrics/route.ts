@@ -68,15 +68,22 @@ export async function GET(_request: NextRequest) {
       .select("round")
       .eq("user_id", user.id)
 
+    const totalTimeMs = rounds.reduce((sum, r) => sum + (r.timeMs || 0), 0)
+    const totalMessages = sessions?.reduce((sum, s) => sum + s.message_count, 0) || 0
+    const totalHints = hints?.length || 0
+    const totalFailedAttempts = failed?.length || 0
+
     return NextResponse.json({
-      totalTimeMs: rounds.reduce((sum, r) => sum + (r.timeMs || 0), 0),
+      totalTimeSeconds: Math.round(totalTimeMs / 1000),
+      totalMessages,
+      totalHints,
+      totalFailedAttempts,
       rounds: rounds.map((r) => ({
         round: r.round,
-        timeMs: r.timeMs,
-        messages: sessions?.filter((s) => s.round === r.round).reduce((sum, s) => sum + s.message_count, 0) || 0,
-        failedAttempts: failed?.filter((f) => f.round === r.round).length || 0,
+        timeSeconds: r.timeMs ? Math.round(r.timeMs / 1000) : 0,
+        messageCount: sessions?.filter((s) => s.round === r.round).reduce((sum, s) => sum + s.message_count, 0) || 0,
         hintClicks: hints?.filter((h) => h.round === r.round).length || 0,
-        toolCalls: tools?.filter((t) => t.round === r.round).length || 0,
+        failedAttempts: failed?.filter((f) => f.round === r.round).length || 0,
       })),
       solvedAt: gameState.round3_completed_at,
     })

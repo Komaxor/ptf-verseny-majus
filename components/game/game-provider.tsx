@@ -58,8 +58,33 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         if (res.ok) {
           const data = await res.json();
           setGameState(data.gameState);
-          setChatMessages(data.chatMessages || []);
           setRevealedHints(data.revealedHints || []);
+
+          const messages = data.chatMessages || [];
+          const loadedPhase = data.gameState?.current_phase as Phase;
+          const loadedRound = PHASE_ROUND[loadedPhase];
+
+          // If in a round phase with no messages, load the welcome message
+          if (loadedRound && messages.length === 0) {
+            try {
+              const challengeRes = await fetch(`/api/challenge?round=${loadedRound}`);
+              if (challengeRes.ok) {
+                const challengeData = await challengeRes.json();
+                if (challengeData.welcomeMessage) {
+                  setChatMessages([{
+                    id: crypto.randomUUID(),
+                    role: "assistant",
+                    content: challengeData.welcomeMessage,
+                    created_at: new Date().toISOString(),
+                  }]);
+                  return;
+                }
+              }
+            } catch {
+              // Fall through to empty messages
+            }
+          }
+          setChatMessages(messages);
         }
       } finally {
         setIsLoading(false);
@@ -76,6 +101,29 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (res.ok) {
       const data = await res.json();
       setGameState(data.gameState);
+
+      // If entering a round, load welcome message
+      const newPhase = data.gameState.current_phase as Phase;
+      const newRound = PHASE_ROUND[newPhase];
+      if (newRound) {
+        try {
+          const challengeRes = await fetch(`/api/challenge?round=${newRound}`);
+          if (challengeRes.ok) {
+            const challengeData = await challengeRes.json();
+            if (challengeData.welcomeMessage) {
+              setChatMessages([{
+                id: crypto.randomUUID(),
+                role: "assistant",
+                content: challengeData.welcomeMessage,
+                created_at: new Date().toISOString(),
+              }]);
+              return;
+            }
+          }
+        } catch {
+          // Fall through to empty messages
+        }
+      }
       setChatMessages([]); // New phase = fresh chat
     }
   }, []);
