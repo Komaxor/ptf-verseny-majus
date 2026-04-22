@@ -1,20 +1,21 @@
-// Non-blocking chat analytics logger
+// Non-blocking chat analytics logger for April heist competition
 // All operations fail gracefully - chat functionality always works
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js"
+import type { ChatMessage } from "./types"
 
 // Feature flag to disable logging entirely
 const LOGGING_ENABLED = process.env.DISABLE_CHAT_LOGGING !== "true"
 
-// Structured log helper: Timestamp | password | message
-function slog(password: string | null, ...args: unknown[]) {
-  console.log(new Date().toISOString(), "|", password ?? "N/A", "|", ...args)
+// Structured log helper: Timestamp | userId | message
+function slog(userId: string | null, ...args: unknown[]) {
+  console.log(new Date().toISOString(), "|", userId ?? "N/A", "|", ...args)
 }
-function slogError(password: string | null, ...args: unknown[]) {
-  console.error(new Date().toISOString(), "|", password ?? "N/A", "|", ...args)
+function slogError(userId: string | null, ...args: unknown[]) {
+  console.error(new Date().toISOString(), "|", userId ?? "N/A", "|", ...args)
 }
-function slogWarn(password: string | null, ...args: unknown[]) {
-  console.warn(new Date().toISOString(), "|", password ?? "N/A", "|", ...args)
+function slogWarn(userId: string | null, ...args: unknown[]) {
+  console.warn(new Date().toISOString(), "|", userId ?? "N/A", "|", ...args)
 }
 
 // Singleton client for logging
@@ -45,68 +46,77 @@ function createLoggingClient(): SupabaseClient | null {
 
 export interface ChatLoggerSession {
   sessionId: string | null
-  challengeId: string
+  round: number
   sessionHash: string
-  generatedPassword: string | null
+  userId: string
 }
 
-// Get or create a chat session - returns null on any failure
+export interface TokenUsage {
+  prompt_tokens?: number
+  completion_tokens?: number
+  total_tokens?: number
+}
+
+// Get or create a chat session - returns session info on any failure
 export async function getOrCreateChatSession(
-  sessionHash: string | null,
-  challengeId: string,
+  sessionHash: string,
+  round: number,
   userIp: string,
-  generatedPassword: string | null = null,
-): Promise<ChatLoggerSession | null> {
+  userId: string,
+): Promise<ChatLoggerSession> {
+  const fallback: ChatLoggerSession = { sessionId: null, round, sessionHash, userId }
+
   if (!LOGGING_ENABLED) {
-    slog(null, "Logging disabled via env var")
-    return null
+    slog(userId, "Logging disabled via env var")
+    return fallback
   }
 
   if (!sessionHash) {
-    slogWarn(null, "No session hash provided - cannot create session")
-    return null
+    slogWarn(userId, "No session hash provided - cannot create session")
+    return fallback
   }
 
   try {
     const supabase = createLoggingClient()
     if (!supabase) {
-      slogWarn(generatedPassword, "Supabase client not available - logging disabled")
-      return null
+      slogWarn(userId, "Supabase client not available - logging disabled")
+      return fallback
     }
 
-    slog(generatedPassword, "Looking for existing session:", sessionHash.substring(0, 8) + "...", challengeId)
+    slog(userId, "Looking for existing session:", sessionHash.substring(0, 8) + "...", "round:", round)
 
     // Try to find existing session
     const { data: existing, error: selectError } = await supabase
-      .from("march_chat_sessions")
+      .from("april_chat_sessions")
       .select("id, message_count")
       .eq("session_hash", sessionHash)
-      .eq("challenge_id", challengeId)
+      .eq("round", round)
       .limit(1)
 
     if (selectError) {
-      slogError(generatedPassword, "Error finding session:", selectError.message)
-      return null
+      slogError(userId, "Error finding session:", selectError.message)
+      return fallback
     }
 
     if (existing && existing.length > 0) {
-      slog(generatedPassword, "Found existing session:", existing[0].id, "message_count:", existing[0].message_count)
+      slog(userId, "Found existing session:", existing[0].id, "message_count:", existing[0].message_count)
       return {
         sessionId: existing[0].id,
-        challengeId,
+        round,
         sessionHash,
-        generatedPassword,
+        userId,
       }
     }
 
-    slog(generatedPassword, "Creating new session for hash:", sessionHash.substring(0, 8) + "...")
+    slog(userId, "Creating new session for hash:", sessionHash.substring(0, 8) + "...")
 
     // Create new session
     const { data: newSession, error: insertError } = await supabase
-      .from("march_chat_sessions")
+      .from("april_chat_sessions")
       .insert({
-        challenge_id: challengeId,
+        user_id: userId,
         session_hash: sessionHash,
+        round,
         user_ip: userIp,
         message_count: 0,
         completed: false,
@@ -117,103 +127,104 @@ export async function getOrCreateChatSession(
     if (insertError) {
       // Handle unique constraint violation gracefully (race condition)
       if (insertError.code === "23505") {
-        slog(generatedPassword, "Race condition - session already exists, fetching...")
+        slog(userId, "Race condition - session already exists, fetching...")
         const { data: retry } = await supabase
-          .from("march_chat_sessions")
+          .from("april_chat_sessions")
           .select("id")
           .eq("session_hash", sessionHash)
-          .eq("challenge_id", challengeId)
+          .eq("round", round)
           .limit(1)
 
         if (retry && retry.length > 0) {
           return {
             sessionId: retry[0].id,
-            challengeId,
+            round,
             sessionHash,
-            generatedPassword,
+            userId,
           }
         }
       }
-      slogError(generatedPassword, "Error creating session:", insertError.message, insertError.code)
-      return null
+      slogError(userId, "Error creating session:", insertError.message, insertError.code)
+      return fallback
     }
 
-    slog(generatedPassword, "Created new session:", newSession?.id)
+    slog(userId, "Created new session:", newSession?.id)
 
     return {
       sessionId: newSession?.id || null,
-      challengeId,
+      round,
       sessionHash,
-      generatedPassword,
+      userId,
     }
   } catch (error) {
-    slogError(generatedPassword, "Unexpected error in getOrCreateChatSession:", error)
-    return null
+    slogError(userId, "Unexpected error in getOrCreateChatSession:", error)
+    return fallback
   }
 }
 
 export async function logChatMessage(
   sessionId: string | null,
-  userMessage: string,
-  assistantResponse: string,
-  responseTimeMs: number,
-  generatedPassword: string | null = null,
-  tokenUsage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number },
+  userId: string,
+  round: number,
+  role: "user" | "assistant",
+  content: string,
+  responseTimeMs?: number,
+  tokenUsage?: TokenUsage,
 ): Promise<void> {
   if (!LOGGING_ENABLED) {
     return
   }
 
   if (!sessionId) {
-    slogWarn(generatedPassword, "No session ID provided - cannot log message")
+    slogWarn(userId, "No session ID provided - cannot log message")
     return
   }
 
-  slog(generatedPassword, "Logging message for session:", sessionId)
+  slog(userId, "Logging", role, "message for session:", sessionId)
 
   try {
     const supabase = createLoggingClient()
     if (!supabase) {
-      slogWarn(generatedPassword, "Supabase client not available")
+      slogWarn(userId, "Supabase client not available")
       return
     }
 
     // Insert message record
-    const { error: messageError } = await supabase.from("march_chat_messages").insert({
+    const { error: messageError } = await supabase.from("april_chat_messages").insert({
       session_id: sessionId,
-      user_message: userMessage,
-      assistant_response: assistantResponse,
-      response_time_ms: responseTimeMs,
-      ...(tokenUsage?.promptTokens != null && { prompt_tokens: tokenUsage.promptTokens }),
-      ...(tokenUsage?.completionTokens != null && { completion_tokens: tokenUsage.completionTokens }),
-      ...(tokenUsage?.totalTokens != null && { total_tokens: tokenUsage.totalTokens }),
+      user_id: userId,
+      round,
+      role,
+      content,
+      ...(responseTimeMs != null && { response_time_ms: responseTimeMs }),
+      ...(tokenUsage?.prompt_tokens != null && { prompt_tokens: tokenUsage.prompt_tokens }),
+      ...(tokenUsage?.completion_tokens != null && { completion_tokens: tokenUsage.completion_tokens }),
+      ...(tokenUsage?.total_tokens != null && { total_tokens: tokenUsage.total_tokens }),
     })
 
     if (messageError) {
-      slogError(generatedPassword, "Error logging message:", messageError.message)
+      slogError(userId, "Error logging message:", messageError.message)
     } else {
-      slog(generatedPassword, "Message logged successfully")
+      slog(userId, "Message logged successfully")
     }
 
-    // First get current count
+    // Increment session message count
     const { data: currentSession, error: fetchError } = await supabase
-      .from("march_chat_sessions")
+      .from("april_chat_sessions")
       .select("message_count")
       .eq("id", sessionId)
       .single()
 
     if (fetchError) {
-      slogError(generatedPassword, "Error fetching current count:", fetchError.message)
+      slogError(userId, "Error fetching current count:", fetchError.message)
       return
     }
 
     const currentCount = currentSession?.message_count || 0
     const newCount = currentCount + 1
 
-    slog(generatedPassword, "Incrementing message_count:", currentCount, "->", newCount)
-
     const { error: updateError } = await supabase
-      .from("march_chat_sessions")
+      .from("april_chat_sessions")
       .update({
         message_count: newCount,
         last_activity_at: new Date().toISOString(),
@@ -221,101 +232,157 @@ export async function logChatMessage(
       .eq("id", sessionId)
 
     if (updateError) {
-      slogError(generatedPassword, "Error updating message count:", updateError.message)
+      slogError(userId, "Error updating message count:", updateError.message)
     } else {
-      slog(generatedPassword, "Message count updated to:", newCount)
+      slog(userId, "Message count updated to:", newCount)
     }
   } catch (error) {
-    slogError(generatedPassword, "Unexpected error in logChatMessage:", error)
+    slogError(userId, "Unexpected error in logChatMessage:", error)
   }
 }
 
-export async function markSessionComplete(sessionHash: string | null, challengeId: string, generatedPassword: string | null = null): Promise<void> {
-  if (!LOGGING_ENABLED) {
-    return
-  }
-
-  if (!sessionHash) {
-    slogWarn(generatedPassword, "No session hash provided - cannot mark complete")
-    return
-  }
-
-  slog(generatedPassword, "Marking session complete:", sessionHash.substring(0, 8) + "...", challengeId)
+export async function logToolCall(
+  sessionId: string | null,
+  userId: string,
+  round: number,
+  toolName: string,
+): Promise<void> {
+  if (!LOGGING_ENABLED || !sessionId) return
 
   try {
     const supabase = createLoggingClient()
     if (!supabase) return
 
+    const { error } = await supabase.from("april_tool_calls").insert({
+      session_id: sessionId,
+      user_id: userId,
+      round,
+      tool_name: toolName,
+    })
+
+    if (error) {
+      slogError(userId, "Error logging tool call:", error.message)
+    } else {
+      slog(userId, "Tool call logged:", toolName)
+    }
+  } catch (error) {
+    slogError(userId, "Unexpected error in logToolCall:", error)
+  }
+}
+
+export async function logContextClear(
+  userId: string,
+  round: number,
+): Promise<void> {
+  if (!LOGGING_ENABLED) return
+
+  try {
+    const supabase = createLoggingClient()
+    if (!supabase) return
+
+    const { error } = await supabase.from("april_context_clears").insert({
+      user_id: userId,
+      round,
+    })
+
+    if (error) {
+      slogError(userId, "Error logging context clear:", error.message)
+    } else {
+      slog(userId, "Context clear logged for round:", round)
+    }
+  } catch (error) {
+    slogError(userId, "Unexpected error in logContextClear:", error)
+  }
+}
+
+export async function getMessagesAfterLastClear(
+  userId: string,
+  round: number,
+): Promise<ChatMessage[]> {
+  try {
+    const supabase = createLoggingClient()
+    if (!supabase) return []
+
+    // Find the most recent context clear for this user/round
+    const { data: lastClear } = await supabase
+      .from("april_context_clears")
+      .select("cleared_at")
+      .eq("user_id", userId)
+      .eq("round", round)
+      .order("cleared_at", { ascending: false })
+      .limit(1)
+      .single()
+
+    // Query messages after the last clear (or all if no clear)
+    let query = supabase
+      .from("april_chat_messages")
+      .select("id, role, content, created_at")
+      .eq("user_id", userId)
+      .eq("round", round)
+      .order("created_at", { ascending: true })
+
+    if (lastClear?.cleared_at) {
+      query = query.gt("created_at", lastClear.cleared_at)
+    }
+
+    const { data: messages, error } = await query
+
+    if (error) {
+      slogError(userId, "Error fetching messages after clear:", error.message)
+      return []
+    }
+
+    return (messages || []) as ChatMessage[]
+  } catch (error) {
+    slogError(userId, "Unexpected error in getMessagesAfterLastClear:", error)
+    return []
+  }
+}
+
+export async function markRoundComplete(
+  userId: string,
+  round: number,
+  sessionHash: string,
+): Promise<void> {
+  if (!LOGGING_ENABLED) return
+
+  try {
+    const supabase = createLoggingClient()
+    if (!supabase) return
+
+    slog(userId, "Marking round", round, "session complete:", sessionHash.substring(0, 8) + "...")
+
     const { data: session, error: findError } = await supabase
-      .from("march_chat_sessions")
+      .from("april_chat_sessions")
       .select("id, started_at, message_count, completed_at, completed")
       .eq("session_hash", sessionHash)
-      .eq("challenge_id", challengeId)
+      .eq("round", round)
       .limit(1)
 
     if (findError) {
-      slogError(generatedPassword, "Error finding session:", findError.message)
+      slogError(userId, "Error finding session:", findError.message)
       return
     }
 
-    // Look up first_login_at from competition user to measure time from login
-    let firstLoginAt: Date | null = null
-    if (generatedPassword) {
-      const { data: compUser } = await supabase
-        .from("march_competition_users")
-        .select("first_login_at")
-        .eq("generated_password", generatedPassword)
-        .single()
-      if (compUser?.first_login_at) {
-        firstLoginAt = new Date(compUser.first_login_at)
-      }
-    }
-
     if (!session || session.length === 0) {
-      slogWarn(generatedPassword, "Session not found for completion marking - creating one now")
-      const completedAt = new Date()
-      const completionTimeSeconds = firstLoginAt
-        ? Math.floor((completedAt.getTime() - firstLoginAt.getTime()) / 1000)
-        : 0
-      // Create a session if it doesn't exist (user may have solved without chatting)
-      const { data: newSession, error: createError } = await supabase
-        .from("march_chat_sessions")
-        .insert({
-          challenge_id: challengeId,
-          session_hash: sessionHash,
-          user_ip: "unknown",
-          message_count: 0,
-          completed: true,
-          completed_at: completedAt.toISOString(),
-          completion_time_seconds: completionTimeSeconds,
-        })
-        .select("id")
-        .single()
-
-      if (createError) {
-        slogError(generatedPassword, "Error creating session for completion:", createError.message)
-      } else {
-        slog(generatedPassword, "Created and marked session complete:", newSession?.id, "completion_time_seconds:", completionTimeSeconds)
-      }
+      slogWarn(userId, "Session not found for completion marking")
       return
     }
 
     const sessionData = session[0]
-    slog(generatedPassword, "Found session for completion:", sessionData.id, "message_count:", sessionData.message_count, "already_completed:", sessionData.completed)
 
     // Don't update if already completed
     if (sessionData.completed_at || sessionData.completed) {
-      slog(generatedPassword, "Session already completed, skipping")
+      slog(userId, "Session already completed, skipping")
       return
     }
 
     const completedAt = new Date()
-    // Use first_login_at (time from login), fall back to started_at (time from first message)
-    const startedAt = firstLoginAt || new Date(sessionData.started_at)
+    const startedAt = new Date(sessionData.started_at)
     const completionTimeSeconds = Math.floor((completedAt.getTime() - startedAt.getTime()) / 1000)
 
     const { error } = await supabase
-      .from("march_chat_sessions")
+      .from("april_chat_sessions")
       .update({
         completed: true,
         completed_at: completedAt.toISOString(),
@@ -324,37 +391,12 @@ export async function markSessionComplete(sessionHash: string | null, challengeI
       .eq("id", sessionData.id)
 
     if (error) {
-      slogError(generatedPassword, "Error marking session complete:", error.message)
+      slogError(userId, "Error marking session complete:", error.message)
     } else {
-      slog(generatedPassword, "Session marked complete:", "completion_time_seconds:", completionTimeSeconds, "message_count:", sessionData.message_count)
+      slog(userId, "Session marked complete:", "completion_time_seconds:", completionTimeSeconds)
     }
   } catch (error) {
-    slogError(generatedPassword, "Unexpected error in markSessionComplete:", error)
-  }
-}
-
-// Check if session is completed for a challenge
-export async function isSessionCompleted(sessionHash: string | null, challengeId: string): Promise<boolean> {
-  if (!sessionHash) return false
-
-  try {
-    const supabase = createLoggingClient()
-    if (!supabase) return false
-
-    const { data, error } = await supabase
-      .from("march_chat_sessions")
-      .select("completed")
-      .eq("session_hash", sessionHash)
-      .eq("challenge_id", challengeId)
-      .limit(1)
-
-    if (error || !data || data.length === 0) {
-      return false
-    }
-
-    return data[0].completed === true
-  } catch {
-    return false
+    slogError(userId, "Unexpected error in markRoundComplete:", error)
   }
 }
 
