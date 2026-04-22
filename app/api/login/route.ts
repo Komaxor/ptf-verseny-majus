@@ -49,13 +49,13 @@ export async function POST(request: NextRequest) {
     const now = new Date()
     if (now < COMPETITION_START) {
       return NextResponse.json(
-        { success: false, error: "A verseny még nem kezdődött el." },
+        { success: false, error: "A verseny meg nem kezdodott el." },
         { status: 403 }
       )
     }
     if (now > COMPETITION_END) {
       return NextResponse.json(
-        { success: false, error: "A verseny már véget ért." },
+        { success: false, error: "A verseny mar veget ert." },
         { status: 403 }
       )
     }
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     const rateLimit = checkRateLimit(ip)
     if (!rateLimit.allowed) {
       return NextResponse.json(
-        { success: false, error: `Túl sok próbálkozás. Kérlek várj ${rateLimit.retryAfterSeconds} másodpercet.` },
+        { success: false, error: `Tul sok probalkozas. Kerlek varj ${rateLimit.retryAfterSeconds} masodpercet.` },
         { status: 429 }
       )
     }
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     if (!password || typeof password !== "string") {
       return NextResponse.json(
-        { success: false, error: "Jelszó megadása kötelező." },
+        { success: false, error: "Jelszo megadasa kotelezo." },
         { status: 400 }
       )
     }
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 
     if (!trimmedPassword) {
       return NextResponse.json(
-        { success: false, error: "Jelszó megadása kötelező." },
+        { success: false, error: "Jelszo megadasa kotelezo." },
         { status: 400 }
       )
     }
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     if (!supabaseUrl || !supabaseServiceKey) {
       console.error("[login] Missing Supabase credentials")
       return NextResponse.json(
-        { success: false, error: "Szerver hiba. Próbáld újra később." },
+        { success: false, error: "Szerver hiba. Probald ujra kesobb." },
         { status: 500 }
       )
     }
@@ -106,14 +106,14 @@ export async function POST(request: NextRequest) {
 
     // Find user by password
     const { data: user, error: findError } = await supabase
-      .from("march_competition_users")
+      .from("april_competition_users")
       .select("id, first_login_at, is_solved, session_token")
       .eq("generated_password", trimmedPassword)
       .single()
 
     if (findError || !user) {
       return NextResponse.json(
-        { success: false, error: "Érvénytelen jelszó." },
+        { success: false, error: "Ervenytelen jelszo." },
         { status: 401 }
       )
     }
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
     const existingCookie = cookieStore.get("competition_session")?.value
     if (user.session_token && existingCookie !== user.session_token) {
       return NextResponse.json(
-        { success: false, error: "Ez a jelszó már használatban van." },
+        { success: false, error: "Ez a jelszo mar hasznalatban van." },
         { status: 409 }
       )
     }
@@ -142,14 +142,14 @@ export async function POST(request: NextRequest) {
     }
 
     const { error: updateError } = await supabase
-      .from("march_competition_users")
+      .from("april_competition_users")
       .update(updateData)
       .eq("id", user.id)
 
     if (updateError) {
       console.error("[login] Failed to update session:", updateError)
       return NextResponse.json(
-        { success: false, error: "Bejelentkezés sikertelen. Próbáld újra." },
+        { success: false, error: "Bejelentkezes sikertelen. Probald ujra." },
         { status: 500 }
       )
     }
@@ -164,17 +164,43 @@ export async function POST(request: NextRequest) {
       path: "/",
     })
 
+    // Check for existing game state
+    const { data: existingState } = await supabase
+      .from("april_game_state")
+      .select("*")
+      .eq("user_id", user.id)
+      .single()
+
+    let gameState = existingState
+
+    if (!existingState) {
+      // First login - create game state
+      const { data: newState, error: stateError } = await supabase
+        .from("april_game_state")
+        .insert({ user_id: user.id, current_phase: "VIDEO_INTRO" })
+        .select()
+        .single()
+
+      if (stateError) {
+        console.error("[login] Failed to create game state:", stateError)
+        // Non-fatal: user can still log in, game state will be created on next access
+      } else {
+        gameState = newState
+      }
+    }
+
     console.log("[login] User logged in successfully:", user.id)
 
     return NextResponse.json({
       success: true,
       userId: user.id,
+      gameState,
       alreadySolved: user.is_solved,
     })
   } catch (error) {
     console.error("[login] Unexpected error:", error)
     return NextResponse.json(
-      { success: false, error: "Bejelentkezés sikertelen. Próbáld újra." },
+      { success: false, error: "Bejelentkezes sikertelen. Probald ujra." },
       { status: 500 }
     )
   }
