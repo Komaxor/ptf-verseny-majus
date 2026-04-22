@@ -1,42 +1,84 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createServiceClient } from "@/lib/supabase/server"
+import { cookies } from "next/headers"
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const sessionHash = request.nextUrl.searchParams.get("sessionHash")
-    if (!sessionHash) {
-      return NextResponse.json({ error: "Missing sessionHash" }, { status: 400 })
+    // Auth
+    const cookieStore = await cookies()
+    const sessionToken = cookieStore.get("competition_session")?.value
+    if (!sessionToken) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const supabase = await createServiceClient()
 
-    // Get chat session data (first message time, message count, completion)
-    const { data: session } = await supabase
-      .from("march_chat_sessions")
-      .select("started_at, completed_at, message_count, completion_time_seconds")
-      .eq("session_hash", sessionHash)
-      .limit(1)
+    const { data: user, error: userError } = await supabase
+      .from("april_competition_users")
+      .select("id")
+      .eq("session_token", sessionToken)
       .single()
 
-    // Get failed attempts count
-    const { count: failedAttempts } = await supabase
-      .from("march_failed_attempts")
-      .select("*", { count: "exact", head: true })
-      .eq("session_hash", sessionHash)
+    if (userError || !user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
 
-    // Get hint clicks count
-    const { count: hintClicks } = await supabase
-      .from("march_hint_clicks")
-      .select("*", { count: "exact", head: true })
-      .eq("session_hash", sessionHash)
+    // Fetch game state for timing
+    const { data: gameState } = await supabase
+      .from("april_game_state")
+      .select("*")
+      .eq("user_id", user.id)
+      .single()
+
+    if (!gameState) {
+      return NextResponse.json({ error: "No game state" }, { status: 404 })
+    }
+
+    // Per-round timing
+    const rounds = [1, 2, 3].map((r) => {
+      const started = gameState[`round${r}_started_at`]
+      const completed = gameState[`round${r}_completed_at`]
+      const timeMs = started && completed
+        ? new Date(completed).getTime() - new Date(started).getTime()
+        : null
+      return { round: r, timeMs }
+    })
+
+    // Message counts per round
+    const { data: sessions } = await supabase
+      .from("april_chat_sessions")
+      .select("round, message_count")
+      .eq("user_id", user.id)
+
+    // Failed attempts per round
+    const { data: failed } = await supabase
+      .from("april_failed_attempts")
+      .select("round")
+      .eq("user_id", user.id)
+
+    // Hint clicks per round
+    const { data: hints } = await supabase
+      .from("april_hint_clicks")
+      .select("round")
+      .eq("user_id", user.id)
+
+    // Tool calls per round
+    const { data: tools } = await supabase
+      .from("april_tool_calls")
+      .select("round")
+      .eq("user_id", user.id)
 
     return NextResponse.json({
-      firstMessageAt: session?.started_at || null,
-      solvedAt: session?.completed_at || null,
-      messageCount: session?.message_count || 0,
-      completionTimeSeconds: session?.completion_time_seconds || 0,
-      failedAttempts: failedAttempts || 0,
-      hintClicks: hintClicks || 0,
+      totalTimeMs: rounds.reduce((sum, r) => sum + (r.timeMs || 0), 0),
+      rounds: rounds.map((r) => ({
+        round: r.round,
+        timeMs: r.timeMs,
+        messages: sessions?.filter((s) => s.round === r.round).reduce((sum, s) => sum + s.message_count, 0) || 0,
+        failedAttempts: failed?.filter((f) => f.round === r.round).length || 0,
+        hintClicks: hints?.filter((h) => h.round === r.round).length || 0,
+        toolCalls: tools?.filter((t) => t.round === r.round).length || 0,
+      })),
+      solvedAt: gameState.round3_completed_at,
     })
   } catch (error) {
     console.error("Solve metrics error:", error)
