@@ -7,7 +7,7 @@ import { COMPETITION_START, COMPETITION_END } from "@/lib/config"
 const PUBLIC_ROUTES = ["/login", "/waiting", "/closed", "/api/login"]
 
 // Routes that should be protected (require valid session)
-const PROTECTED_ROUTES = ["/", "/cart", "/api/chat", "/api/verify-passcode", "/api/hint-click", "/api/solve-metrics"]
+const PROTECTED_ROUTES = ["/", "/api/chat", "/api/verify-passcode", "/api/hint-click", "/api/solve-metrics", "/api/game-state", "/api/judge", "/api/context-clear"]
 
 function isWithinCompetitionWindow(): "before" | "during" | "after" {
   const now = new Date()
@@ -58,7 +58,7 @@ export async function middleware(request: NextRequest) {
             auth: { autoRefreshToken: false, persistSession: false },
           })
           const { data: user } = await supabase
-            .from("march_competition_users")
+            .from("april_competition_users")
             .select("id, is_solved")
             .eq("session_token", sessionToken)
             .single()
@@ -95,7 +95,7 @@ export async function middleware(request: NextRequest) {
               auth: { autoRefreshToken: false, persistSession: false },
             })
             const { data: user } = await supabase
-              .from("march_competition_users")
+              .from("april_competition_users")
               .select("id")
               .eq("session_token", sessionToken)
               .single()
@@ -137,7 +137,7 @@ export async function middleware(request: NextRequest) {
     })
 
     const { data: user, error } = await supabase
-      .from("march_competition_users")
+      .from("april_competition_users")
       .select("id, session_token, is_solved")
       .eq("session_token", sessionToken)
       .single()

@@ -1,65 +1,69 @@
-// Hungarian translations for the RAMtastic.hu competition
+// Hungarian translations for the Citadel Plaza heist competition
 // This file centralizes all UI text for easy localization
 
 export const t = {
-  // Header
-  header: {
-    title: "RAMtastic.hu",
-    subtitle: "Magyarország kedvenc memóriaboltja",
-    loading: "Betöltés...",
-    activeChallenge: "Aktív kihívás",
-    newChallengeIn: "Új kihívás:",
-    rotationSoon: "Hamarosan frissül...",
-  },
-
   // Chat Interface
   chat: {
-    aiHelpdesk: "(ügyfélszolgálat)",
-    placeholder: "Kérdezz Ramónától...",
-    errorMessage: "Hiba történt. Kérlek próbáld újra.",
-    defaultWelcome: (name: string) => `Szia! ${name} vagyok, miben segíthetek?`,
+    aiHelpdesk: "(AI asszisztens)",
+    placeholder: "Irj uzenetet...",
+    errorMessage: "Hiba tortent. Kerlek probald ujra.",
+    defaultWelcome: (name: string) => `Udvozlom! ${name} vagyok, miben segithetek?`,
   },
 
-  // Passcode Entry
-  passcode: {
-    enterTitle: (type: string) => `${type} megadása`,
-    submitHint: "Add meg a kinyert kuponkódot",
+  // Round labels
+  round: {
+    label: (n: number) => `${n}. szoba`,
+    round1: "1. szoba — Aula",
+    round2: "2. szoba — Recepcio",
+    round3: "3. szoba — Iroda",
+    doorTry: "Ajto kiprobalasa",
+    contextClear: "Kontextus torlese",
+    contextCleared: "Kontextus torolve. Uj beszelgetes indult.",
     hintButton: "Tipp",
-    noHints: "Ehhez a kihíváshoz nincs elérhető tipp.",
-    hintNotYet: (minutes: number) => `Ez a tipp ${minutes} perc múlva lesz elérhető.`,
-    verifyButton: "Beküldés",
-    defaultError: "Hibás kód! Próbáld újra.",
-    rateLimitError: (seconds: number) => `Kérlek várj ${seconds} másodpercet a következő próbálkozás előtt.`,
-    verificationFailed: "Ellenőrzés sikertelen. Próbáld újra.",
+    noHints: "Nincs elerheto tipp ehhez a szobához.",
+    hintNotYet: (minutes: number) => `Ez a tipp ${minutes} perc mulva lesz elerheto.`,
   },
 
-  // Success Page
+  // Passcode / answer entry
+  passcode: {
+    enterTitle: (type: string) => `${type} megadasa`,
+    submitHint: "Add meg a valaszt",
+    verifyButton: "Bekuldés",
+    defaultError: "Hibas valasz! Probald ujra.",
+    rateLimitError: (seconds: number) => `Kerlek varj ${seconds} masodpercet a kovetkezo probalkozas elott.`,
+    verificationFailed: "Ellenorzes sikertelen. Probald ujra.",
+  },
+
+  // Success / heist report
   success: {
-    congratulations: "Gratulálunk!",
-    challengeCompleted: "Sikeresen megszerezted a titkos kuponkódot!",
-  },
-
-  // Footer
-  footer: {
-    copyright: "© 2026 RAMtastic.hu — Minden jog fenntartva. (A weboldal AI által generált, teljesen fiktív, nem áll mögötte valódi cég vagy szervezet.)",
+    congratulations: "Gratulalunk!",
+    heistComplete: "Sikeresen behatoltál a Citadel Plazába!",
+    heistReport: "Betörési jelentés",
+    totalTime: "Összes idő",
+    round1Time: "1. szoba",
+    round2Time: "2. szoba",
+    round3Time: "3. szoba",
+    messages: "Üzenetek",
+    hints: "Tippek",
+    attempts: "Próbálkozások",
   },
 
   // Login Page
   login: {
-    title: "Bejelentkezés",
-    subtitle: "Add meg a kapott jelszavadat a versenyhez",
+    title: "Prompt The Flag",
+    subtitle: "Citadel Plaza — Add meg a kapott jelszavadat",
     passwordLabel: "Jelszó",
     passwordPlaceholder: "Add meg a jelszavad",
-    loginButton: "Bejelentkezés",
-    loggingIn: "Bejelentkezés...",
+    loginButton: "Belépés",
+    loggingIn: "Belépés...",
     invalidPassword: "Érvénytelen jelszó",
     loginFailed: "Bejelentkezés sikertelen. Próbáld újra.",
   },
 
   // Waiting Page
   waiting: {
-    title: "RAMtastic.hu",
-    subtitle: "A kihívás hamarosan kezdődik!",
+    title: "Prompt The Flag",
+    subtitle: "Citadel Plaza — A küldetés hamarosan kezdődik!",
     startsIn: "Kezdés:",
     days: "nap",
     hours: "óra",
@@ -81,16 +85,16 @@ export const t = {
       const startTime = `${startParts.find(p => p.type === 'hour')?.value}:${startParts.find(p => p.type === 'minute')?.value}`
       const endTime = `${endParts.find(p => p.type === 'hour')?.value}:${endParts.find(p => p.type === 'minute')?.value}`
       const suffix = day === 1 ? '-jén' : [2, 3, 6, 8, 13, 16, 18, 20, 23, 26, 28, 30].includes(day) ? '-án' : '-én'
-      return `A kihívás ${month} ${day}${suffix} budapesti idő szerint ${startTime}-kor kezdődik és ${endTime}-ig tart.`
+      return `A küldetés ${month} ${day}${suffix} budapesti idő szerint ${startTime}-kor kezdődik és ${endTime}-ig tart.`
     },
   },
 
   // Closed Page
   closed: {
-    title: "A kihívás véget ért",
+    title: "A küldetés véget ért",
     subtitle: "Köszönjük a részvételt!",
     resultsMessage: "Az eredmények hamarosan elérhetők lesznek.",
-    thanksForParticipating: "Köszönjük, hogy részt vettél a RAMtastic.hu kihívásán!",
+    thanksForParticipating: "Köszönjük, hogy részt vettél a Citadel Plaza küldetésén!",
   },
 
   // Competition

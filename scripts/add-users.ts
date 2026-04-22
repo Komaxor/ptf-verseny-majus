@@ -1,5 +1,5 @@
 /**
- * Add competition users to march_competition_users
+ * Add competition users to april_competition_users (April 2026 heist competition)
  *
  * Usage:
  *   # Single user with auto-generated password
@@ -64,7 +64,7 @@ async function insertUsers(passwords: string[]): Promise<void> {
 
   for (let i = 0; i < rows.length; i += chunkSize) {
     const chunk = rows.slice(i, i + chunkSize)
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/march_competition_users`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/april_competition_users`, {
       method: "POST",
       headers: HEADERS,
       body: JSON.stringify(chunk),
@@ -80,7 +80,7 @@ async function insertUsers(passwords: string[]): Promise<void> {
     inserted += data.length
   }
 
-  console.log(`\nInserted ${inserted} user(s) into march_competition_users`)
+  console.log(`\nInserted ${inserted} user(s) into april_competition_users`)
 }
 
 async function main() {
@@ -135,7 +135,7 @@ async function main() {
     passwords.slice(0, 10).forEach((p) => console.log(`  ${p}`))
     console.log(`  ... and ${passwords.length - 10} more`)
     // Write full list to file
-    const outPath = resolve(__dirname, "../data/march-passwords.txt")
+    const outPath = resolve(__dirname, "../data/april-passwords.txt")
     const { writeFileSync, mkdirSync } = await import("fs")
     mkdirSync(dirname(outPath), { recursive: true })
     writeFileSync(outPath, passwords.join("\n") + "\n", "utf-8")
@@ -144,7 +144,7 @@ async function main() {
 
   // Show current total
   const countRes = await fetch(
-    `${SUPABASE_URL}/rest/v1/march_competition_users?select=id`,
+    `${SUPABASE_URL}/rest/v1/april_competition_users?select=id`,
     {
       headers: {
         apikey: SERVICE_KEY,
@@ -156,7 +156,7 @@ async function main() {
   )
   const range = countRes.headers.get("content-range") || ""
   const total = range.split("/")[1]
-  console.log(`\nTotal users in march_competition_users: ${total}`)
+  console.log(`\nTotal users in april_competition_users: ${total}`)
 }
 
 main().catch((err) => {

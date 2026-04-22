@@ -1,11 +1,11 @@
 {
-  "name": "Prompt The Flag",
+  "name": "Prompt The Flag — Citadel Plaza",
   "short_name": "PTF",
-  "description": "Daily AI security capture-the-flag challenge. Test your prompt engineering skills by extracting secrets from AI assistants.",
+  "description": "Három AI-karakter, három szoba, egy kulcs. Hatold be a Citadel Plazát prompt engineering tudásoddal.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#10b981",
+  "background_color": "#0a0a0f",
+  "theme_color": "#00ff88",
   "icons": [
     {
       "src": "/favicon.png",

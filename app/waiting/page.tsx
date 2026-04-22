@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Clock, Cpu } from "lucide-react"
+import { Clock, Shield } from "lucide-react"
 import { t } from "@/lib/translations"
 import MatrixBg from "@/components/matrix-bg"
 import { COMPETITION_START, COMPETITION_END } from "@/lib/config"
@@ -60,52 +60,52 @@ export default function WaitingPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-transparent flex flex-col items-center justify-center p-4">
+    <div className="relative min-h-screen bg-[#0a0a0f] flex flex-col items-center justify-center p-4">
       <MatrixBg />
       <div className="absolute inset-0 bg-black/60 z-[1] pointer-events-none" />
       <div className="relative z-10 text-center max-w-2xl mx-auto">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center">
-            <Cpu className="w-10 h-10 text-white" />
+          <div className="w-20 h-20 bg-[#00ff88]/10 border-2 border-[#00ff88]/40 rounded-2xl flex items-center justify-center">
+            <Shield className="w-10 h-10 text-[#00ff88]" />
           </div>
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 whitespace-pre-line">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
           {t.waiting.title}
         </h1>
-        <p className="text-base sm:text-xl text-gray-400 mb-12">
+        <p className="text-base sm:text-xl text-[#00ff88]/70 mb-12">
           {t.waiting.subtitle}
         </p>
 
         {/* Countdown */}
         <div className="mb-12">
           <p className="text-lg text-gray-400 mb-6 flex items-center justify-center gap-2">
-            <Clock className="w-5 h-5" />
+            <Clock className="w-5 h-5 text-[#00ff88]" />
             {t.waiting.startsIn}
           </p>
           <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto">
-            <div className="bg-black/70 border border-blue-500/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-blue-500 font-mono">
+            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
                 {String(timeRemaining.days).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.days}</div>
             </div>
-            <div className="bg-black/70 border border-blue-500/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-blue-500 font-mono">
+            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
                 {String(timeRemaining.hours).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.hours}</div>
             </div>
-            <div className="bg-black/70 border border-blue-500/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-blue-500 font-mono">
+            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
                 {String(timeRemaining.minutes).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.minutes}</div>
             </div>
-            <div className="bg-black/70 border border-blue-500/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-blue-500 font-mono">
+            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
                 {String(timeRemaining.seconds).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.seconds}</div>
@@ -114,7 +114,7 @@ export default function WaitingPage() {
         </div>
 
         {/* Info */}
-        <div className="bg-black/70 border border-blue-500/30 rounded-lg p-6 mb-8 backdrop-blur-sm">
+        <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-6 mb-8 backdrop-blur-sm">
           <h2 className="text-lg font-semibold text-white mb-2">
             {t.waiting.getReady}
           </h2>
@@ -127,7 +127,7 @@ export default function WaitingPage() {
         {timeRemaining.days === 0 && timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds === 0 && (
           <button
             onClick={() => window.location.href = "/login"}
-            className="mb-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors cursor-pointer"
+            className="mb-8 px-6 py-3 bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold rounded-lg transition-colors cursor-pointer"
           >
             Belépés
           </button>
@@ -135,9 +135,9 @@ export default function WaitingPage() {
 
         {/* Decorative elements */}
         <div className="flex items-center justify-center gap-2 text-gray-400/50">
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-          <span className="text-sm">RAMtastic.hu</span>
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+          <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
+          <span className="text-sm">Citadel Plaza</span>
+          <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
         </div>
       </div>
     </div>

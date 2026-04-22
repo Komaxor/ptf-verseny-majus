@@ -14,8 +14,8 @@ export async function GET() {
 
     // Get user from session token
     const { data: user, error: userError } = await supabase
-      .from("march_competition_users")
-      .select("id, is_solved, solved_at")
+      .from("april_competition_users")
+      .select("id, is_solved, solved_at, total_chat_messages, total_passcode_attempts, total_hint_clicks")
       .eq("session_token", competitionSession)
       .single()
 
@@ -23,71 +23,42 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
 
-    // Get all session hashes linked to this user
-    const { data: links } = await supabase
-      .from("march_user_session_links")
-      .select("session_hash")
+    // Get game state for round timing
+    const { data: gameState } = await supabase
+      .from("april_game_state")
+      .select("round1_started_at, round1_completed_at, round2_started_at, round2_completed_at, round3_started_at, round3_completed_at")
+      .eq("user_id", user.id)
+      .single()
+
+    // Calculate total completion time from game state
+    let completionTimeSeconds = 0
+    if (gameState) {
+      const roundTimes = [
+        { start: gameState.round1_started_at, end: gameState.round1_completed_at },
+        { start: gameState.round2_started_at, end: gameState.round2_completed_at },
+        { start: gameState.round3_started_at, end: gameState.round3_completed_at },
+      ]
+      for (const rt of roundTimes) {
+        if (rt.start && rt.end) {
+          completionTimeSeconds += Math.round((new Date(rt.end).getTime() - new Date(rt.start).getTime()) / 1000)
+        }
+      }
+    }
+
+    // Get total tokens from chat messages
+    const { data: tokenData } = await supabase
+      .from("april_chat_messages")
+      .select("total_tokens")
       .eq("user_id", user.id)
 
-    const sessionHashes = links?.map((l) => l.session_hash) || []
-
-    if (sessionHashes.length === 0) {
-      return NextResponse.json({
-        isSolved: user.is_solved || false,
-        completionTimeSeconds: 0,
-        messageCount: 0,
-        failedAttempts: 0,
-        hintClicks: 0,
-        totalTokens: 0,
-      })
-    }
-
-    // Get chat session stats
-    const { data: sessions } = await supabase
-      .from("march_chat_sessions")
-      .select("message_count, completion_time_seconds")
-      .in("session_hash", sessionHashes)
-
-    const messageCount = sessions?.reduce((sum, s) => sum + (s.message_count || 0), 0) || 0
-    const completionTimeSeconds = sessions?.reduce((max, s) => Math.max(max, s.completion_time_seconds || 0), 0) || 0
-
-    // Get session IDs for token query
-    const { data: sessionRows } = await supabase
-      .from("march_chat_sessions")
-      .select("id")
-      .in("session_hash", sessionHashes)
-
-    const sessionIds = sessionRows?.map((s) => s.id) || []
-
-    // Get total tokens
-    let totalTokens = 0
-    if (sessionIds.length > 0) {
-      const { data: tokenData } = await supabase
-        .from("march_chat_messages")
-        .select("total_tokens")
-        .in("session_id", sessionIds)
-
-      totalTokens = tokenData?.reduce((sum, m) => sum + (m.total_tokens || 0), 0) || 0
-    }
-
-    // Get failed attempts count
-    const { count: failedAttempts } = await supabase
-      .from("march_failed_attempts")
-      .select("*", { count: "exact", head: true })
-      .in("session_hash", sessionHashes)
-
-    // Get hint clicks count
-    const { count: hintClicks } = await supabase
-      .from("march_hint_clicks")
-      .select("*", { count: "exact", head: true })
-      .in("session_hash", sessionHashes)
+    const totalTokens = tokenData?.reduce((sum, m) => sum + (m.total_tokens || 0), 0) || 0
 
     return NextResponse.json({
       isSolved: user.is_solved || false,
       completionTimeSeconds,
-      messageCount,
-      failedAttempts: failedAttempts || 0,
-      hintClicks: hintClicks || 0,
+      messageCount: user.total_chat_messages || 0,
+      failedAttempts: user.total_passcode_attempts || 0,
+      hintClicks: user.total_hint_clicks || 0,
       totalTokens,
     })
   } catch (error) {
