@@ -1,273 +1,271 @@
-// Bypasses AI SDK abstraction to avoid Zod version conflicts
-import OpenAI from "openai"
-import { getOrCreateChatSession, logChatMessage, extractUserIp, isSessionCompleted } from "@/lib/chat-logger"
-import { getActiveChallenge, buildSystemPrompt } from "@/lib/challenge-loader"
-import { createClient } from "@supabase/supabase-js"
+import { NextRequest } from "next/server"
 import { cookies } from "next/headers"
-import { COMPETITION_END } from "@/lib/config"
+import OpenAI from "openai"
+import { createServiceClient } from "@/lib/supabase/server"
+import {
+  loadRoundConfig,
+  loadSystemPrompt,
+  loadToolFile,
+  getToolFileName,
+  extractWelcomeMessage,
+} from "@/lib/round-loader"
+import {
+  getOrCreateChatSession,
+  logChatMessage,
+  logToolCall,
+  getMessagesAfterLastClear,
+  extractUserIp,
+} from "@/lib/chat-logger"
+import { CHAT_COOLDOWN_MS, COMPETITION_END } from "@/lib/config"
 
-export const maxDuration = 30
+export const maxDuration = 60
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-}
-
-// Get authenticated competition user and increment message count
-async function getAndTrackCompetitionUser(sessionHash: string | null): Promise<{ userId: string; generatedPassword: string | null } | null> {
-  try {
-    const cookieStore = await cookies()
-    const competitionSession = cookieStore.get("competition_session")?.value
-
-    if (!competitionSession) return null
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-    if (!supabaseUrl || !supabaseServiceKey) return null
-
-    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
-      auth: { autoRefreshToken: false, persistSession: false },
+// Build OpenAI tool definitions for a round
+function buildToolDefinitions(round: number) {
+  const config = loadRoundConfig(round)
+  const toolDefs: OpenAI.Chat.Completions.ChatCompletionTool[] = config.tools.map(
+    (toolName) => ({
+      type: "function" as const,
+      function: {
+        name: toolName,
+        description: getToolDescription(toolName),
+        parameters: { type: "object" as const, properties: {}, required: [] },
+      },
     })
+  )
+  return toolDefs
+}
 
-    const { data: user, error } = await supabase
-      .from("march_competition_users")
-      .select("id, generated_password")
-      .eq("session_token", competitionSession)
-      .single()
-
-    if (error || !user) return null
-
-    // Increment message count for competition tracking
-    await supabase.rpc("march_increment_user_chat_messages", { user_id: user.id })
-
-    // Link session hash to user (ignore duplicates)
-    if (sessionHash) {
-      await supabase
-        .from("march_user_session_links")
-        .upsert({ user_id: user.id, session_hash: sessionHash }, { onConflict: "user_id,session_hash" })
-    }
-
-    return { userId: user.id, generatedPassword: user.generated_password ?? null }
-  } catch {
-    return null
+function getToolDescription(toolName: string): string {
+  const descriptions: Record<string, string> = {
+    search_building_directory: "Az epulet berloi nyilvantartasanak keresese. Megmutatja, melyik ceg melyik emeleten es ajtoszamon talalhato.",
+    check_floor_plan: "Egy adott emelet alaprajzanak megtekintese. Megmutatja a szobak szamozasat es elrendezeseT.",
+    read_security_protocols: "Az epulet biztonsagi szabalyzatanak olvasasa.",
+    check_maintenance_schedule: "Az epulet karbantartasi utemtervenek megtekintese.",
+    read_building_rules: "Az epulet hazirendjenek olvasasa (nyitvatartas, szabalyok).",
+    check_announcements: "Az epulet legfrissebb kozlemenyeinek megtekintese.",
+    search_employee_directory: "A Mase Capital dolgozoi nevsoranak keresese nev vagy beosztas alapjan.",
+    check_visitor_policy: "A latogatoi szabalyzat megtekintese.",
+    check_daily_schedule: "A mai napi beosztas megtekintese: megbeszelesek, vart latogatok.",
+    read_company_profile: "A Mase Capital cegprofiljanak olvasasa.",
+    check_meeting_rooms: "A targyalotermek foglaltsaganak megtekintese.",
+    read_internal_memos: "Belso levelezes es kozlemenyek olvasasa.",
+    search_emails: "Search Viktor Mase's recent emails by keyword or sender.",
+    read_file: "Open and read a file from Viktor's desktop or documents.",
+    check_calendar: "View Viktor's upcoming calendar entries.",
+    search_notes: "Search Viktor's personal notes and reminders.",
+    check_browser_bookmarks: "View Viktor's saved browser bookmarks.",
+    read_portfolio: "View the fund's current portfolio positions.",
   }
+  return descriptions[toolName] || toolName
 }
 
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: corsHeaders,
-  })
-}
-
-export async function POST(req: Request) {
-  console.log("[v0] Chat API POST called")
+export async function POST(request: NextRequest) {
   const requestStartTime = Date.now()
 
   // Check if competition has ended
   if (new Date() > COMPETITION_END) {
-    return new Response(JSON.stringify({ error: "A verseny már véget ért." }), {
+    return new Response(JSON.stringify({ error: "A verseny mar veget ert." }), {
       status: 403,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json" },
     })
-  }
-
-  let messages
-  let sessionHash: string | null = null
-  try {
-    const body = await req.json()
-    messages = body.messages
-    sessionHash = body.session_hash || null
-    console.log(
-      "[v0] Request body parsed, messages count:",
-      messages?.length,
-      "sessionHash:",
-      sessionHash ? sessionHash.substring(0, 8) + "..." : "null",
-    )
-  } catch (err) {
-    console.log("[v0] Failed to parse request body:", err)
-    return new Response(JSON.stringify({ error: "Invalid request body" }), {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
-    })
-  }
-
-  if (!sessionHash) {
-    console.warn("[v0] No session hash in request - chat will not be logged")
-  }
-
-  // Track competition user message
-  const competitionUser = await getAndTrackCompetitionUser(sessionHash)
-  const generatedPassword = competitionUser?.generatedPassword ?? null
-  if (competitionUser) {
-    console.log(new Date().toISOString(), "|", generatedPassword ?? "N/A", "|", "Competition user tracked:", competitionUser.userId)
-  }
-
-  let challengeId = "unknown"
-  let systemPrompt = "You are a helpful AI assistant."
-  let challenge = null
-
-  try {
-    console.log("[v0] Loading active challenge...")
-    challenge = await getActiveChallenge()
-    console.log("[v0] Challenge loaded:", challenge?.id)
-    challengeId = challenge?.id || "unknown"
-    systemPrompt = buildSystemPrompt(challenge)
-    console.log("[v0] System prompt built, length:", systemPrompt.length)
-  } catch (error) {
-    console.error("[v0] Failed to load challenge:", error)
-  }
-
-  if (sessionHash && challenge) {
-    const completed = await isSessionCompleted(sessionHash, challengeId)
-    if (completed) {
-      console.log("[v0] Session already completed, returning success message")
-      const successMessage =
-        challenge.metadata.successMessage || "Congratulations! You've already completed this challenge."
-
-      // Return the success message as a stream response
-      const encoder = new TextEncoder()
-      const readable = new ReadableStream({
-        start(controller) {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: successMessage })}\n\n`))
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"))
-          controller.close()
-        },
-      })
-
-      return new Response(readable, {
-        headers: {
-          "Content-Type": "text/event-stream",
-          "Cache-Control": "no-cache",
-          Connection: "keep-alive",
-          ...corsHeaders,
-        },
-      })
-    }
   }
 
   if (!process.env.OPENAI_API_KEY) {
-    console.log("[v0] Missing OPENAI_API_KEY")
     return new Response(JSON.stringify({ error: "OpenAI API key is not configured" }), {
       status: 500,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json" },
     })
   }
 
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  })
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  const supabase = await createServiceClient()
 
-  let chatSession: { sessionId: string | null; challengeId: string; sessionHash: string; generatedPassword: string | null } | null = null
-  try {
-    const userIp = extractUserIp(req)
-    console.log(new Date().toISOString(), "|", generatedPassword ?? "N/A", "|", "Creating/getting chat session for hash:", sessionHash?.substring(0, 8) + "...")
-    chatSession = await getOrCreateChatSession(sessionHash, challengeId, userIp, generatedPassword)
-    console.log("[v0] Chat session result:", chatSession?.sessionId ? "ID: " + chatSession.sessionId : "null")
-  } catch (error) {
-    console.error("[v0] Failed to initialize chat session:", error)
+  // Auth
+  const cookieStore = await cookies()
+  const sessionToken = cookieStore.get("competition_session")?.value
+  if (!sessionToken) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const userMessage = messages[messages.length - 1]?.content || ""
+  const { data: user } = await supabase
+    .from("april_competition_users")
+    .select("id")
+    .eq("session_token", sessionToken)
+    .single()
 
-  // Convert messages to OpenAI format
-  const openaiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+  if (!user) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
+  }
+
+  let body
+  try {
+    body = await request.json()
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid request body" }), { status: 400 })
+  }
+
+  const { message, sessionHash, round } = body as {
+    message: string
+    sessionHash: string
+    round: number
+  }
+
+  if (!message || !sessionHash || !round || round < 1 || round > 3) {
+    return new Response(JSON.stringify({ error: "Bad request" }), { status: 400 })
+  }
+
+  // Rate limiting (3s cooldown)
+  const { data: lastMsg } = await supabase
+    .from("april_chat_messages")
+    .select("created_at")
+    .eq("user_id", user.id)
+    .eq("round", round)
+    .eq("role", "user")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single()
+
+  if (lastMsg) {
+    const elapsed = Date.now() - new Date(lastMsg.created_at).getTime()
+    if (elapsed < CHAT_COOLDOWN_MS) {
+      const waitTime = Math.ceil((CHAT_COOLDOWN_MS - elapsed) / 1000)
+      return new Response(
+        JSON.stringify({ error: `Kerlek varj ${waitTime} masodpercet.`, rateLimited: true, waitTime }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      )
+    }
+  }
+
+  // Get/create chat session
+  const userIp = extractUserIp(request)
+  const session = await getOrCreateChatSession(sessionHash, round, userIp, user.id)
+
+  // Increment message count
+  await supabase.rpc("april_increment_user_chat_messages", { p_user_id: user.id })
+
+  // Link user to session
+  await supabase
+    .from("april_user_session_links")
+    .upsert({ user_id: user.id, session_hash: sessionHash }, { onConflict: "user_id,session_hash" })
+
+  // Log user message
+  await logChatMessage(session.sessionId, user.id, round, "user", message)
+
+  // Build conversation history
+  const systemPrompt = loadSystemPrompt(round)
+  const welcomeMessage = extractWelcomeMessage(systemPrompt)
+  const priorMessages = await getMessagesAfterLastClear(user.id, round)
+
+  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: systemPrompt },
-    ...messages.map((msg: { role: string; content?: string; parts?: { type: string; text: string }[] }) => ({
-      role: msg.role as "user" | "assistant",
-      content: msg.parts?.find((p) => p.type === "text")?.text || msg.content || "",
+    { role: "assistant", content: welcomeMessage },
+    ...priorMessages.map((m) => ({
+      role: m.role as "user" | "assistant",
+      content: m.content,
     })),
   ]
 
-  let stream
+  // Tool definitions
+  const tools = buildToolDefinitions(round)
+
   try {
-    console.log("[v0] Creating OpenAI stream...")
-    stream = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: openaiMessages,
-      stream: true,
-      stream_options: { include_usage: true },
+    // Agent loop: call OpenAI, handle tool calls, repeat until text response
+    let response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages,
+      tools,
+      stream: false,
     })
-    console.log("[v0] OpenAI stream created")
+
+    // Handle tool calls iteratively
+    while (response.choices[0]?.finish_reason === "tool_calls") {
+      const toolCalls = response.choices[0].message.tool_calls || []
+      messages.push(response.choices[0].message)
+
+      for (const toolCall of toolCalls) {
+        const toolName = toolCall.function.name
+        let toolResult: string
+
+        try {
+          const fileName = getToolFileName(round, toolName)
+          toolResult = loadToolFile(round, fileName)
+          // Log tool call
+          await logToolCall(session.sessionId, user.id, round, toolName)
+        } catch {
+          toolResult = JSON.stringify({ error: "File not found" })
+        }
+
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: toolResult,
+        })
+      }
+
+      // Call again with tool results
+      response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages,
+        tools,
+        stream: false,
+      })
+    }
+
+    // Get the final response content
+    const finalContent = response.choices[0]?.message?.content || ""
+    const responseTimeMs = Date.now() - requestStartTime
+    const usage = response.usage
+
+    // Log assistant message
+    await logChatMessage(
+      session.sessionId, user.id, round, "assistant", finalContent,
+      responseTimeMs,
+      usage ? {
+        prompt_tokens: usage.prompt_tokens,
+        completion_tokens: usage.completion_tokens,
+        total_tokens: usage.total_tokens,
+      } : undefined
+    )
+
+    // Stream the response via SSE (simulated streaming for consistent UX)
+    const encoder = new TextEncoder()
+    const stream = new ReadableStream({
+      start(controller) {
+        const words = finalContent.split(" ")
+        let i = 0
+        const interval = setInterval(() => {
+          if (i < words.length) {
+            const chunk = (i === 0 ? "" : " ") + words[i]
+            const data = JSON.stringify({ content: chunk })
+            controller.enqueue(encoder.encode(`data: ${data}\n\n`))
+            i++
+          } else {
+            controller.enqueue(encoder.encode(`data: [DONE]\n\n`))
+            controller.close()
+            clearInterval(interval)
+          }
+        }, 30) // ~30ms per word for natural feel
+      },
+    })
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
+    })
   } catch (error) {
-    console.error("[v0] OpenAI stream creation failed:", error)
+    console.error("[chat] OpenAI error:", error)
     const errorMessage = error instanceof Error ? error.message : "Failed to connect to OpenAI"
     return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json" },
     })
   }
+}
 
-  let fullAssistantResponse = ""
-  let tokenUsage: { promptTokens?: number; completionTokens?: number; totalTokens?: number } = {}
-
-  // Create a ReadableStream to return SSE-formatted response
-  const encoder = new TextEncoder()
-  const readable = new ReadableStream({
-    async start(controller) {
-      try {
-        for await (const chunk of stream) {
-          const content = chunk.choices[0]?.delta?.content || ""
-          if (content) {
-            fullAssistantResponse += content
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`))
-          }
-          // Capture token usage from the final chunk
-          if (chunk.usage) {
-            tokenUsage = {
-              promptTokens: chunk.usage.prompt_tokens,
-              completionTokens: chunk.usage.completion_tokens,
-              totalTokens: chunk.usage.total_tokens,
-            }
-          }
-        }
-        controller.enqueue(encoder.encode("data: [DONE]\n\n"))
-
-        const responseTimeMs = Date.now() - requestStartTime
-        console.log("[v0] Stream complete, logging message. SessionId:", chatSession?.sessionId, "Tokens:", tokenUsage)
-
-        if (chatSession?.sessionId) {
-          try {
-            await logChatMessage(chatSession.sessionId, userMessage, fullAssistantResponse, responseTimeMs, chatSession.generatedPassword, tokenUsage)
-            console.log("[v0] Message logged successfully")
-          } catch (err) {
-            console.error("[v0] Failed to log message:", err)
-          }
-        } else {
-          console.warn("[v0] No session ID - message not logged")
-        }
-      } catch (error) {
-        console.error("[v0] Stream error:", error)
-        const errorMessage = error instanceof Error ? error.message : "Stream error occurred"
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: errorMessage })}\n\n`))
-      } finally {
-        controller.close()
-      }
-    },
-  })
-
-  // Return the response immediately so SSE chunks stream to the client in real-time.
-  // Logging runs inside the stream's start() before controller.close(), so the
-  // serverless function stays alive until logging completes.
-  return new Response(readable, {
-    headers: {
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-      ...corsHeaders,
-    },
-  })
+export async function OPTIONS() {
+  return new Response(null, { status: 200 })
 }
