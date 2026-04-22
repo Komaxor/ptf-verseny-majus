@@ -48,7 +48,6 @@ export function extractWelcomeMessage(systemPromptContent: string): string {
     .trim();
 }
 
-// Tool name → .md filename mapping per round
 const TOOL_FILE_MAP: Record<number, Record<string, string>> = {
   1: {
     search_building_directory: "building-directory",
