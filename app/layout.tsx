@@ -2,40 +2,26 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Toaster } from "sonner"
-import { ClientProviders } from "@/components/client-providers"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "RAMtastic.hu — Magyarország kedvenc memóriaboltja",
+  title: "Citadel Plaza -- Promptverseny",
   description:
-    "DDR4 és DDR5 RAM memóriák széles választéka. Kingston, Corsair, G.Skill, Crucial — 3 év garancia, gyors szállítás!",
-  keywords: [
-    "RAM",
-    "memória",
-    "DDR4",
-    "DDR5",
-    "Kingston",
-    "Corsair",
-    "G.Skill",
-    "Crucial",
-    "számítógép memória",
-    "RAM vásárlás",
-    "webáruház",
-  ],
-  authors: [{ name: "RAMtastic.hu" }],
-  creator: "RAMtastic.hu",
-  publisher: "RAMtastic.hu",
+    "Harom AI-karakter, harom szoba, egy kulcs. Hatold be a Citadel Plazat prompt engineering tudasoddal.",
+  authors: [{ name: "Promptverseny" }],
+  creator: "Promptverseny",
+  publisher: "Promptverseny",
   icons: {
     icon: [
       { url: "/favicon.ico", type: "image/x-icon" },
     ],
   },
   openGraph: {
-    title: "RAMtastic.hu — Magyarország kedvenc memóriaboltja",
-    description: "DDR4 és DDR5 RAM memóriák széles választéka. Kingston, Corsair, G.Skill, Crucial.",
+    title: "Citadel Plaza -- Promptverseny",
+    description: "Harom AI-karakter, harom szoba, egy kulcs. Prompt engineering verseny.",
     type: "website",
     locale: "hu_HU",
   },
@@ -49,7 +35,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#2563eb",
+  themeColor: "#0a0a0f",
 }
 
 export default function RootLayout({
@@ -62,10 +48,8 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.openai.com" />
       </head>
-      <body className={`font-sans antialiased`}>
-        <ClientProviders>
-          {children}
-        </ClientProviders>
+      <body className={`font-sans antialiased bg-[#0a0a0f] text-white`}>
+        {children}
         <Toaster position="bottom-left" />
       </body>
     </html>

@@ -3,11 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 
-import { Loader2, AlertTriangle, KeyRound, Cpu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { t } from "@/lib/translations"
+import { Loader2, AlertTriangle, KeyRound, Shield } from "lucide-react"
 import { COMPETITION_END } from "@/lib/config"
 import MatrixBg from "@/components/matrix-bg"
 
@@ -49,10 +45,10 @@ export default function LoginPage() {
         window.location.href = "/"
         return
       } else {
-        setError(result.error || t.login.invalidPassword)
+        setError(result.error || "Ervenytelen kod")
       }
     } catch {
-      setError(t.login.loginFailed)
+      setError("Bejelentkezes sikertelen. Probald ujra.")
     } finally {
       setIsLoading(false)
     }
@@ -61,35 +57,37 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-screen bg-transparent flex flex-col">
       <MatrixBg />
-      <div className="absolute inset-0 bg-black/60 z-[1] pointer-events-none" />
+      <div className="absolute inset-0 bg-[#0a0a0f]/80 z-[1] pointer-events-none" />
       <div className="relative z-10 w-full max-w-md mx-auto flex-1 flex flex-col items-center justify-center p-4">
         {/* Logo */}
         <div className="flex flex-col items-center justify-center mb-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4">
-            <Cpu className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-[#00ff88]/10 border border-[#00ff88]/20 rounded-2xl flex items-center justify-center mb-4">
+            <Shield className="w-8 h-8 text-[#00ff88]" />
           </div>
-          <h1 className="text-2xl font-bold text-white">RAMtastic.hu</h1>
-          <p className="text-sm text-gray-400">Magyarország kedvenc memóriaboltja</p>
+          <h1 className="text-2xl font-bold text-white">Citadel Plaza</h1>
+          <p className="text-sm text-white/40">Promptverseny -- Aprilis 2026</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-black/70 border border-blue-500/30 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+        <div className="bg-[#0a0a0f]/90 border border-[#00ff88]/20 rounded-xl p-6 shadow-lg backdrop-blur-sm w-full">
           <div className="text-center mb-6">
-            <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <KeyRound className="w-6 h-6 text-blue-500" />
+            <div className="w-12 h-12 bg-[#00ff88]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <KeyRound className="w-6 h-6 text-[#00ff88]" />
             </div>
             <h2 className="text-xl font-semibold text-white mb-2">
-              {t.login.title}
+              Bejelentkezes
             </h2>
-            <p className="text-sm text-gray-400">
-              {t.login.subtitle}
+            <p className="text-sm text-white/40">
+              Add meg a meghivokodod
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-300">{t.login.passwordLabel}</Label>
-              <Input
+              <label htmlFor="password" className="text-sm text-white/60">
+                Meghivokod
+              </label>
+              <input
                 id="password"
                 type="text"
                 value={password}
@@ -97,8 +95,8 @@ export default function LoginPage() {
                   setPassword(e.target.value)
                   if (error) setError(null)
                 }}
-                placeholder={t.login.passwordPlaceholder}
-                className="bg-black/50 border-blue-500/30 text-white font-mono text-center text-lg tracking-wider focus:border-blue-500"
+                placeholder="Add meg a meghivokodod"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
                 autoComplete="off"
                 autoFocus
                 disabled={isLoading}
@@ -106,32 +104,32 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 px-3 py-2 rounded-md">
+              <div className="flex items-center gap-2 text-red-400 text-sm bg-red-400/10 px-3 py-2 rounded-md">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
-            <Button
+            <button
               type="submit"
               disabled={isLoading || !password.trim()}
-              className="w-full bg-blue-600 hover:bg-blue-700 cursor-pointer disabled:cursor-not-allowed"
+              className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
               {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  {t.login.loggingIn}
-                </>
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Bejelentkezes...
+                </span>
               ) : (
-                t.login.loginButton
+                "Belepes"
               )}
-            </Button>
+            </button>
           </form>
         </div>
 
         {/* Footer hint */}
-        <p className="text-center text-xs text-gray-500 mt-6">
-          A jelszót a szervezőktől kaptad
+        <p className="text-center text-xs text-white/20 mt-6">
+          A kodot a szervezoktol kaptad
         </p>
       </div>
     </div>
