@@ -2,9 +2,9 @@
 
 ## What This Is
 
-A **prompt engineering competition platform** disguised as a Hungarian RAM e-commerce store ("RAMtastic.hu"). Participants log in, chat with an AI assistant named **Ramóna** (GPT-4.1-mini), extract a hidden coupon code from the conversation, and submit it to win. The competition is time-gated (60 minutes).
+A **prompt engineering competition platform** themed as a heist escape game ("Citadel Plaza"). Participants log in, navigate three locked rooms with three AI characters, extract secret codes through conversation, and escape. The competition is time-gated (60 minutes).
 
-This repo was forked from the March edition (`ptf-verseny-marcius`) and is being adapted for the **April** competition.
+This repo was forked from the March edition (`ptf-verseny-marcius`) and fully redesigned for the **April** competition.
 
 ## Tech Stack
 
@@ -38,27 +38,26 @@ Required in `.env.local`:
 
 ```
 app/                    # Next.js App Router pages + API routes
-  api/                  # Serverless endpoints (chat, login, verify-passcode, etc.)
+  api/                  # Serverless endpoints (chat, login, verify-passcode, judge, game-state, etc.)
   login/                # Login page
-  success/              # Post-solve page (metrics, certificate)
+  success/              # Post-solve page (heist report)
   waiting/              # Pre-competition countdown
   closed/               # Post-competition page
 components/             # React components
-  chat-interface.tsx    # Main chat UI with SSE streaming
-  chat-widget.tsx       # Collapsible chat sidebar
+  chat/                 # Chat UI components (chat-interface, avatars)
   passcode-entry.tsx    # Secret code submission form
-  product-grid.tsx      # Mock store product listing
   ui/                   # Radix UI wrappers (shadcn-style)
 lib/                    # Utilities
-  config.ts             # Competition timing constants (START, END, LENGTH)
-  products.ts           # Mock RAM product data (8 items)
-  challenge-loader.ts   # Loads challenge JSON
+  config.ts             # Competition timing constants (START, END, LENGTH, phases)
+  challenge-loader.ts   # Loads round-specific challenge data
   chat-logger.ts        # Chat analytics logging
-  cart-context.tsx      # Cart state (decorative, not competition-critical)
   translations.ts       # Hungarian UI strings
   supabase/             # Supabase client/server helpers
-data/challenges/        # Challenge JSON (secret answer, system prompt, hints)
-scripts/                # Admin scripts (user creation, backups, exports)
+data/challenges/        # Challenge configs per round
+  round-1/              # Adél (security system) — exact answer
+  round-2/              # Vanda (receptionist) — AI-judged answer
+  round-3/              # Copilot (desktop assistant) — exact answer
+scripts/                # Admin scripts (user creation, backups, exports — still use march_ prefix)
 middleware.ts           # Auth + competition-phase routing
 ```
 
@@ -66,36 +65,41 @@ middleware.ts           # Auth + competition-phase routing
 
 ### Competition Flow
 1. **Before competition:** All routes redirect to `/waiting` (countdown)
-2. **During competition:** Login with unique password → chat with Ramóna → find coupon code → submit at passcode entry
-3. **After competition:** Solvers see `/success` (metrics + certificate), others see `/closed`
+2. **During competition:** Login → progress through 3 rooms (rounds) with video interludes → each room has an AI character to extract a code from → submit code to advance
+3. **After competition:** Solvers see `/success` (heist report), others see `/closed`
+
+### Three Rounds
+- **Round 1 — Adél:** Citadel Plaza AI security system. Exact answer required.
+- **Round 2 — Vanda:** Mase Capital receptionist. Answer evaluated by AI judge (`/api/judge`).
+- **Round 3 — Copilot:** Executive's desktop assistant. Exact answer required.
+
+Each round has: system prompt (markdown), support documents, tool definitions, time-locked hints, and answer config.
 
 ### Authentication
-- Login validates password against `march_competition_users` Supabase table
+- Login validates password against `april_competition_users` Supabase table
 - Sets `competition_session` httpOnly cookie with UUID session token
 - `middleware.ts` enforces auth on all protected routes
 
 ### Chat System
 - Client sends messages to `/api/chat` with `session_hash`
 - Server streams OpenAI responses via SSE
-- Chat logged to `march_chat_sessions` + `march_chat_messages` tables
-- System prompt defined in challenge JSON includes company context and hints
+- Chat logged to `april_chat_sessions` + `april_chat_messages` tables
+- System prompt loaded from round-specific challenge data
 
-### Database Tables (prefixed `march_`)
-- `march_competition_users` — participants, passwords, solve status
-- `march_chat_sessions` / `march_chat_messages` — conversation logs
-- `march_user_session_links` — user-session mapping
-- `march_failed_attempts` — wrong passcode submissions (rate limiting)
-
-### Challenge Data (`data/challenges/challenge-competition.json`)
-- Current secret answer: `RAMFREE100`
-- Difficulty: medium, estimated 15-30 min
-- Contains knowledge base docs, company profiles, hint schedule
+### Database Tables (prefixed `april_`)
+- `april_competition_users` — participants, passwords, solve status
+- `april_chat_sessions` / `april_chat_messages` — conversation logs
+- `april_user_session_links` — user-session mapping
+- `april_failed_attempts` — wrong passcode submissions (rate limiting)
+- `april_game_state` — multi-round progression tracking
+- `april_tool_calls` — AI tool usage logs
+- `april_context_clears` — context clear events
 
 ## Important Notes
 
-- **All Supabase table names are prefixed with `march_`** — these need updating for April
+- **Competition date:** April 24, 2026, 17:00–18:00 CET
 - **Competition timing** is in `lib/config.ts` (UTC dates)
-- The e-commerce store (products, cart) is purely decorative — the real challenge is the AI chat
+- Phases: VIDEO_INTRO → ROUND_1 → VIDEO_1_2 → ROUND_2 → VIDEO_2_3 → ROUND_3 → VIDEO_OUTRO → SUCCESS
 - Rate limiting: 5-second cooldown between passcode attempts
 - Hints are time-locked (revealed after X minutes into competition)
-- Certificate generation happens on the success page with user's chosen name
+- Scripts in `scripts/` still reference `march_` table names (old competition data exports)

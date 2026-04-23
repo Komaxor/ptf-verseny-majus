@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Bejelentkezés - RAMtastic.hu",
+  title: "Bejelentkezés - Áprilisi promptverseny",
   description: "Jelentkezz be a kihívásba.",
   openGraph: {
-    title: "Bejelentkezés - RAMtastic.hu",
+    title: "Bejelentkezés - Áprilisi promptverseny",
     description: "Jelentkezz be a kihívásba.",
   },
 }
