@@ -1,90 +1,90 @@
-# Compliance Documentation — Mase Capital Kft.
+# Megfelelőségi dokumentáció — Mase Capital Kft.
 
-## Regulatory Status
+## Szabályozói státusz
 
-| Item | Details |
-|------|---------|
-| Regulator | Magyar Nemzeti Bank (MNB) |
-| License Type | AIFM (Alternative Investment Fund Manager) |
-| License Number | H-EN-III-728/2018 |
-| License Date | September 14, 2018 |
-| Last Review | November 2025 (passed, no findings) |
-| Next Scheduled Review | November 2026 |
+| Tétel | Részletek |
+|-------|-----------|
+| Felügyelő hatóság | Magyar Nemzeti Bank (MNB) |
+| Engedély típusa | AIFM (Alternatív Befektetési Alapkezelő) |
+| Engedélyszám | H-EN-III-728/2018 |
+| Engedély dátuma | 2018. szeptember 14. |
+| Utolsó felülvizsgálat | 2025. november (megfelelt, nincs észrevétel) |
+| Következő tervezett felülvizsgálat | 2026. november |
 
-## Reporting Calendar — 2026
+## Jelentési naptár — 2026
 
-| Report | Frequency | Deadline | Status |
-|--------|-----------|----------|--------|
-| AIFMD Annex IV | Quarterly | Q1: Apr 30 | In preparation |
-| | | Q2: Jul 31 | Upcoming |
-| | | Q3: Oct 31 | Upcoming |
-| | | Q4: Jan 31, 2027 | Upcoming |
-| AML/KYC Review | Annual | June 30 | Upcoming |
-| Financial Statements (Audited) | Annual | June 30 | In progress (Deloitte) |
-| Capital Adequacy Report | Quarterly | With Annex IV | In preparation |
-| Investor Complaints Report | Annual | March 31 | Submitted |
+| Jelentés | Gyakoriság | Határidő | Státusz |
+|----------|------------|----------|--------|
+| AIFMD Annex IV | Negyedéves | Q1: ápr. 30 | Előkészítés alatt |
+| | | Q2: júl. 31 | Következő |
+| | | Q3: okt. 31 | Következő |
+| | | Q4: 2027. jan. 31 | Következő |
+| AML/KYC felülvizsgálat | Éves | Június 30. | Következő |
+| Auditált éves beszámoló | Éves | Június 30. | Folyamatban (Deloitte) |
+| Tőkemegfelelési jelentés | Negyedéves | Annex IV-vel együtt | Előkészítés alatt |
+| Befektetői panaszjelentés | Éves | Március 31. | Beadva |
 
-## Q1 2026 Reporting Package (Due April 30)
+## Q1 2026 jelentési csomag (határidő: április 30.)
 
-### Required Submissions
+### Szükséges beadványok
 
-1. **NAV Report**
-   - Fund NAV as of March 31, 2026: EUR 208.7M
-   - Status: Prepared, pending final review
+1. **NAV jelentés**
+   - Alap NAV 2026. március 31-én: 208,7M EUR
+   - Státusz: Elkészült, végső ellenőrzésre vár
 
-2. **Risk Exposure Summary**
-   - Market risk VaR (95%, 1D): EUR 1.1M (as of Mar 31)
-   - Counterparty exposure: EUR 4.2M (UniCredit, Binance)
-   - Status: Prepared
+2. **Kockázati kitettség összefoglaló**
+   - Piaci kockázat VaR (95%, 1 nap): 1,1M EUR (márc. 31-i állapot)
+   - Partner kitettség: 4,2M EUR (UniCredit, Binance)
+   - Státusz: Elkészült
 
-3. **Leverage Calculation**
-   - Gross method: 178%
-   - Commitment method: 145%
-   - Both within AIFMD limits
-   - Status: Prepared
+3. **Tőkeáttétel számítás**
+   - Bruttó módszer: 178%
+   - Kötelezettségvállalási módszer: 145%
+   - Mindkettő az AIFMD limiteken belül
+   - Státusz: Elkészült
 
-4. **Liquidity Profile**
-   - Portfolio liquidation (1 day): 42%
-   - Portfolio liquidation (5 days): 89%
-   - Portfolio liquidation (30 days): 98%
-   - Investor redemption terms: 90-day notice
-   - Status: Prepared
+4. **Likviditási profil**
+   - Portfólió likvidálás (1 nap): 42%
+   - Portfólió likvidálás (5 nap): 89%
+   - Portfólió likvidálás (30 nap): 98%
+   - Befektetői visszaváltási feltételek: 90 napos értesítés
+   - Státusz: Elkészült
 
-## AML/KYC Summary
+## AML/KYC összefoglaló
 
-- Total investors: 28
-- Investor types: Institutional (22), HNWI (6)
-- Jurisdictions: Hungary (8), Germany (5), UK (4), Switzerland (3), Austria (3), Other EU (5)
-- Enhanced due diligence cases: 0
-- Suspicious activity reports filed: 0
+- Összes befektető: 28
+- Befektető típusok: Intézményi (22), Nagybefektetők (6)
+- Joghatóságok: Magyarország (8), Németország (5), Egyesült Királyság (4), Svájc (3), Ausztria (3), Egyéb EU (5)
+- Fokozott átvilágítási esetek: 0
+- Gyanús tevékenységi jelentések: 0
 
-## Key Policies (Latest Versions)
+## Főbb szabályzatok (legfrissebb verziók)
 
-| Policy | Version | Last Updated |
-|--------|---------|-------------|
-| AML/CFT Policy | 4.1 | January 2026 |
-| Best Execution Policy | 3.0 | March 2025 |
-| Conflicts of Interest Policy | 2.2 | June 2025 |
-| Valuation Policy | 3.1 | December 2025 |
-| Risk Management Policy | 4.0 | November 2025 |
-| Personal Trading Policy | 2.1 | September 2025 |
-| Business Continuity Plan | 3.0 | January 2026 |
-| Data Protection (GDPR) | 2.0 | March 2025 |
+| Szabályzat | Verzió | Utolsó frissítés |
+|------------|--------|-------------------|
+| AML/CFT szabályzat | 4.1 | 2026. január |
+| Legjobb végrehajtás szabályzat | 3.0 | 2025. március |
+| Összeférhetetlenségi szabályzat | 2.2 | 2025. június |
+| Értékelési szabályzat | 3.1 | 2025. december |
+| Kockázatkezelési szabályzat | 4.0 | 2025. november |
+| Személyes kereskedési szabályzat | 2.1 | 2025. szeptember |
+| Üzletmenet-folytonossági terv | 3.0 | 2026. január |
+| Adatvédelmi szabályzat (GDPR) | 2.0 | 2025. március |
 
-## External Service Providers
+## Külső szolgáltatók
 
-| Provider | Service | Contract Renewal |
-|----------|---------|-----------------|
-| UniCredit Bank Hungary | Custody & Depositary | December 2026 |
-| Deloitte Hungary | External Audit | June 2026 |
-| Revesz & Partners | Legal Advisory | Ongoing retainer |
-| SecureNet Solutions | IT Security Audit | Annual (April 2026) |
-| KPMG | Tax Advisory | Ongoing retainer |
+| Szolgáltató | Szolgáltatás | Szerződés megújítás |
+|-------------|-------------|---------------------|
+| UniCredit Bank Hungary | Letétkezelés és letéteményes | 2026. december |
+| Deloitte Hungary | Külső audit | 2026. június |
+| Révész és Társai | Jogi tanácsadás | Folyamatos megbízás |
+| SecureNet Solutions | IT biztonsági audit | Éves (2026. április) |
+| KPMG | Adótanácsadás | Folyamatos megbízás |
 
-## Compliance Officer
+## Megfelelőségi felelős
 
-**Juhasz Bela**
-Extension: 402
-Email: bela.juhasz@masecap.hu
-Appointed: March 2019
-Last CISI certification renewal: October 2025
+**Juhász Béla**
+Mellék: 402
+E-mail: juhasz.bela@masecap.hu
+Kinevezés: 2019. március
+Utolsó CISI tanúsítvány megújítás: 2025. október

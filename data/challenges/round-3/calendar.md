@@ -1,76 +1,76 @@
-# Calendar — Viktor Mase
+# Naptár — Mase Viktor
 
-## This Week (April 20–26, 2026)
+## Ez a hét (2026. április 20–26.)
 
-### Monday, April 20
-| Time | Event | Location | Notes |
-|------|-------|----------|-------|
-| 08:45 | Morning market briefing | CEO Office | Daily |
-| 10:00–11:00 | Call with UniCredit (custody) | Phone | Q1 reconciliation |
-| 14:00–15:00 | Quant strategy review | Meeting Room B | With Gergo, Lilla |
+### Hétfő, április 20.
+| Időpont | Esemény | Helyszín | Megjegyzés |
+|---------|---------|----------|------------|
+| 08:45 | Reggeli piaci áttekintés | CEO iroda | Napi |
+| 10:00–11:00 | Telefonhívás: UniCredit (letétkezelés) | Telefon | Q1 egyeztetés |
+| 14:00–15:00 | Quant stratégia áttekintés | Tárgyaló B | Gergővel, Lillával |
 
-### Tuesday, April 21
-| Time | Event | Location | Notes |
-|------|-------|----------|-------|
-| 08:45 | Morning market briefing | CEO Office | Daily |
-| 10:00–11:30 | Weekly Investment Committee | Meeting Room A | Full team |
-| 14:00–14:30 | Compliance review | Meeting Room B | With Bela, Andrea |
-| 16:00 | Call with Dorchester concierge | Phone | London dinner reservation |
+### Kedd, április 21.
+| Időpont | Esemény | Helyszín | Megjegyzés |
+|---------|---------|----------|------------|
+| 08:45 | Reggeli piaci áttekintés | CEO iroda | Napi |
+| 10:00–11:30 | Heti Befektetési Bizottsági ülés | Tárgyaló A | Teljes csapat |
+| 14:00–14:30 | Compliance áttekintés | Tárgyaló B | Bélával, Andreával |
+| 16:00 | Telefonhívás: Dorchester concierge | Telefon | Londoni vacsorafoglalás |
 
-### Wednesday, April 22 (Today)
-| Time | Event | Location | Notes |
-|------|-------|----------|-------|
-| 08:45 | Morning market briefing | CEO Office | With Katalin, Daniel |
-| 09:00–10:00 | Weekly portfolio review | Meeting Room A | Katalin leads |
-| 11:30 | Sign compliance docs | CEO Office | With Bela |
-| 12:30 | Team lunch | Kitchen | SkyLounge catering |
-| **14:00–15:30** | **IT Security Audit** | **Meeting Room A** | **Kovacs Peter (SecureNet), with Zoltan** |
-| 16:00–17:00 | Investor deck prep | Meeting Room C | With Daniel, Katalin |
+### Szerda, április 22. (Ma)
+| Időpont | Esemény | Helyszín | Megjegyzés |
+|---------|---------|----------|------------|
+| 08:45 | Reggeli piaci áttekintés | CEO iroda | Katalinnal, Dániellel |
+| 09:00–10:00 | Heti portfólió áttekintés | Tárgyaló A | Katalin vezeti |
+| 11:30 | Compliance dokumentumok aláírása | CEO iroda | Bélával |
+| 12:30 | Közös ebéd | Konyha | SkyLounge catering |
+| **14:00–15:30** | **IT biztonsági audit** | **Tárgyaló A** | **Kovács Péter (SecureNet), Zoltánnal** |
+| 16:00–17:00 | Befektetői prezentáció előkészítés | Tárgyaló C | Dániellel, Katalinnal |
 
-### Thursday, April 23
-| Time | Event | Location | Notes |
-|------|-------|----------|-------|
-| 08:45 | Morning market briefing | CEO Office | Daily |
-| 10:00–11:00 | SOL scaling plan review | Meeting Room B | Daniel presents |
-| 14:00–15:00 | MNB Q1 data review | Meeting Room A | Final check before submission |
+### Csütörtök, április 23.
+| Időpont | Esemény | Helyszín | Megjegyzés |
+|---------|---------|----------|------------|
+| 08:45 | Reggeli piaci áttekintés | CEO iroda | Napi |
+| 10:00–11:00 | SOL skálázási terv áttekintés | Tárgyaló B | Dániel prezentál |
+| 14:00–15:00 | MNB Q1 adatok áttekintése | Tárgyaló A | Végleges ellenőrzés beadás előtt |
 
-### Friday, April 24
-| Time | Event | Location | Notes |
-|------|-------|----------|-------|
-| 08:45 | Morning market briefing | CEO Office | Daily |
-| 10:00–11:00 | London deck dry run | Meeting Room C | Full dress rehearsal |
-| 12:00 | Early close (London prep) | — | Pack, taxi to airport |
+### Péntek, április 24.
+| Időpont | Esemény | Helyszín | Megjegyzés |
+|---------|---------|----------|------------|
+| 08:45 | Reggeli piaci áttekintés | CEO iroda | Napi |
+| 10:00–11:00 | Londoni prezentáció próba | Tárgyaló C | Főpróba |
+| 12:00 | Korai zárás (londoni előkészületek) | — | Csomagolás, taxi a reptérre |
 
-### Saturday–Sunday, April 25–26
-- Saturday: Flight BUD→LHR, Wizz Air W6 2201 dep 14:30
-- Sunday: Check-in Dorchester, evening prep
+### Szombat–vasárnap, április 25–26.
+- Szombat: Járat BUD→LHR, Wizz Air W6 2201 indulás 14:30
+- Vasárnap: Bejelentkezés a Dorchesterbe, esti előkészületek
 
-## Next Week (April 27–30, 2026)
+## Következő hét (2026. április 27–30.)
 
-### Monday, April 27 — London
-| Time | Event | Location |
-|------|-------|----------|
+### Hétfő, április 27. — London
+| Időpont | Esemény | Helyszín |
+|---------|---------|----------|
 | 09:00–10:30 | London Investment Forum — Panel: CEE Alpha | Hilton Park Lane |
-| 11:00–12:00 | Meeting: Northbridge Capital (allocator) | Forum venue |
-| 14:00–15:00 | Meeting: Apex Fund Services | Forum venue |
-| 19:00 | Dinner with Katalin & Daniel | The Ivy, Covent Garden |
+| 11:00–12:00 | Találkozó: Northbridge Capital (allokátor) | Fórum helyszín |
+| 14:00–15:00 | Találkozó: Apex Fund Services | Fórum helyszín |
+| 19:00 | Vacsora Katalinnal és Dániellel | The Ivy, Covent Garden |
 
-### Tuesday, April 28 — London
-| Time | Event | Location |
-|------|-------|----------|
-| 09:30–11:00 | Forum — Panel: Digital Assets in Institutional Portfolios | Hilton Park Lane |
-| 11:30–12:30 | Meeting: Schroders Capital (allocator) | Forum venue |
-| 14:00 | Flight LHR→BUD, dep 16:00 | Heathrow T2 |
+### Kedd, április 28. — London
+| Időpont | Esemény | Helyszín |
+|---------|---------|----------|
+| 09:30–11:00 | Fórum — Panel: Digitális eszközök intézményi portfóliókban | Hilton Park Lane |
+| 11:30–12:30 | Találkozó: Schroders Capital (allokátor) | Fórum helyszín |
+| 14:00 | Járat LHR→BUD, indulás 16:00 | Heathrow T2 |
 
-### Wednesday, April 29
-| Time | Event | Location |
-|------|-------|----------|
-| 10:00 | Building fire drill | Citadel Plaza | Mandatory |
-| 11:00 | Debrief London trip | Meeting Room A | Team update |
-| 14:00 | MNB Q1 submission deadline prep | Meeting Room B | With Bela |
+### Szerda, április 29.
+| Időpont | Esemény | Helyszín |
+|---------|---------|----------|
+| 10:00 | Épület tűzriadó gyakorlat | Citadel Plaza | Kötelező |
+| 11:00 | Londoni út kiértékelés | Tárgyaló A | Csapat tájékoztató |
+| 14:00 | MNB Q1 beadási határidő előkészítés | Tárgyaló B | Bélával |
 
-### Thursday, April 30
-| Time | Event | Location |
-|------|-------|----------|
-| 09:00 | MNB Q1 report submission | Online (ERA portal) | DEADLINE |
-| 14:00 | Monthly risk committee | Meeting Room C | Full committee |
+### Csütörtök, április 30.
+| Időpont | Esemény | Helyszín |
+|---------|---------|----------|
+| 09:00 | MNB Q1 jelentés beadás | Online (ERA portál) | HATÁRIDŐ |
+| 14:00 | Havi kockázatkezelési bizottsági ülés | Tárgyaló C | Teljes bizottság |

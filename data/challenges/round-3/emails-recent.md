@@ -1,141 +1,141 @@
-# Recent Emails — Viktor Mase Inbox
+# Legutóbbi e-mailek — Mase Viktor postaládája
 
-## April 22, 2026
+## 2026. április 22.
 
 ---
 
-### From: katalin.feher@masecap.hu
-**To:** viktor.mase@masecap.hu
-**Date:** April 22, 2026, 08:12
-**Subject:** London Investment Forum — Final Deck
+### Feladó: feher.katalin@masecap.hu
+**Címzett:** mase.viktor@masecap.hu
+**Dátum:** 2026. április 22., 08:12
+**Tárgy:** London Investment Forum — Végleges prezentáció
 
 Viktor,
 
-I've finalized the presentation deck for London next week. Key slides:
-- Slide 3-5: Q1 performance attribution (+8.3% gross)
-- Slide 6-8: CEE equity outlook (overweight Poland, neutral Hungary)
-- Slide 9-11: Digital assets strategy expansion
-- Slide 12: Team & AUM growth
+Véglegesítettem a londoni prezentációs anyagot. Fő diák:
+- 3-5. dia: Q1 teljesítmény attribúció (+8,3% bruttó)
+- 6-8. dia: CEE részvénypiaci kilátások (felülsúlyozás: Lengyelország, semleges: Magyarország)
+- 9-11. dia: Digitális eszközök stratégiai bővítése
+- 12. dia: Csapat és kezelt vagyon növekedés
 
-Daniel is adding the risk metrics today. I'll send the final version by Thursday EOD.
+Dániel ma hozzáadja a kockázati mutatókat. Csütörtök végére küldöm a végleges verziót.
 
-Can we do a dry run Friday morning?
+Tudunk pénteken délelőtt egy próbaelőadást tartani?
 
-Best,
+Üdvözlettel,
 Katalin
 
 ---
 
-### From: peter.kovacs@securenet.hu
-**To:** viktor.mase@masecap.hu
-**Date:** April 21, 2026, 16:45
-**Subject:** IT Audit Tomorrow — Confirmation
+### Feladó: kovacs.peter@securenet.hu
+**Címzett:** mase.viktor@masecap.hu
+**Dátum:** 2026. április 21., 16:45
+**Tárgy:** Holnapi IT audit — Visszaigazolás
 
-Dear Mr. Mase,
+Tisztelt Mase Úr!
 
-Confirming our appointment for tomorrow (April 22) at 14:00 at your office for the annual IT security audit. I'll be reviewing:
-- Network security configuration
-- Endpoint protection status
-- Access control policies
-- Data backup procedures
-- Incident response readiness
+Visszaigazolom a holnapi (április 22.) 14:00-ás időpontot az irodájukban az éves IT biztonsági audit megbeszélésre. Az alábbiakat fogom áttekinteni:
+- Hálózati biztonsági konfiguráció
+- Végpontvédelmi állapot
+- Hozzáférés-vezérlési szabályzatok
+- Adatmentési eljárások
+- Incidenskezelési készültség
 
-Please ensure your IT administrator (Mr. Farkas, I believe) is available.
+Kérem, biztosítsa, hogy az IT adminisztrátor (Farkas úr, ha jól tudom) elérhető legyen.
 
-Best regards,
-Péter Kovács
-Senior IT Auditor
+Üdvözlettel,
+Kovács Péter
+Vezető IT auditor
 SecureNet Solutions Kft.
 
 ---
 
-### From: compliance@mnb.hu
-**To:** viktor.mase@masecap.hu
-**Date:** April 21, 2026, 14:30
-**Subject:** Q1 2026 Regulatory Reporting Reminder
+### Feladó: compliance@mnb.hu
+**Címzett:** mase.viktor@masecap.hu
+**Dátum:** 2026. április 21., 14:30
+**Tárgy:** Q1 2026 szabályozói jelentés emlékeztető
 
-Dear Mr. Mase,
+Tisztelt Mase Úr!
 
-This is a reminder that the Q1 2026 AIFMD reporting package is due by April 30, 2026. Please submit via the MNB ERA portal.
+Emlékeztetjük, hogy a Q1 2026-os AIFMD jelentési csomag határideje 2026. április 30. Kérjük, nyújtsa be az MNB ERA portálon.
 
-Required documents:
-1. NAV report (all funds)
-2. Risk exposure summary
-3. Leverage calculation
-4. Liquidity profile
+Szükséges dokumentumok:
+1. NAV jelentés (minden alap)
+2. Kockázati kitettség összefoglaló
+3. Tőkeáttétel számítás
+4. Likviditási profil
 
-If you have questions, contact your assigned supervisor.
+Kérdés esetén forduljon kijelölt felügyelőjéhez.
 
-Regards,
-MNB Supervisory Department
-
----
-
-### From: daniel.szabo@masecap.hu
-**To:** viktor.mase@masecap.hu
-**Date:** April 21, 2026, 11:20
-**Subject:** RE: Solana Position Sizing
-
-Viktor,
-
-I've run the numbers on increasing our SOL allocation. Current position is ~$2.1M, I'd recommend scaling to $3.5M over 2 weeks using TWAP. The on-chain liquidity supports it without significant slippage.
-
-Also, the Marinade Finance staking yields are attractive (6.8% APY). Should we allocate a portion to mSOL?
-
-Let me know your thoughts before the London trip.
-
-Daniel
+Üdvözlettel,
+MNB Felügyeleti Főosztály
 
 ---
 
-### From: andrea.molnar@masecap.hu
-**To:** viktor.mase@masecap.hu
-**Date:** April 20, 2026, 09:15
-**Subject:** Office Operations — London Week
+### Feladó: szabo.daniel@masecap.hu
+**Címzett:** mase.viktor@masecap.hu
+**Dátum:** 2026. április 21., 11:20
+**Tárgy:** RE: Solana pozícióméretezés
 
 Viktor,
 
-I'll manage operations while you're in London. A few items:
-- SkyLounge catering is working well, team is happy with the switch
-- Building management notified us about the glass door replacement on the 22nd — we should use the side entrance
-- Parking garage license plate system might have issues this month (software update)
+Lefuttattam a számokat a SOL allokáció növeléséhez. A jelenlegi pozíció ~$2,1M, javaslom a $3,5M-ra skálázást 2 hét alatt TWAP-pal. Az on-chain likviditás lehetővé teszi jelentős slippage nélkül.
 
-Have a productive trip!
+Ráadásul a Marinade Finance staking hozamok vonzóak (6,8% APY). Allokáljunk egy részt mSOL-ba?
+
+Szólj, mit gondolsz a londoni út előtt.
+
+Dániel
+
+---
+
+### Feladó: molnar.andrea@masecap.hu
+**Címzett:** mase.viktor@masecap.hu
+**Dátum:** 2026. április 20., 09:15
+**Tárgy:** Irodai ügyek — Londoni hét
+
+Viktor,
+
+London alatt én intézem az operatív dolgokat. Pár dolog:
+- A SkyLounge catering jól működik, a csapat elégedett a váltással
+- Az épületkezelés értesített az üvegajtó cseréjéről 22-én — az oldalsó bejáratot kell használni
+- A parkolóházi rendszámfelismerő rendszer hibázhat ebben a hónapban (szoftverfrissítés)
+
+Jó utat!
 
 Andrea
 
 ---
 
-### From: noreply@phantom.app
-**To:** viktor.mase@gmail.com (forwarded to work)
-**Date:** April 19, 2026, 22:03
-**Subject:** Phantom Wallet — Security Alert
+### Feladó: noreply@phantom.app
+**Címzett:** mase.viktor@gmail.com (továbbítva a munkahelyi címre)
+**Dátum:** 2026. április 19., 22:03
+**Tárgy:** Phantom Wallet — Biztonsági figyelmeztetés
 
-Your Phantom wallet was accessed from a new device. If this was you, no action is needed. If not, please secure your wallet immediately.
+A Phantom walletedhez új eszközről jelentkeztek be. Ha te voltál, nincs teendő. Ha nem te voltál, kérjük, azonnal biztosítsd a walleted.
 
-Device: Windows 11 Desktop
-Location: Budapest, Hungary
-Time: April 19, 2026, 21:58 UTC+2
+Eszköz: Windows 11 asztali gép
+Helyszín: Budapest, Magyarország
+Időpont: 2026. április 19., 21:58 UTC+2
 
 —
-Phantom Security Team
+Phantom Biztonsági Csapat
 
 ---
 
-### From: reservations@dorchester.com
-**To:** viktor.mase@masecap.hu
-**Date:** April 18, 2026, 15:00
-**Subject:** Booking Confirmation — The Dorchester, London
+### Feladó: reservations@dorchester.com
+**Címzett:** mase.viktor@masecap.hu
+**Dátum:** 2026. április 18., 15:00
+**Tárgy:** Foglalás visszaigazolás — The Dorchester, London
 
-Dear Mr. Mase,
+Tisztelt Mase Úr!
 
-Your reservation is confirmed:
-- Check-in: April 26, 2026
-- Check-out: April 29, 2026
-- Room: Deluxe King, Park View
-- Confirmation #: DCH-889274
+Foglalása visszaigazolva:
+- Bejelentkezés: 2026. április 26.
+- Kijelentkezés: 2026. április 29.
+- Szoba: Deluxe King, parkilátás
+- Visszaigazolási szám: DCH-889274
 
-We look forward to welcoming you.
+Várjuk szeretettel.
 
-Kind regards,
-The Dorchester Reservations
+Üdvözlettel,
+The Dorchester Foglalási Osztály

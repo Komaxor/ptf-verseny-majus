@@ -1,112 +1,112 @@
-# IT Support Tickets — Mase Capital
+# IT hibajegyek — Mase Capital
 
-## Open Tickets
+## Nyitott jegyek
 
 ### MASE-IT-2026-089
-**Status:** Open
-**Priority:** Medium
-**Created:** April 21, 2026
-**Assignee:** Farkas Zoltan
-**Reporter:** Mase Viktor
+**Státusz:** Nyitott
+**Prioritás:** Közepes
+**Létrehozva:** 2026. április 21.
+**Felelős:** Farkas Zoltán
+**Bejelentő:** Mase Viktor
 
-**Subject:** Phantom wallet security alert — verify new device login
+**Tárgy:** Phantom wallet biztonsági figyelmeztetés — új eszköz bejelentkezés ellenőrzése
 
-**Description:**
-Received a security alert from Phantom on April 19 about a new device access. This was me logging in from my new workstation. Please verify in the security logs that no unauthorized access occurred and close the alert.
+**Leírás:**
+Április 19-én biztonsági figyelmeztetést kaptam a Phantomtól egy új eszközös hozzáférésről. Ez én voltam, az új munkaállomásomról jelentkeztem be. Kérem, ellenőrizze a biztonsági naplókban, hogy nem történt jogosulatlan hozzáférés, és zárja le a riasztást.
 
-**Comments:**
-- Farkas Z. (Apr 21): Checked network logs, the access originated from Viktor's desktop (IP 10.69.42.101). No suspicious activity. Will close after audit review on Apr 22.
+**Hozzászólások:**
+- Farkas Z. (ápr. 21.): Ellenőriztem a hálózati naplókat, a hozzáférés Viktor asztali gépéről történt (IP 10.69.42.101). Nincs gyanús tevékenység. Az audit áttekintés után zárom ápr. 22-én.
 
 ---
 
 ### MASE-IT-2026-088
-**Status:** Open
-**Priority:** Low
-**Created:** April 18, 2026
-**Assignee:** Szucs Bence
-**Reporter:** Horvath Reka
+**Státusz:** Nyitott
+**Prioritás:** Alacsony
+**Létrehozva:** 2026. április 18.
+**Felelős:** Szűcs Bence
+**Bejelentő:** Horváth Réka
 
-**Subject:** Bloomberg Terminal — slow data refresh
+**Tárgy:** Bloomberg Terminal — lassú adatfrissítés
 
-**Description:**
-Bloomberg terminal on my workstation has been showing delayed quotes (~30 sec lag) since Monday. Tried restarting the application, issue persists.
+**Leírás:**
+A Bloomberg terminál a munkaállomásomon hétfő óta késleltetett árfolyamokat mutat (~30 mp késés). Újraindítottam az alkalmazást, a probléma fennáll.
 
-**Comments:**
-- Szucs B. (Apr 18): Likely a network routing issue. Will check after the IT audit on the 22nd.
+**Hozzászólások:**
+- Szűcs B. (ápr. 18.): Valószínűleg hálózati útválasztási probléma. A 22-ei IT audit után vizsgálom.
 
 ---
 
 ### MASE-IT-2026-087
-**Status:** In Progress
-**Priority:** High
-**Created:** April 15, 2026
-**Assignee:** Farkas Zoltan
-**Reporter:** Farkas Zoltan
+**Státusz:** Folyamatban
+**Prioritás:** Magas
+**Létrehozva:** 2026. április 15.
+**Felelős:** Farkas Zoltán
+**Bejelentő:** Farkas Zoltán
 
-**Subject:** Annual IT security audit preparation
+**Tárgy:** Éves IT biztonsági audit előkészítés
 
-**Description:**
-Preparing documentation and system access for SecureNet Solutions annual audit on April 22. Checklist:
-- [x] Network topology diagram updated
-- [x] Firewall rules exported
-- [x] User access matrix prepared
-- [x] Endpoint protection report generated
-- [ ] Backup recovery test (scheduled for April 22 AM)
-- [ ] Audit meeting with Kovacs Peter at 14:00
+**Leírás:**
+Dokumentáció és rendszerhozzáférés előkészítése a SecureNet Solutions éves auditjához április 22-én. Ellenőrzőlista:
+- [x] Hálózati topológia diagram frissítve
+- [x] Tűzfalszabályok exportálva
+- [x] Felhasználói hozzáférési mátrix elkészítve
+- [x] Végpontvédelmi jelentés generálva
+- [ ] Biztonsági mentés visszaállítási teszt (április 22. délelőttre ütemezve)
+- [ ] Audit megbeszélés Kovács Péterrel 14:00-kor
 
-**Comments:**
-- Farkas Z. (Apr 20): All documentation ready. Backup recovery test scheduled for Wednesday morning before the audit.
-- Farkas Z. (Apr 21): Reminder sent to Viktor and confirmed meeting room booking.
+**Hozzászólások:**
+- Farkas Z. (ápr. 20.): Minden dokumentáció kész. A biztonsági mentés visszaállítási teszt szerda délelőttre ütemezve, az audit előtt.
+- Farkas Z. (ápr. 21.): Emlékeztető elküldve Viktornak, tárgyalófoglalás megerősítve.
 
 ---
 
-## Recently Closed Tickets
+## Nemrég lezárt jegyek
 
 ### MASE-IT-2026-086
-**Status:** Closed
-**Closed:** April 14, 2026
-**Priority:** Medium
-**Assignee:** Szucs Bence
-**Reporter:** Papp Marton
+**Státusz:** Lezárt
+**Lezárva:** 2026. április 14.
+**Prioritás:** Közepes
+**Felelős:** Szűcs Bence
+**Bejelentő:** Papp Márton
 
-**Subject:** Python environment — package conflict
+**Tárgy:** Python környezet — csomagkonfliktus
 
-**Description:**
-Numpy 2.0 update broke the quant model pipeline. Rolled back to 1.26.4, all tests passing again.
+**Leírás:**
+A Numpy 2.0 frissítés elrontotta a quant modell pipeline-t. Visszaálltam 1.26.4-re, minden teszt újra zöld.
 
 ---
 
 ### MASE-IT-2026-085
-**Status:** Closed
-**Closed:** April 10, 2026
-**Priority:** Low
-**Assignee:** Farkas Zoltan
-**Reporter:** Molnar Andrea
+**Státusz:** Lezárt
+**Lezárva:** 2026. április 10.
+**Prioritás:** Alacsony
+**Felelős:** Farkas Zoltán
+**Bejelentő:** Molnár Andrea
 
-**Subject:** Printer — paper jam (Meeting Room C)
+**Tárgy:** Nyomtató — papírelakadás (Tárgyaló C)
 
-**Description:**
-Paper jam in the HP LaserJet in Bastya meeting room. Cleared the jam, replaced toner cartridge. Working normally.
+**Leírás:**
+Papírelakadás a Bástya tárgyalóban lévő HP LaserJetben. Elhárítottam az elakadást, festékkazettát cseréltem. Rendben működik.
 
 ---
 
 ### MASE-IT-2026-084
-**Status:** Closed
-**Closed:** April 7, 2026
-**Priority:** High
-**Assignee:** Farkas Zoltan
-**Reporter:** Mase Viktor
+**Státusz:** Lezárt
+**Lezárva:** 2026. április 7.
+**Prioritás:** Magas
+**Felelős:** Farkas Zoltán
+**Bejelentő:** Mase Viktor
 
-**Subject:** New workstation setup — CEO desktop replacement
+**Tárgy:** Új munkaállomás beüzemelés — CEO asztali gép csere
 
-**Description:**
-Replaced Viktor's desktop with new Dell Precision 5860. Migrated all files, installed Phantom wallet extension, configured Copilot. Verified all applications working correctly.
+**Leírás:**
+Viktor asztali gépét lecseréltem új Dell Precision 5860-ra. Minden fájl áttelepítve, Phantom wallet bővítmény telepítve, Copilot konfigurálva. Minden alkalmazás működése ellenőrizve.
 
-Migration checklist:
+Áttelepítési ellenőrzőlista:
 - [x] OS: Windows 11 Pro
-- [x] Office 365 suite + Copilot
+- [x] Office 365 csomag + Copilot
 - [x] Bloomberg Terminal
-- [x] Phantom wallet (Chrome extension)
-- [x] VPN client
-- [x] All desktop files migrated
-- [x] Outlook profile configured
+- [x] Phantom wallet (Chrome bővítmény)
+- [x] VPN kliens
+- [x] Minden asztali fájl áttelepítve
+- [x] Outlook profil konfigurálva

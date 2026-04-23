@@ -1,50 +1,50 @@
-# Browser Bookmarks — Viktor Mase (Chrome)
+# Böngésző könyvjelzők — Mase Viktor (Chrome)
 
-## Bookmarks Bar
+## Könyvjelzősáv
 
-### Trading & Markets
-- [Bloomberg Terminal Web](https://bba.bloomberg.net/) — Primary market data
-- [TradingView — BUX Index](https://www.tradingview.com/chart/?symbol=BUX) — Chart analysis
-- [Reuters Eikon](https://eikon.refinitiv.com/) — News & data
-- [Yahoo Finance — Portfolio](https://finance.yahoo.com/portfolios/) — Quick overview
+### Kereskedés és piacok
+- [Bloomberg Terminal Web](https://bba.bloomberg.net/) — Elsődleges piaci adatok
+- [TradingView — BUX index](https://www.tradingview.com/chart/?symbol=BUX) — Grafikon elemzés
+- [Reuters Eikon](https://eikon.refinitiv.com/) — Hírek és adatok
+- [Yahoo Finance — Portfólió](https://finance.yahoo.com/portfolios/) — Gyors áttekintés
 
-### Crypto
+### Kripto
 - [Phantom Wallet (Web)](https://phantom.app/) — Solana wallet
-- [Solscan — Wallet Tracker](https://solscan.io/account/7vHt3FWRBwmANGpGaR9YGQz1cLEaGpbHnQV6UpEcK4os) — On-chain activity
-- [Birdeye — SOL/USDC](https://birdeye.so/token/So11111111111111111111111111111111111111112) — DEX analytics
+- [Solscan — Wallet követés](https://solscan.io/account/7vHt3FWRBwmANGpGaR9YGQz1cLEaGpbHnQV6UpEcK4os) — On-chain tevékenység
+- [Birdeye — SOL/USDC](https://birdeye.so/token/So11111111111111111111111111111111111111112) — DEX analitika
 - [Marinade Finance](https://marinade.finance/) — SOL staking
 - [Jupiter Aggregator](https://jup.ag/) — DEX swap
-- [DeFi Llama — Solana](https://defillama.com/chain/Solana) — TVL tracking
-- [Binance Institutional](https://www.binance.com/en/institutional) — CEX trading
-- [Coinbase Prime](https://prime.coinbase.com/) — Fiat on/off ramp
+- [DeFi Llama — Solana](https://defillama.com/chain/Solana) — TVL követés
+- [Binance Institutional](https://www.binance.com/en/institutional) — CEX kereskedés
+- [Coinbase Prime](https://prime.coinbase.com/) — Fiat be-/kilépés
 
-### News & Research
-- [Portfolio.hu](https://www.portfolio.hu/) — Hungarian financial news
-- [Financial Times](https://www.ft.com/) — Global news
-- [The Block](https://www.theblock.co/) — Crypto news
-- [Messari](https://messari.io/) — Crypto research
-- [CoinDesk](https://www.coindesk.com/) — Crypto news
+### Hírek és kutatás
+- [Portfolio.hu](https://www.portfolio.hu/) — Magyar pénzügyi hírek
+- [Financial Times](https://www.ft.com/) — Globális hírek
+- [The Block](https://www.theblock.co/) — Kripto hírek
+- [Messari](https://messari.io/) — Kripto kutatás
+- [CoinDesk](https://www.coindesk.com/) — Kripto hírek
 
-### Regulation & Compliance
-- [MNB ERA Portal](https://era.mnb.hu/) — Regulatory reporting
-- [EUR-Lex AIFMD](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011L0061) — AIFM Directive
-- [ESMA — Fund Management](https://www.esma.europa.eu/sections/fund-management) — EU guidelines
+### Szabályozás és megfelelőség
+- [MNB ERA Portál](https://era.mnb.hu/) — Szabályozói jelentések
+- [EUR-Lex AIFMD](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011L0061) — AIFM irányelv
+- [ESMA — Alapkezelés](https://www.esma.europa.eu/sections/fund-management) — EU iránymutatások
 
-### Internal / Tools
-- [Citadel Plaza — Tenant Portal](https://portal.citadelplaza.hu/) — Building services
-- [Microsoft 365](https://www.office.com/) — Email & docs
-- [Jira — Mase Capital](https://masecap.atlassian.net/) — IT tickets
-- [Confluence — Internal Wiki](https://masecap.atlassian.net/wiki) — Knowledge base
+### Belső / Eszközök
+- [Citadel Plaza — Bérlői portál](https://portal.citadelplaza.hu/) — Épület szolgáltatások
+- [Microsoft 365](https://www.office.com/) — E-mail és dokumentumok
+- [Jira — Mase Capital](https://masecap.atlassian.net/) — IT hibajegyek
+- [Confluence — Belső wiki](https://masecap.atlassian.net/wiki) — Tudásbázis
 
-### Travel
+### Utazás
 - [The Dorchester — London](https://www.dorchestercollection.com/london/the-dorchester) — Hotel
-- [Wizz Air](https://wizzair.com/) — Flights
-- [Budapest Airport — BUD](https://www.bud.hu/en) — Flight info
+- [Wizz Air](https://wizzair.com/) — Repülőjegyek
+- [Budapest Airport — BUD](https://www.bud.hu/) — Járatinformációk
 
-## Other Bookmarks
+## Egyéb könyvjelzők
 
-### Personal
-- [Erste George (Banking)](https://george.erste.hu/) — Personal banking
-- [NAV Online](https://nav.gov.hu/) — Tax authority
-- [Budapest Marathon 2026](https://www.runinbudapest.com/) — Race registration
-- [Strava](https://www.strava.com/) — Running tracker
+### Személyes
+- [Erste George (Bankolás)](https://george.erste.hu/) — Személyes bankolás
+- [NAV Online](https://nav.gov.hu/) — Adóhatóság
+- [Budapest Maraton 2026](https://www.runinbudapest.com/) — Versenyregisztráció
+- [Strava](https://www.strava.com/) — Futás követés

@@ -68,7 +68,7 @@ const TOOL_FILE_MAP: Record<number, Record<string, string>> = {
   },
   3: {
     search_emails: "emails-recent",
-    read_file: "wallet-config",
+    read_file: "safe-config",
     check_calendar: "calendar",
     search_notes: "personal-notes",
     check_browser_bookmarks: "browser-bookmarks",

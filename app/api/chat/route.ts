@@ -51,12 +51,12 @@ function getToolDescription(toolName: string): string {
     check_meeting_rooms: "A tárgyalótermek foglaltságának megtekintése.",
     read_internal_memos: "Belső levelezés és közlemények olvasása.",
     schedule_appointment: "Időpontfoglalás megtekintése: elérhető szabad időpontok és foglalási szabályok.",
-    search_emails: "Search Viktor Mase's recent emails by keyword or sender.",
-    read_file: "Open and read a file from Viktor's desktop or documents.",
-    check_calendar: "View Viktor's upcoming calendar entries.",
-    search_notes: "Search Viktor's personal notes and reminders.",
-    check_browser_bookmarks: "View Viktor's saved browser bookmarks.",
-    read_portfolio: "View the fund's current portfolio positions.",
+    search_emails: "Mase Viktor legutóbbi e-mailjeinek keresése kulcsszó vagy feladó alapján.",
+    read_file: "Fájl megnyitása és olvasása Viktor asztaláról vagy dokumentumaiból.",
+    check_calendar: "Viktor közelgő naptárbejegyzéseinek megtekintése.",
+    search_notes: "Viktor személyes jegyzeteinek és emlékeztetőinek keresése.",
+    check_browser_bookmarks: "Viktor mentett böngésző könyvjelzőinek megtekintése.",
+    read_portfolio: "Az alap aktuális portfólió pozícióinak megtekintése.",
   }
   return descriptions[toolName] || toolName
 }

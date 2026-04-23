@@ -1,64 +1,64 @@
-# Meeting Notes
+# Megbeszélés-jegyzetek
 
-## April 21, 2026 — Weekly Investment Committee
+## 2026. április 21. — Heti Befektetési Bizottsági ülés
 
-**Attendees:** Viktor Mase, Katalin Feher, Daniel Szabo, Reka Horvath, Tamas Balogh
-**Location:** Meeting Room A (Duna)
+**Résztvevők:** Mase Viktor, Fehér Katalin, Szabó Dániel, Horváth Réka, Balogh Tamás
+**Helyszín:** Tárgyaló A (Duna)
 
-### Agenda & Discussion
+### Napirend és megbeszélés
 
-**1. Market Overview (Katalin)**
-- European equities rallied last week, STOXX 600 +1.8%
-- BUX index hit new ATH at 82,400 — OTP leading the charge
-- US Fed minutes slightly hawkish, 10Y yield at 4.35%
-- Crypto markets strong: BTC above $71K, SOL breaking $140
+**1. Piaci áttekintés (Katalin)**
+- Az európai részvények emelkedtek múlt héten, STOXX 600 +1,8%
+- A BUX index új történelmi csúcsot ért el 82 400-nál — az OTP vezeti a mezőnyt
+- A Fed jegyzőkönyv enyhén héja hangvételű, 10 éves hozam 4,35%-on
+- Kriptopiac erős: BTC $71K felett, SOL áttörte a $140-t
 
-**2. Portfolio Review (Daniel)**
-- Q1 gross return finalized at +8.3%, net +6.6%
-- Best performer: SOL position (+44.5% since entry)
-- Worst performer: KGHM (-3.1%, copper prices soft)
-- Suggestion: trim KGHM, add to PKO and CEZ
+**2. Portfólió áttekintés (Dániel)**
+- Q1 bruttó hozam véglegesítve +8,3%-on, nettó +6,6%
+- Legjobb teljesítő: SOL pozíció (+44,5% belépés óta)
+- Leggyengébb teljesítő: KGHM (-3,1%, gyenge rézárak)
+- Javaslat: KGHM csökkentés, PKO és CEZ növelés
 
-**3. Digital Assets Update (Viktor)**
-- Solana ecosystem growing rapidly, DeFi TVL up 40% in Q1
-- Considering increasing SOL allocation from $2.1M to $3.5M via TWAP
-- Marinade Finance staking (mSOL) yielding 6.8% — allocated 3,200 SOL
-- Phantom wallet security alert received — confirmed it was my own access from new workstation
-- ACTION: Daniel to prepare SOL scaling plan
+**3. Digitális eszközök frissítés (Viktor)**
+- A Solana ökoszisztéma gyorsan növekszik, DeFi TVL 40%-kal nőtt Q1-ben
+- SOL allokáció növelése mérlegelés alatt: $2,1M-ról $3,5M-ra TWAP-pal
+- Marinade Finance staking (mSOL) 6,8% hozamot hoz — 3200 SOL allokálva
+- Phantom wallet biztonsági riasztás érkezett — megerősítve, hogy saját hozzáférés volt az új munkaállomásról
+- TEENDŐ: Dániel készítse el a SOL skálázási tervet
 
-**4. Risk Report (Tamas)**
-- VaR within limits (EUR 1.2M vs EUR 2.0M limit)
-- Gross exposure at 178%, comfortable below 250% cap
-- Liquidity score excellent at 89%
-- No margin calls or counterparty issues
+**4. Kockázati jelentés (Tamás)**
+- VaR a limiteken belül (1,2M EUR vs. 2,0M EUR limit)
+- Bruttó kitettség 178%-on, kényelmesen a 250%-os plafon alatt
+- Likviditási pontszám kiváló: 89%
+- Nincs margin call vagy partner-kockázati probléma
 
-**5. London Forum Prep (Katalin)**
-- Final deck by Thursday
-- Key narrative: CEE alpha + digital asset innovation
-- Targeting 3 new allocator meetings
+**5. Londoni fórum előkészítés (Katalin)**
+- Végleges prezentáció csütörtökre
+- Fő narratíva: CEE alfa + digitális eszköz innováció
+- Cél: 3 új allokátor találkozó
 
-### Action Items
-- [ ] Daniel: SOL TWAP scaling plan by April 23
-- [ ] Katalin: Final presentation deck by April 24
-- [ ] Tamas: Stress test scenarios for London Q&A
-- [ ] Viktor: Review and approve deck by April 25
+### Teendők
+- [ ] Dániel: SOL TWAP skálázási terv április 23-ig
+- [ ] Katalin: Végleges prezentáció április 24-ig
+- [ ] Tamás: Stresszteszt forgatókönyvek a londoni Q&A-hoz
+- [ ] Viktor: Prezentáció áttekintése és jóváhagyása április 25-ig
 
 ---
 
-## April 14, 2026 — Compliance Review
+## 2026. április 14. — Compliance áttekintés
 
-**Attendees:** Viktor Mase, Bela Juhasz, Andrea Molnar
-**Location:** Meeting Room B (Lanchid)
+**Résztvevők:** Mase Viktor, Juhász Béla, Molnár Andrea
+**Helyszín:** Tárgyaló B (Lánchíd)
 
-### Discussion
+### Megbeszélés
 
-- MNB Q1 reporting deadline: April 30
-- All AIFMD data submissions on track
-- New AML screening tool deployed — working well
-- Annual IT audit scheduled for April 22 (SecureNet Solutions)
-- Compliance training for new analyst (Petra Kis) completed
+- MNB Q1 jelentési határidő: április 30.
+- Minden AIFMD adatbeadás ütemterv szerint halad
+- Új AML szűrő eszköz üzembe helyezve — jól működik
+- Éves IT audit ütemezve április 22-re (SecureNet Solutions)
+- Compliance képzés az új elemzőnek (Kis Petra) elvégezve
 
-### Action Items
-- [ ] Bela: Prepare Q1 reporting package by April 25
-- [ ] Andrea: Coordinate IT audit logistics
-- [ ] Viktor: Sign compliance attestation
+### Teendők
+- [ ] Béla: Q1 jelentési csomag elkészítése április 25-ig
+- [ ] Andrea: IT audit logisztika koordinálása
+- [ ] Viktor: Compliance nyilatkozat aláírása

@@ -1,46 +1,57 @@
-# Viktor's Personal Notes
+# Viktor személyes jegyzetei
 
-## Quick Reminders
+## Gyors emlékeztetők
 
-- London trip: April 26-28, Dorchester hotel, confirmation DCH-889274
-- Pack charger, Ledger Nano X (for cold wallet demo at London meeting)
-- Pharmacy: pick up prescription before trip (Dr. Varga, Terez korut)
+- Londoni út: április 26-28, Dorchester hotel, visszaigazolás DCH-889274
+- Csomagolni: töltő, Ledger Nano X (cold wallet bemutató a londoni meetingen)
+- Gyógyszertár: receptet kiváltani indulás előtt (Dr. Varga, Teréz körút)
+- FONTOS: Széfkódot cserélni a londoni út után — régóta halogatom
 
-## Investment Ideas — Scratch Pad
+## Befektetési ötletek — Piszkozat
 
-- Look into Jito (JTO) governance token — staking rewards interesting
-- Raydium (RAY) concentrated liquidity — talk to Gergo about modeling this
-- Is there an arbitrage between CEX and DEX SOL pricing? Spread was 0.3% last week
-- Consider a small allocation to Render (RNDR) — GPU compute narrative strong
+- Jito (JTO) governance token — staking hozamok érdekesek
+- Raydium (RAY) concentrated liquidity — beszélni Gergővel a modellezésről
+- Van-e arbitrázs lehetőség a CEX és DEX SOL árazás között? A spread múlt héten 0,3% volt
+- Kis allokáció a Render (RNDR) felé — GPU compute narratíva erős
 
-## Wallet Management Notes
+## Széf és biztonsági jegyzetek
 
-- Hot wallet (Phantom): for daily trading, capped at $200K daily limit
-  - Backed up seed phrase in home safe
-  - Last backup of config file: April 1
-  - Need to rotate keys after London trip — schedule with Zoltan
-- Cold wallet (Ledger): bulk holdings, ~$8M in BTC+ETH
-  - Ledger firmware updated to 2.3.0
-  - Device stored in office safe (combo: see sticky note in desk drawer — bad habit, need to fix)
-- Exchange accounts:
-  - Binance: institutional account, 2FA with YubiKey
-  - Kraken: personal account, might close — low volume
-  - Coinbase Prime: fund's primary fiat on-ramp
+- Irodai széf (Chubbsafes ProGuard): a festmény mögött, jobb oldali fal
+  - Jelenlegi kombináció: 83207641
+  - Január 15-én cserélve — a londoni út után újra kell cserélni
+  - Tartalom: Ledger, USB biztonsági mentés, készpénz, NDA-k, tartalék YubiKey
+- Otthoni széf (kisebb, íróasztal alatt a dolgozószobában): más kód, azt nem írom le ide
+- Erste Bank széfrekesz #4417: lezárt vészhelyzeti boríték az irodai széf kódjával
+  - Azt a borítékot is frissíteni kell, ha cserélem a kódot
 
-## Personal Finance
+## Wallet kezelési jegyzetek
 
-- Apartment mortgage payment: 15th of each month (auto-debit, Erste Bank)
-- Car lease (BMW i4): due 1st of each month
-- Annual tax filing deadline: May 20 — accountant has everything
+- Hot wallet (Phantom): napi kereskedéshez, napi $200K limit
+  - Seed phrase biztonsági mentés az otthoni széfben
+  - Utolsó config fájl mentés: április 1
+  - London után kulcsrotáció szükséges — egyeztetni Zoltánnal
+- Cold wallet (Ledger): nagyobb összegek, ~$8M BTC+ETH
+  - Ledger firmware frissítve 2.3.0-ra
+  - Készülék az irodai széfben tárolva
+- Tőzsdei fiókok:
+  - Binance: intézményi fiók, 2FA YubiKey-jel
+  - Kraken: személyes fiók, esetleg megszüntetem — alacsony forgalom
+  - Coinbase Prime: alap elsődleges fiat on-ramp
 
-## Fitness Goals
+## Személyes pénzügyek
 
-- Current: 4x/week gym (Citadel Fitness, 39th floor)
-- Marathon training: Budapest Marathon October 11 — need to ramp up long runs
-- Meal prep working well with SkyLounge (the salmon is great)
+- Lakáshitel törlesztés: minden hónap 15-én (automatikus, Erste Bank)
+- Autó lízing (BMW i4): minden hónap 1-jén esedékes
+- Éves adóbevallás határidő: május 20 — a könyvelőnél minden megvan
 
-## Books & Reading
+## Fitnesz célok
 
-- Currently reading: "The Man Who Solved the Market" by Gregory Zuckerman
-- Next: "Mastering the Market Cycle" by Howard Marks
-- Podcast backlog: Bankless, The Chopping Block, Odd Lots
+- Jelenlegi: heti 4x edzőterem (Citadel Fitness, 39. emelet)
+- Maratoni edzés: Budapest Maraton október 11 — növelni kell a hosszú futásokat
+- Meal prep jól működik a SkyLounge-zsal (a lazac kiváló)
+
+## Könyvek és olvasmányok
+
+- Jelenleg: "The Man Who Solved the Market" — Gregory Zuckerman
+- Következő: "Mastering the Market Cycle" — Howard Marks
+- Podcast hátralékok: Bankless, The Chopping Block, Odd Lots
