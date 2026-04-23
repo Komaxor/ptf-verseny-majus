@@ -12,8 +12,11 @@ import {
   Loader2,
   Download,
   Shield,
+  ArrowRight,
 } from "lucide-react";
 import { jsPDF } from "jspdf";
+import { PromptversenyFooter } from "@/components/promptverseny-footer";
+import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal";
 
 interface RoundMetrics {
   round: number;
@@ -57,6 +60,7 @@ export function PhaseSuccess() {
   const [usernameSaved, setUsernameSaved] = useState(false);
   const [usernameSubmitting, setUsernameSubmitting] = useState(false);
   const [usernameError, setUsernameError] = useState<string | null>(null);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   useEffect(() => {
     async function loadMetrics() {
@@ -336,7 +340,7 @@ export function PhaseSuccess() {
               </div>
               <button
                 onClick={() => generateCertificate(username)}
-                className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
               >
                 <Download className="w-4 h-4" />
                 Oklevél letöltése
@@ -344,12 +348,13 @@ export function PhaseSuccess() {
             </div>
           ) : (
             <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-              <div className="flex items-center gap-2 mb-3">
+              <label htmlFor="success-username" className="flex items-center gap-2 mb-3">
                 <User className="w-4 h-4 text-[#00ff88]" />
                 <span className="text-sm font-medium text-white">Add meg a teljes neved</span>
-              </div>
+              </label>
               <form onSubmit={handleUsernameSubmit} className="flex gap-2">
                 <input
+                  id="success-username"
                   type="text"
                   value={username}
                   onChange={(e) => {
@@ -358,14 +363,14 @@ export function PhaseSuccess() {
                   }}
                   placeholder="Teljes név"
                   maxLength={50}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/30 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
                   autoComplete="off"
                   disabled={usernameSubmitting}
                 />
                 <button
                   type="submit"
                   disabled={usernameSubmitting || !username.trim()}
-                  className="px-6 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors"
+                  className="px-6 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
                 >
                   {usernameSubmitting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -389,7 +394,7 @@ export function PhaseSuccess() {
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
               window.open(url, "_blank", "noopener,noreferrer");
             }}
-            className="w-full flex items-center justify-center gap-2 border border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white px-4 py-3 rounded-xl transition-colors"
+            className="w-full flex items-center justify-center gap-2 border border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white px-4 py-3 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -402,7 +407,33 @@ export function PhaseSuccess() {
             Megosztás LinkedIn-en
           </button>
         </div>
+
+        {/* Pre-registration CTA */}
+        <div className="mt-10 bg-white/5 border border-[#00ff88]/20 rounded-xl p-6 w-full max-w-lg mx-auto">
+          <h2 className="text-lg font-semibold text-white mb-2">
+            Előregisztráció a következő versenyünkre
+          </h2>
+          <p className="text-sm text-white/60 mb-4">
+            Következő promptversenyről ne maradj le!
+          </p>
+          <button
+            onClick={() => setEmailModalOpen(true)}
+            className="inline-flex items-center gap-2 bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] cursor-pointer"
+          >
+            Előregisztrálok
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
+      <div className="relative z-10">
+        <PromptversenyFooter />
+      </div>
+
+      <PromptversenyEmailModal
+        open={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        source="post_success"
+      />
     </div>
   );
 }

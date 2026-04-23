@@ -30,9 +30,9 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
       {showSkip && (
         <button
           onClick={onComplete}
-          className="absolute bottom-8 right-8 px-4 py-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white rounded-lg backdrop-blur-sm transition-all text-sm"
+          className="absolute bottom-8 right-8 px-4 py-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white rounded-lg backdrop-blur-sm transition-all text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
         >
-          Kihagyas &rarr;
+          Kihagyás &rarr;
         </button>
       )}
     </div>

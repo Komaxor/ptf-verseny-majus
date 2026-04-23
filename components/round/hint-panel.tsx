@@ -41,7 +41,9 @@ export function HintPanel({ round }: HintPanelProps) {
     <div className="border-t border-white/10">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-2 px-4 py-2 text-xs text-white/40 hover:text-white/60 transition-colors"
+        aria-expanded={isOpen}
+        aria-controls="hints-panel-body"
+        className="w-full flex items-center gap-2 px-4 py-2 text-xs text-white/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
       >
         <Lightbulb className="w-3 h-3" />
         Tippek (
@@ -50,7 +52,7 @@ export function HintPanel({ round }: HintPanelProps) {
       </button>
 
       {isOpen && (
-        <div className="px-4 pb-3 space-y-2">
+        <div id="hints-panel-body" className="px-4 pb-3 space-y-2">
           {hints.map((hint) => {
             const unlockTime = startTime + hint.unlock_after_minutes * 60000;
             const isUnlocked = now >= unlockTime;
@@ -65,7 +67,7 @@ export function HintPanel({ round }: HintPanelProps) {
               return (
                 <div
                   key={hint.number}
-                  className="flex items-center gap-2 text-xs text-white/20"
+                  className="flex items-center gap-2 text-xs text-white/60"
                 >
                   <Lock className="w-3 h-3" />
                   <span>
@@ -79,7 +81,7 @@ export function HintPanel({ round }: HintPanelProps) {
               return (
                 <div
                   key={hint.number}
-                  className="flex items-start gap-2 text-xs text-[#00ff88]/70"
+                  className="flex items-start gap-2 text-xs text-[#00ff88]/90"
                 >
                   <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" />
                   <span>{hint.text}</span>
@@ -91,7 +93,7 @@ export function HintPanel({ round }: HintPanelProps) {
               <button
                 key={hint.number}
                 onClick={() => revealHint(round, hint.number)}
-                className="flex items-center gap-2 text-xs text-white/40 hover:text-[#00ff88] transition-colors"
+                className="flex items-center gap-2 text-xs text-white/70 hover:text-[#00ff88] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] rounded"
               >
                 <Unlock className="w-3 h-3" />
                 <span>Tipp {hint.number} felfedése</span>

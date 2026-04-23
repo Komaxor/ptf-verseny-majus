@@ -60,12 +60,15 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
   if (round === 1) {
     return (
       <div className="p-4 border-t border-white/10">
-        <label className="text-xs text-white/40 uppercase tracking-wider mb-2 block">
+        <span id="round1-label" className="text-xs text-white/60 uppercase tracking-wider mb-2 block">
           Válaszod
-        </label>
+        </span>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 flex-1">
             <input
+              id="round1-floor"
+              aria-labelledby="round1-label"
+              aria-label="Emelet"
               value={floor}
               onChange={(e) => handleAlphanumericChange(e.target.value, setFloor)}
               onKeyDown={(e) => {
@@ -73,11 +76,13 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
               }}
               placeholder="Emelet"
               maxLength={3}
-              className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
+              className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/30 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
             />
-            <span className="text-white/30 text-lg font-bold">+</span>
+            <span aria-hidden="true" className="text-white/50 text-lg font-bold">+</span>
             <input
               ref={doorRef}
+              id="round1-door"
+              aria-label="Ajtó"
               value={door}
               onChange={(e) => handleAlphanumericChange(e.target.value, setDoor)}
               onKeyDown={(e) => {
@@ -85,29 +90,30 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
               }}
               placeholder="Ajtó"
               maxLength={3}
-              className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
+              className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/30 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
             />
           </div>
           <button
             onClick={handleSubmit}
             disabled={isSubmitting || isCoolingDown || !canSubmit}
-            className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors"
+            className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
           >
             Beküldés
           </button>
         </div>
-        {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
+        {error && <p role="alert" className="text-red-400 text-xs mt-2">{error}</p>}
       </div>
     );
   }
 
   return (
     <div className="p-4 border-t border-white/10">
-      <label className="text-xs text-white/40 uppercase tracking-wider mb-2 block">
+      <label htmlFor="round3-safe" className="text-xs text-white/60 uppercase tracking-wider mb-2 block">
         Széfkód (4-8 számjegy)
       </label>
       <div className="flex gap-2">
         <input
+          id="round3-safe"
           value={answer}
           onChange={(e) => {
             const v = e.target.value.replace(/\D/g, "");
@@ -118,17 +124,17 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
           maxLength={8}
           inputMode="numeric"
           pattern="[0-9]*"
-          className="w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center font-mono tracking-[0.3em] placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
+          className="w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center font-mono tracking-[0.3em] placeholder-white/30 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
         />
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || isCoolingDown || !canSubmit}
-          className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors"
+          className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
         >
           Beküldés
         </button>
       </div>
-      {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
+      {error && <p role="alert" className="text-red-400 text-xs mt-2">{error}</p>}
     </div>
   );
 }

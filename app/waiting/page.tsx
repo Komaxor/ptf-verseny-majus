@@ -127,7 +127,7 @@ export default function WaitingPage() {
         {timeRemaining.days === 0 && timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds === 0 && (
           <button
             onClick={() => window.location.href = "/login"}
-            className="mb-8 px-6 py-3 bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold rounded-lg transition-colors cursor-pointer"
+            className="mb-8 px-6 py-3 bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
           >
             Belépés
           </button>

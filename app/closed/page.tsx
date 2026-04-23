@@ -139,8 +139,8 @@ export default function ClosedPage() {
           </div>
         ) : (
           <div className="bg-black/70 border border-[#00ff88]/30 rounded-xl p-6">
-            <p className="text-gray-400">
-              Nem találtunk statisztikát ehhez a munkamenethez.
+            <p className="text-gray-300">
+              Ezen a böngészőn nincs aktív munkamenet. Ha részt vettél a versenyen, használd ugyanazt az eszközt és böngészőt, mint a verseny alatt.
             </p>
           </div>
         )}

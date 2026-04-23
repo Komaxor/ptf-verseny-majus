@@ -94,7 +94,7 @@ export default function LoginPage() {
                   if (error) setError(null)
                 }}
                 placeholder="Add meg a kódod"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/20 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
                 autoComplete="off"
                 autoFocus
                 disabled={isLoading}
@@ -111,7 +111,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading || !password.trim()}
-              className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">

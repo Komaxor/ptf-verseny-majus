@@ -19,9 +19,15 @@ export function ChatInterface() {
   const { chatMessages, currentRound, isChatStreaming } = useGame();
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll on new messages
+  // Auto-scroll on new messages, but only if the user is already near the bottom
+  // (preserves scroll position when the user has scrolled up to re-read earlier turns).
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "instant" });
+    const el = scrollRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (distanceFromBottom <= 80) {
+      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    }
   }, [chatMessages]);
 
   const isRound2 = currentRound === 2;

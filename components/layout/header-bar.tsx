@@ -23,17 +23,18 @@ export function HeaderBar() {
 
   const minutes = Math.floor(remaining / 60000);
   const seconds = Math.floor((remaining % 60000) / 1000);
+  const isUrgent = remaining === 0 || minutes < 1;
 
   return (
     <header className="flex items-center justify-between px-6 py-3 bg-[#0a0a0f] border-b border-white/10">
       <div className="flex items-center gap-3">
         <span className="text-[#00ff88] font-bold text-lg tracking-tight">PTF</span>
-        <span className="text-white/20 text-sm">Áprilisi promptverseny</span>
+        <span className="text-white/60 text-sm">Áprilisi promptverseny</span>
       </div>
 
       {currentRound && (
         <div className="flex items-center gap-4">
-          <div className="flex gap-1">
+          <div className="flex gap-1" aria-label={`${currentRound}. feladat / 3`}>
             {[1, 2, 3].map((r) => (
               <div
                 key={r}
@@ -42,18 +43,26 @@ export function HeaderBar() {
                     ? "bg-[#00ff88]"
                     : r === currentRound
                     ? "bg-[#00ff88] animate-pulse"
-                    : "bg-white/20"
+                    : "bg-white/30"
                 }`}
               />
             ))}
           </div>
-          <span className="text-white/40 text-sm">
+          <span className="text-white/60 text-sm">
             {currentRound === 1 ? "Első" : currentRound === 2 ? "Második" : "Harmadik"} feladat
           </span>
         </div>
       )}
 
       <div
+        role="timer"
+        aria-live={isUrgent ? "assertive" : "polite"}
+        aria-atomic="true"
+        aria-label={
+          remaining === 0
+            ? "A verseny lezárult"
+            : `Hátralévő idő: ${minutes} perc ${seconds} másodperc`
+        }
         className={`flex items-center gap-2 text-sm font-mono ${
           remaining === 0
             ? "text-red-500 font-bold"
@@ -61,11 +70,11 @@ export function HeaderBar() {
             ? "text-red-500"
             : minutes < 5
             ? "text-yellow-400"
-            : "text-white/60"
+            : "text-white/80"
         }`}
         title="Hátralévő idő"
       >
-        <Timer className="w-4 h-4" />
+        <Timer className="w-4 h-4" aria-hidden="true" />
         {remaining === 0
           ? "LEZÁRULT"
           : `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}

@@ -47,14 +47,14 @@ export default function MatrixBg() {
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       ctx.font = fontSize + "px monospace"
-      ctx.shadowColor = "#3b82f6"
-      ctx.shadowBlur = 8
+      ctx.shadowColor = "#00ff88"
+      ctx.shadowBlur = 6
 
       for (let i = 0; i < columns; i++) {
         const char = letters[Math.floor(Math.random() * letters.length)]
         const y = drops[i] * fontSize
 
-        ctx.fillStyle = "#3b82f6"
+        ctx.fillStyle = "#00ff88"
         ctx.fillText(char, i * fontSize, y)
 
         drops[i] += speeds[i]

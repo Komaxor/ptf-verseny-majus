@@ -36,7 +36,7 @@ export function TryDoorButton() {
     <button
       onClick={handleTryDoor}
       disabled={isJudging}
-      className="flex items-center gap-1 px-3 py-1.5 text-xs text-[#00ff88]/70 hover:text-[#00ff88] border border-[#00ff88]/20 hover:border-[#00ff88]/40 rounded-lg transition-colors disabled:opacity-30"
+      className="flex items-center gap-1 px-3 py-1.5 text-xs text-[#00ff88]/80 hover:text-[#00ff88] border border-[#00ff88]/20 hover:border-[#00ff88]/40 rounded-lg transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
     >
       <DoorOpen className="w-3 h-3" />
       {isJudging ? "Próbálom..." : "Megpróbálom az ajtót"}

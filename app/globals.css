@@ -92,12 +92,13 @@
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb, var(--border)) var(--scrollbar-track, transparent);
   }
   .scrollbar-thumb-border {
-    scrollbar-color: var(--border) transparent;
+    --scrollbar-thumb: var(--border);
   }
   .scrollbar-track-transparent {
-    scrollbar-color: var(--border) transparent;
+    --scrollbar-track: transparent;
   }
 }
 
@@ -106,11 +107,11 @@
   height: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track, transparent);
   border-radius: 4px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--scrollbar-thumb, var(--border));
   border-radius: 4px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
