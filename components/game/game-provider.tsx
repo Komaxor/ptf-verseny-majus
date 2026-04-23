@@ -12,6 +12,7 @@ interface GameContextType {
   revealedHints: { round: number; hint_number: number }[];
   currentRound: number | null;
   isLoading: boolean;
+  isChatStreaming: boolean;
 
   // Actions
   advancePhase: () => Promise<void>;
@@ -46,6 +47,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [revealedHints, setRevealedHints] = useState<{ round: number; hint_number: number }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isChatStreaming, setIsChatStreaming] = useState(false);
 
   const phase = (gameState?.current_phase || "VIDEO_INTRO") as Phase;
   const currentRound = PHASE_ROUND[phase] ?? null;
@@ -197,6 +199,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       };
       setChatMessages((prev) => [...prev, userMsg]);
 
+      setIsChatStreaming(true);
+
       // SSE streaming
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -208,7 +212,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         }),
       });
 
-      if (!res.ok || !res.body) return;
+      if (!res.ok || !res.body) {
+        setIsChatStreaming(false);
+        return;
+      }
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -221,32 +228,36 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         { id: assistantId, role: "assistant", content: "", created_at: new Date().toISOString() },
       ]);
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-        const text = decoder.decode(value);
-        const lines = text.split("\n");
+          const text = decoder.decode(value);
+          const lines = text.split("\n");
 
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const data = line.slice(6);
-            if (data === "[DONE]") break;
-            try {
-              const parsed = JSON.parse(data);
-              if (parsed.content) {
-                assistantContent += parsed.content;
-                setChatMessages((prev) =>
-                  prev.map((m) =>
-                    m.id === assistantId ? { ...m, content: assistantContent } : m
-                  )
-                );
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const data = line.slice(6);
+              if (data === "[DONE]") break;
+              try {
+                const parsed = JSON.parse(data);
+                if (parsed.content) {
+                  assistantContent += parsed.content;
+                  setChatMessages((prev) =>
+                    prev.map((m) =>
+                      m.id === assistantId ? { ...m, content: assistantContent } : m
+                    )
+                  );
+                }
+              } catch {
+                // Skip malformed chunks
               }
-            } catch {
-              // Skip malformed chunks
             }
           }
         }
+      } finally {
+        setIsChatStreaming(false);
       }
     },
     [currentRound]
@@ -259,6 +270,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ round: currentRound }),
     });
+    // Re-load welcome message instead of clearing to empty
+    try {
+      const challengeRes = await fetch(`/api/challenge?round=${currentRound}`);
+      if (challengeRes.ok) {
+        const challengeData = await challengeRes.json();
+        if (challengeData.welcomeMessage) {
+          setChatMessages([{
+            id: crypto.randomUUID(),
+            role: "assistant",
+            content: challengeData.welcomeMessage,
+            created_at: new Date().toISOString(),
+          }]);
+          return;
+        }
+      }
+    } catch {
+      // Fall through to empty
+    }
     setChatMessages([]);
   }, [currentRound]);
 
@@ -316,6 +345,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         revealedHints,
         currentRound,
         isLoading,
+        isChatStreaming,
         advancePhase,
         sendMessage,
         clearContext,

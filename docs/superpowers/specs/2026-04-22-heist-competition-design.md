@@ -18,7 +18,7 @@ A 3-round prompt engineering competition where participants social-engineer thre
 
 1. **Adél** — Citadel Plaza AI security system (building lobby kiosk). Easy difficulty.
 2. **Vanda** — Mase Capital receptionist AI on the 69th floor. Medium difficulty.
-3. **Copilot** — Microsoft Copilot on the fund manager's desktop. Hard difficulty.
+3. **Copilot** — Copilot on the fund manager's desktop. Hard difficulty.
 
 ## Competition Flow
 

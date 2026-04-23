@@ -13,9 +13,9 @@ const ROUND_NAMES: Record<number, string> = {
 };
 
 const CHARACTER_INFO: Record<number, { name: string; role: string }> = {
-  1: { name: "Adél", role: "AI biztonsági rendszer" },
+  1: { name: "Adél", role: "Citadel Plaza virtuális portás" },
   2: { name: "Vanda", role: "Mase Capital recepciós" },
-  3: { name: "Copilot", role: "Microsoft Copilot" },
+  3: { name: "Copilot", role: "Copilot asztali asszisztens" },
 };
 
 export function RoundHeader({ round }: RoundHeaderProps) {

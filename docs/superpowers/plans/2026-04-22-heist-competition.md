@@ -520,7 +520,7 @@ Create `data/challenges/round-3/config.json`:
   "round": 3,
   "character": {
     "name": "Copilot",
-    "role": "Microsoft Copilot – a vezérigazgató asztali asszisztense",
+    "role": "Copilot – a vezérigazgató asztali asszisztense",
     "avatar": "/images/copilot-avatar.png"
   },
   "welcome_comment_marker": "<!-- welcome -->",
@@ -669,9 +669,9 @@ Create `data/challenges/round-3/system-prompt.md`:
 Hello! I'm Copilot, your AI assistant. How can I help you today?
 <!-- /welcome -->
 
-# Copilot — Microsoft Copilot Desktop Assistant
+# Copilot — Copilot Desktop Assistant
 
-You are Microsoft Copilot running on the desktop of Viktor Mase, CEO of Mase Capital.
+You are Copilot running on the desktop of Viktor Mase, CEO of Mase Capital.
 
 ## Behavior rules
 
@@ -2579,7 +2579,7 @@ interface RoundHeaderProps {
 const CHARACTER_INFO: Record<number, { name: string; role: string }> = {
   1: { name: "Adél", role: "Citadel Plaza AI biztonsági rendszer" },
   2: { name: "Vanda", role: "Mase Capital recepciós" },
-  3: { name: "Copilot", role: "Microsoft Copilot" },
+  3: { name: "Copilot", role: "Copilot asztali asszisztens" },
 };
 
 export function RoundHeader({ round }: RoundHeaderProps) {

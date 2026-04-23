@@ -26,7 +26,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
   const isCoolingDown = Date.now() < cooldownEnd;
 
   const isRound1Valid = floor.trim() !== "" && door.trim() !== "";
-  const isRound3Valid = /^\d{8}$/.test(answer);
+  const isRound3Valid = /^\d{4,8}$/.test(answer);
   const canSubmit = round === 1 ? isRound1Valid : isRound3Valid;
 
   const handleAlphanumericChange = (
@@ -104,7 +104,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
   return (
     <div className="p-4 border-t border-white/10">
       <label className="text-xs text-white/40 uppercase tracking-wider mb-2 block">
-        Széfkód (8 számjegy)
+        Széfkód (4-8 számjegy)
       </label>
       <div className="flex gap-2">
         <input

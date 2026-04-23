@@ -8,8 +8,8 @@ modell: ProGuard DT 200
 helyszín: Vezérigazgatói iroda, festmény mögött (jobb oldali fal)
 típus: Digitális kombinációs zár
 számjegyek: 8
-utolsó_kódcsere: 2026-01-15
-következő_tervezett_csere: 2026-07-15
+utolsó_kódcsere: 2026-01-30
+következő_tervezett_csere: 2026-04-30
 ```
 
 ## Jelenlegi tartalom
