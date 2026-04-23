@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import { createServiceClient } from "@/lib/supabase/server"
-import { VALID_TRANSITIONS, PHASE_ROUND, type Phase } from "@/lib/config"
+import { VALID_TRANSITIONS, PHASE_ROUND, type Phase, COMPETITION_END } from "@/lib/config"
 import type { ChatMessage } from "@/lib/types"
 import { getMessagesAfterLastClear } from "@/lib/chat-logger"
 
@@ -108,14 +108,17 @@ export async function PATCH(_request: NextRequest) {
     }
   }
 
-  // Mark solved when reaching SUCCESS
+  // Mark solved when reaching SUCCESS — only if within competition time
   if (nextPhase === "SUCCESS") {
-    await supabase
-      .from("april_competition_users")
-      .update({ is_solved: true, solved_at: new Date().toISOString() })
-      .eq("id", user.id)
+    const now = new Date()
+    if (now <= COMPETITION_END) {
+      await supabase
+        .from("april_competition_users")
+        .update({ is_solved: true, solved_at: now.toISOString() })
+        .eq("id", user.id)
+    }
 
-    // Calculate per-round times
+    // Calculate per-round times regardless (for user's own stats)
     for (const r of [1, 2, 3]) {
       const started = gameState[`round${r}_started_at`]
       const completed = gameState[`round${r}_completed_at`]
