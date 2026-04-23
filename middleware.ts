@@ -73,6 +73,9 @@ export async function middleware(request: NextRequest) {
         }
       }
     }
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json({ error: "A verseny véget ért." }, { status: 403 })
+    }
     if (pathname !== "/closed") {
       return NextResponse.redirect(new URL("/closed", request.url))
     }

@@ -21,7 +21,7 @@ export function TryDoorButton() {
           {
             id: crypto.randomUUID(),
             role: "assistant" as const,
-            content: "Meghúzod a kilincset, de az ajtó meg se mozdul.",
+            content: result.error || "Meghúzod a kilincset, de az ajtó meg se mozdul.",
             created_at: new Date().toISOString(),
           },
         ]);

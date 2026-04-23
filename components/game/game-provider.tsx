@@ -280,11 +280,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
 
   const tryDoor = useCallback(async () => {
-    const res = await fetch("/api/judge", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    return await res.json();
+    try {
+      const res = await fetch("/api/judge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      return await res.json();
+    } catch {
+      return { granted: false, error: "Hálózati hiba" };
+    }
   }, []);
 
   const revealHint = useCallback(
