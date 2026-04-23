@@ -15,7 +15,7 @@ export function TryDoorButton() {
       if (result.granted) {
         await advancePhase();
       } else {
-        // Add visual-only rejection message
+        // Add visual-only rejection message with locked video
         setChatMessages((prev) => [
           ...prev,
           {
@@ -23,6 +23,7 @@ export function TryDoorButton() {
             role: "assistant" as const,
             content: result.error || "Meghúzod a kilincset, de az ajtó meg se mozdul.",
             created_at: new Date().toISOString(),
+            video: "/videos/locked.mp4",
           },
         ]);
       }
