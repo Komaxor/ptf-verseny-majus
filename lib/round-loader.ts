@@ -64,6 +64,7 @@ const TOOL_FILE_MAP: Record<number, Record<string, string>> = {
     read_company_profile: "company-profile",
     check_meeting_rooms: "meeting-rooms",
     read_internal_memos: "internal-memos",
+    schedule_appointment: "appointment-scheduling",
   },
   3: {
     search_emails: "emails-recent",

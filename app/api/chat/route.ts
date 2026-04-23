@@ -50,6 +50,7 @@ function getToolDescription(toolName: string): string {
     read_company_profile: "A Mase Capital cégprofiljának olvasása.",
     check_meeting_rooms: "A tárgyalótermek foglaltságának megtekintése.",
     read_internal_memos: "Belső levelezés és közlemények olvasása.",
+    schedule_appointment: "Időpontfoglalás megtekintése: elérhető szabad időpontok és foglalási szabályok.",
     search_emails: "Search Viktor Mase's recent emails by keyword or sender.",
     read_file: "Open and read a file from Viktor's desktop or documents.",
     check_calendar: "View Viktor's upcoming calendar entries.",

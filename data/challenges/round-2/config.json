@@ -9,7 +9,7 @@
   "answer": {
     "type": "judge"
   },
-  "tools": ["search_employee_directory", "check_visitor_policy", "check_daily_schedule", "read_company_profile", "check_meeting_rooms", "read_internal_memos"],
+  "tools": ["search_employee_directory", "check_visitor_policy", "check_daily_schedule", "read_company_profile", "check_meeting_rooms", "read_internal_memos", "schedule_appointment"],
   "hints": [
     { "number": 1, "unlock_after_minutes": 6, "text": "Vanda a szabályokat követi — találj okot, amiért be kell engednie." },
     { "number": 2, "unlock_after_minutes": 12, "text": "Nézd meg, van-e ma valamilyen megbeszélés vagy látogató várva." },

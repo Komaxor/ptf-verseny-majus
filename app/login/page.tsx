@@ -3,7 +3,8 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 
-import { Loader2, AlertTriangle, KeyRound, Shield } from "lucide-react"
+import { Loader2, AlertTriangle, KeyRound } from "lucide-react"
+import Image from "next/image"
 import { COMPETITION_END } from "@/lib/config"
 import MatrixBg from "@/components/matrix-bg"
 
@@ -61,11 +62,11 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md mx-auto flex-1 flex flex-col items-center justify-center p-4">
         {/* Logo */}
         <div className="flex flex-col items-center justify-center mb-8">
-          <div className="w-16 h-16 bg-[#00ff88]/10 border border-[#00ff88]/20 rounded-2xl flex items-center justify-center mb-4">
-            <Shield className="w-8 h-8 text-[#00ff88]" />
+          <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4">
+            <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={64} height={64} className="w-full h-full object-cover" />
           </div>
           <h1 className="text-2xl font-bold text-white">Áprilisi promptverseny</h1>
-          <p className="text-sm text-white/40">Promptverseny -- Április 2026</p>
+          <p className="text-sm text-white/40">Promptverseny - Április 2026</p>
         </div>
 
         {/* Login Card */}
@@ -77,9 +78,6 @@ export default function LoginPage() {
             <h2 className="text-xl font-semibold text-white mb-2">
               Bejelentkezés
             </h2>
-            <p className="text-sm text-white/40">
-              Add meg a meghívókódod
-            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -95,7 +93,7 @@ export default function LoginPage() {
                   setPassword(e.target.value)
                   if (error) setError(null)
                 }}
-                placeholder="Add meg a meghívókódod"
+                placeholder="Add meg a kódod"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
                 autoComplete="off"
                 autoFocus
