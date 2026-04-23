@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     if (findError || !user) {
       return NextResponse.json(
-        { success: false, error: "Érvénytelen jelszó." },
+        { success: false, error: "Érvénytelen kód. Ellenőrizd a szervezőktől kapott meghívókódot." },
         { status: 401 }
       )
     }

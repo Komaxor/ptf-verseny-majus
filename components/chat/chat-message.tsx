@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { User } from "lucide-react";
 import { useGame } from "@/components/game/game-provider";
@@ -15,19 +14,6 @@ const CHAT_AVATARS: Record<number, string> = {
 export function ChatMessage({ message }: { message: ChatMessageType }) {
   const isUser = message.role === "user";
   const { currentRound } = useGame();
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    // Try to play with sound — browsers allow this after user interaction
-    video.muted = false;
-    video.play().catch(() => {
-      // Fallback: play muted if browser still blocks unmuted autoplay
-      video.muted = true;
-      video.play();
-    });
-  }, []);
 
   const avatarSrc = currentRound ? CHAT_AVATARS[currentRound] : null;
 
@@ -55,10 +41,14 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
       >
         {message.video && (
           <video
-            ref={videoRef}
             src={message.video}
+            autoPlay
+            muted
             playsInline
+            controls
+            preload="metadata"
             className="rounded-md w-full max-w-xs mb-2"
+            aria-label="Asszisztens videóüzenete"
           />
         )}
         <p className="text-sm text-white/90 whitespace-pre-wrap">{message.content}</p>

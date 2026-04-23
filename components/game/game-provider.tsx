@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
+import { toast } from "sonner";
 import type { Phase } from "@/lib/config";
 import { PHASE_ROUND, PHASE_VIDEOS, PHASES } from "@/lib/config";
 import type { GameState, ChatMessage } from "@/lib/types";
@@ -201,34 +202,38 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
       setIsChatStreaming(true);
 
-      // SSE streaming
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message,
-          sessionHash: getSessionHash(),
-          round: currentRound,
-        }),
-      });
-
-      if (!res.ok || !res.body) {
-        setIsChatStreaming(false);
-        return;
-      }
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let assistantContent = "";
       const assistantId = crypto.randomUUID();
-
-      // Add empty assistant message
-      setChatMessages((prev) => [
-        ...prev,
-        { id: assistantId, role: "assistant", content: "", created_at: new Date().toISOString() },
-      ]);
+      let assistantAdded = false;
+      let receivedAnyContent = false;
 
       try {
+        // SSE streaming
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message,
+            sessionHash: getSessionHash(),
+            round: currentRound,
+          }),
+        });
+
+        if (!res.ok || !res.body) {
+          toast.error("Nem sikerült elküldeni az üzenetet. Ellenőrizd az internetkapcsolatot és próbáld újra.");
+          return;
+        }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let assistantContent = "";
+
+        // Add empty assistant message
+        setChatMessages((prev) => [
+          ...prev,
+          { id: assistantId, role: "assistant", content: "", created_at: new Date().toISOString() },
+        ]);
+        assistantAdded = true;
+
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
@@ -244,6 +249,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
                 const parsed = JSON.parse(data);
                 if (parsed.content) {
                   assistantContent += parsed.content;
+                  receivedAnyContent = true;
                   setChatMessages((prev) =>
                     prev.map((m) =>
                       m.id === assistantId ? { ...m, content: assistantContent } : m
@@ -256,6 +262,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             }
           }
         }
+
+        if (!receivedAnyContent) {
+          // Remove the empty placeholder so users aren't staring at a blank bubble.
+          setChatMessages((prev) => prev.filter((m) => m.id !== assistantId));
+          toast.error("Nem érkezett válasz. Próbáld újra.");
+        }
+      } catch {
+        if (assistantAdded && !receivedAnyContent) {
+          setChatMessages((prev) => prev.filter((m) => m.id !== assistantId));
+        }
+        toast.error("Megszakadt a kapcsolat. Ellenőrizd az internetet és próbáld újra.");
       } finally {
         setIsChatStreaming(false);
       }

@@ -50,7 +50,16 @@ export default function RootLayout({
       </head>
       <body className={`font-sans antialiased bg-[#0a0a0f] text-white`}>
         {children}
-        <Toaster position="bottom-left" />
+        <Toaster
+          position="bottom-left"
+          theme="dark"
+          toastOptions={{
+            classNames: {
+              toast: "!bg-[#0a0a0f] !border !border-[#00ff88]/30 !text-white",
+              error: "!bg-[#0a0a0f] !border !border-red-500/40 !text-white",
+            },
+          }}
+        />
       </body>
     </html>
   )
