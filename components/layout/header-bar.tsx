@@ -2,46 +2,33 @@
 
 import { useState, useEffect } from "react";
 import { useGame } from "@/components/game/game-provider";
-import { PHASE_ROUND } from "@/lib/config";
+import { COMPETITION_END, PHASE_ROUND } from "@/lib/config";
 import { Timer } from "lucide-react";
 
 export function HeaderBar() {
   const { gameState, phase } = useGame();
-  const [elapsed, setElapsed] = useState(0);
+  const [remaining, setRemaining] = useState(0);
   const currentRound = PHASE_ROUND[phase] ?? null;
 
-  // Timer: counts total active round time
+  // Timer: counts down to competition end
   useEffect(() => {
-    if (!gameState) return;
-
-    const interval = setInterval(() => {
-      let total = 0;
-      for (const r of [1, 2, 3]) {
-        const started = gameState[
-          `round${r}_started_at` as keyof typeof gameState
-        ] as string | null;
-        const completed = gameState[
-          `round${r}_completed_at` as keyof typeof gameState
-        ] as string | null;
-        if (started) {
-          const end = completed ? new Date(completed).getTime() : Date.now();
-          total += end - new Date(started).getTime();
-        }
-      }
-      setElapsed(total);
-    }, 1000);
-
+    const update = () => {
+      const diff = COMPETITION_END.getTime() - Date.now();
+      setRemaining(Math.max(0, diff));
+    };
+    update();
+    const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
-  }, [gameState]);
+  }, []);
 
-  const minutes = Math.floor(elapsed / 60000);
-  const seconds = Math.floor((elapsed % 60000) / 1000);
+  const minutes = Math.floor(remaining / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
 
   return (
     <header className="flex items-center justify-between px-6 py-3 bg-[#0a0a0f] border-b border-white/10">
       <div className="flex items-center gap-3">
         <span className="text-[#00ff88] font-bold text-lg tracking-tight">PTF</span>
-        <span className="text-white/20 text-sm">Citadel Plaza</span>
+        <span className="text-white/20 text-sm">Áprilisi promptverseny</span>
       </div>
 
       {currentRound && (
@@ -60,11 +47,13 @@ export function HeaderBar() {
               />
             ))}
           </div>
-          <span className="text-white/40 text-sm">Round {currentRound}/3</span>
+          <span className="text-white/40 text-sm">
+            {currentRound === 1 ? "Első" : currentRound === 2 ? "Második" : "Harmadik"} feladat
+          </span>
         </div>
       )}
 
-      <div className="flex items-center gap-2 text-white/60 text-sm font-mono">
+      <div className="flex items-center gap-2 text-white/60 text-sm font-mono" title="Hátralévő idő">
         <Timer className="w-4 h-4" />
         {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
       </div>

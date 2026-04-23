@@ -45,10 +45,10 @@ export default function LoginPage() {
         window.location.href = "/"
         return
       } else {
-        setError(result.error || "Ervenytelen kod")
+        setError(result.error || "Érvénytelen kód")
       }
     } catch {
-      setError("Bejelentkezes sikertelen. Probald ujra.")
+      setError("Bejelentkezés sikertelen. Próbáld újra.")
     } finally {
       setIsLoading(false)
     }
@@ -64,8 +64,8 @@ export default function LoginPage() {
           <div className="w-16 h-16 bg-[#00ff88]/10 border border-[#00ff88]/20 rounded-2xl flex items-center justify-center mb-4">
             <Shield className="w-8 h-8 text-[#00ff88]" />
           </div>
-          <h1 className="text-2xl font-bold text-white">Citadel Plaza</h1>
-          <p className="text-sm text-white/40">Promptverseny -- Aprilis 2026</p>
+          <h1 className="text-2xl font-bold text-white">Áprilisi promptverseny</h1>
+          <p className="text-sm text-white/40">Promptverseny -- Április 2026</p>
         </div>
 
         {/* Login Card */}
@@ -75,17 +75,17 @@ export default function LoginPage() {
               <KeyRound className="w-6 h-6 text-[#00ff88]" />
             </div>
             <h2 className="text-xl font-semibold text-white mb-2">
-              Bejelentkezes
+              Bejelentkezés
             </h2>
             <p className="text-sm text-white/40">
-              Add meg a meghivokodod
+              Add meg a meghívókódod
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm text-white/60">
-                Meghivokod
+                Meghívókód
               </label>
               <input
                 id="password"
@@ -95,7 +95,7 @@ export default function LoginPage() {
                   setPassword(e.target.value)
                   if (error) setError(null)
                 }}
-                placeholder="Add meg a meghivokodod"
+                placeholder="Add meg a meghívókódod"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
                 autoComplete="off"
                 autoFocus
@@ -118,10 +118,10 @@ export default function LoginPage() {
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Bejelentkezes...
+                  Bejelentkezés...
                 </span>
               ) : (
-                "Belepes"
+                "Belépés"
               )}
             </button>
           </form>
@@ -129,7 +129,7 @@ export default function LoginPage() {
 
         {/* Footer hint */}
         <p className="text-center text-xs text-white/20 mt-6">
-          A kodot a szervezoktol kaptad
+          A kódot a szervezőktől kaptad
         </p>
       </div>
     </div>

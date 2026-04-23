@@ -1,7 +1,7 @@
 {
-  "name": "Prompt The Flag — Citadel Plaza",
+  "name": "Prompt The Flag — Áprilisi promptverseny",
   "short_name": "PTF",
-  "description": "Három AI-karakter, három szoba, egy kulcs. Hatold be a Citadel Plazát prompt engineering tudásoddal.",
+  "description": "Három AI-karakter, három szoba, egy kulcs. Prompt engineering verseny.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0f",

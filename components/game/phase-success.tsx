@@ -41,13 +41,13 @@ function formatDuration(seconds: number): string {
   if (minutes < 60) return `${minutes} perc ${secs} mp`;
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  return `${hours} ora ${mins} perc`;
+  return `${hours} óra ${mins} perc`;
 }
 
 const ROUND_NAMES: Record<number, string> = {
-  1: "Lobby -- Adel",
-  2: "Recepcio -- Vanda",
-  3: "Iroda -- Copilot",
+  1: "Lobby - Adél",
+  2: "Recepció - Vanda",
+  3: "Iroda - Copilot",
 };
 
 export function PhaseSuccess() {
@@ -137,7 +137,7 @@ export function PhaseSuccess() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
     doc.setTextColor(180, 180, 180);
-    doc.text("Promptverseny -- Citadel Plaza Infiltration", w / 2, 82, { align: "center" });
+    doc.text("Promptverseny -- Április 2026", w / 2, 82, { align: "center" });
 
     // Decorative line
     doc.setDrawColor(0, 255, 136);
@@ -164,7 +164,7 @@ export function PhaseSuccess() {
     doc.setFontSize(13);
     doc.setTextColor(180, 180, 180);
     doc.text(
-      "Sikeresen behatolt a Citadel Plaza epuletbe es megszerezte a privat kulcsot.",
+      "Sikeresen teljesítette az áprilisi promptverseny kihívásait.",
       w / 2,
       132,
       { align: "center" }
@@ -176,9 +176,9 @@ export function PhaseSuccess() {
       doc.setTextColor(0, 255, 136);
       const metricsText = [
         metrics.totalTimeSeconds > 0
-          ? `Ido: ${formatDuration(metrics.totalTimeSeconds)}`
+          ? `Idő: ${formatDuration(metrics.totalTimeSeconds)}`
           : null,
-        `Uzenetek: ${metrics.totalMessages} db`,
+        `Üzenetek: ${metrics.totalMessages} db`,
         `Tippek: ${metrics.totalHints} db`,
       ]
         .filter(Boolean)
@@ -223,10 +223,10 @@ export function PhaseSuccess() {
       if (result.success) {
         setUsernameSaved(true);
       } else {
-        setUsernameError(result.error || "Hiba tortent.");
+        setUsernameError(result.error || "Hiba történt.");
       }
     } catch {
-      setUsernameError("Hiba tortent. Probald ujra.");
+      setUsernameError("Hiba történt. Próbáld újra.");
     } finally {
       setUsernameSubmitting(false);
     }
@@ -242,22 +242,22 @@ export function PhaseSuccess() {
 
         {/* Title */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
-          Infiltracio sikeres!
+          Infiltráció sikeres!
         </h1>
         <p className="text-base sm:text-xl text-white/60 mb-4">
-          Sikeresen behatoltad a Citadel Plazat es megszerezted a privat kulcsot.
+          Sikeresen teljesítetted az áprilisi promptverseny kihívásait.
         </p>
 
         {/* Status banner */}
         <div className="inline-flex items-center gap-2 bg-[#00ff88]/10 border border-[#00ff88]/20 text-[#00ff88] px-5 py-2.5 rounded-full text-sm font-medium mb-10">
           <Check className="w-4 h-4" />
-          Kuldetesteljesitve
+          Küldetés teljesítve
         </div>
 
         {/* Overall metrics */}
         {loading ? (
           <div className="text-sm text-white/40 animate-pulse">
-            Statisztikak betoltese...
+            Statisztikák betöltése...
           </div>
         ) : metrics ? (
           <div className="w-full space-y-6">
@@ -265,12 +265,12 @@ export function PhaseSuccess() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
               <MetricCard
                 icon={<Clock className="w-5 h-5 text-[#00ff88]" />}
-                label="Osszes ido"
+                label="Összes idő"
                 value={formatDuration(metrics.totalTimeSeconds)}
               />
               <MetricCard
                 icon={<MessageSquare className="w-5 h-5 text-[#00ff88]" />}
-                label="Uzenetek"
+                label="Üzenetek"
                 value={`${metrics.totalMessages} db`}
               />
               <MetricCard
@@ -280,7 +280,7 @@ export function PhaseSuccess() {
               />
               <MetricCard
                 icon={<XCircle className="w-5 h-5 text-red-400" />}
-                label="Hibas probalkozasok"
+                label="Hibás próbálkozások"
                 value={`${metrics.totalFailedAttempts} db`}
               />
             </div>
@@ -289,7 +289,7 @@ export function PhaseSuccess() {
             {metrics.rounds && metrics.rounds.length > 0 && (
               <div className="space-y-3">
                 <h2 className="text-sm uppercase tracking-wider text-white/30 font-medium">
-                  Korrol korre
+                  Szobáról szobára
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {metrics.rounds.map((r) => (
@@ -302,11 +302,11 @@ export function PhaseSuccess() {
                       </h3>
                       <div className="space-y-1 text-xs text-white/60">
                         <div className="flex justify-between">
-                          <span>Ido:</span>
+                          <span>Idő:</span>
                           <span className="text-white/80">{formatDuration(r.timeSeconds)}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Uzenetek:</span>
+                          <span>Üzenetek:</span>
                           <span className="text-white/80">{r.messageCount} db</span>
                         </div>
                         <div className="flex justify-between">
@@ -314,7 +314,7 @@ export function PhaseSuccess() {
                           <span className="text-white/80">{r.hintClicks} db</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Hibas probalkozasok:</span>
+                          <span>Hibás próbálkozások:</span>
                           <span className="text-white/80">{r.failedAttempts} db</span>
                         </div>
                       </div>
@@ -332,14 +332,14 @@ export function PhaseSuccess() {
             <div className="space-y-3">
               <div className="flex items-center justify-center gap-2 bg-[#00ff88]/10 border border-[#00ff88]/20 text-[#00ff88] px-4 py-3 rounded-xl text-sm font-medium">
                 <Check className="w-4 h-4" />
-                Nev mentve: <span className="font-bold">{username}</span>
+                Név mentve: <span className="font-bold">{username}</span>
               </div>
               <button
                 onClick={() => generateCertificate(username)}
                 className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <Download className="w-4 h-4" />
-                Oklevel letoltese
+                Oklevél letöltése
               </button>
             </div>
           ) : (
@@ -356,7 +356,7 @@ export function PhaseSuccess() {
                     setUsername(e.target.value.slice(0, 50));
                     if (usernameError) setUsernameError(null);
                   }}
-                  placeholder="Teljes nev"
+                  placeholder="Teljes név"
                   maxLength={50}
                   className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/20 focus:outline-none focus:border-[#00ff88]/50"
                   autoComplete="off"
@@ -370,7 +370,7 @@ export function PhaseSuccess() {
                   {usernameSubmitting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    "Mentes"
+                    "Mentés"
                   )}
                 </button>
               </form>
@@ -385,7 +385,7 @@ export function PhaseSuccess() {
         <div className="mt-8 w-full max-w-lg mx-auto">
           <button
             onClick={() => {
-              const text = `Sikeresen behatoltam a Citadel Plazaba a promptverseny aprilisi kihivasaban! \n\nHarom AI-karakter meggyozesevel szereztem meg a privat kulcsot -- prompt engineering tudas es kreativ gondolkodas kellett hozza.\n\nHa te is kiprobalnad magad, kovesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`;
+              const text = `Sikeresen teljesítettem a promptverseny áprilisi kihívását!\n\nHárom AI-karakter meggyőzésével kellett megszereznem a privát kulcsot -- prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`;
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
               window.open(url, "_blank", "noopener,noreferrer");
             }}
@@ -399,7 +399,7 @@ export function PhaseSuccess() {
             >
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
             </svg>
-            Megosztas LinkedIn-en
+            Megosztás LinkedIn-en
           </button>
         </div>
       </div>

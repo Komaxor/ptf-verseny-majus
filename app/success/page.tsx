@@ -126,7 +126,7 @@ export default function SuccessPage() {
       doc.setFontSize(10)
       doc.setTextColor(120, 120, 120)
       const metricsText = [
-        metrics.completionTimeSeconds > 0 ? `Megoldási idó: ${formatDuration(metrics.completionTimeSeconds)}` : null,
+        metrics.completionTimeSeconds > 0 ? `Megoldási idő: ${formatDuration(metrics.completionTimeSeconds)}` : null,
         `Üzenetek: ${metrics.messageCount} db`,
         `Tippek: ${metrics.hintClicks} db`,
       ].filter(Boolean).join("  •  ")

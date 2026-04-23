@@ -13,7 +13,7 @@ export function ChatInterface() {
 
   // Auto-scroll on new messages
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "instant" });
   }, [chatMessages]);
 
   const isRound2 = currentRound === 2;

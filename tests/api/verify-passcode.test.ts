@@ -385,7 +385,7 @@ describe("POST /api/verify-passcode", () => {
   // Note: the route returns HTTP 200 with success: false for wrong answers
   // (no explicit status code is set, so Next.js defaults to 200).
 
-  it("returns success:false with 'Hibas valasz' error for wrong answer", async () => {
+  it("returns success:false with 'Hibás válasz' error for wrong answer", async () => {
     mockConfig();
     mockVerifyAnswer(false);
 
@@ -403,7 +403,7 @@ describe("POST /api/verify-passcode", () => {
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.success).toBe(false);
-    expect(body.error).toBe("Hibas valasz");
+    expect(body.error).toBe("Hibás válasz");
   });
 
   it("inserts to april_failed_attempts on wrong answer", async () => {

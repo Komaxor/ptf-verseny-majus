@@ -136,7 +136,7 @@ export default function WaitingPage() {
         {/* Decorative elements */}
         <div className="flex items-center justify-center gap-2 text-gray-400/50">
           <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
-          <span className="text-sm">Citadel Plaza</span>
+          <span className="text-sm">Áprilisi promptverseny</span>
           <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
         </div>
       </div>

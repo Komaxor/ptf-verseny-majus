@@ -49,13 +49,13 @@ export async function POST(request: NextRequest) {
     const now = new Date()
     if (now < COMPETITION_START) {
       return NextResponse.json(
-        { success: false, error: "A verseny meg nem kezdodott el." },
+        { success: false, error: "A verseny még nem kezdődött el." },
         { status: 403 }
       )
     }
     if (now > COMPETITION_END) {
       return NextResponse.json(
-        { success: false, error: "A verseny mar veget ert." },
+        { success: false, error: "A verseny már véget ért." },
         { status: 403 }
       )
     }
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     const rateLimit = checkRateLimit(ip)
     if (!rateLimit.allowed) {
       return NextResponse.json(
-        { success: false, error: `Tul sok probalkozas. Kerlek varj ${rateLimit.retryAfterSeconds} masodpercet.` },
+        { success: false, error: `Túl sok próbálkozás. Kérlek várj ${rateLimit.retryAfterSeconds} másodpercet.` },
         { status: 429 }
       )
     }
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     if (!password || typeof password !== "string") {
       return NextResponse.json(
-        { success: false, error: "Jelszo megadasa kotelezo." },
+        { success: false, error: "Jelszó megadása kötelező." },
         { status: 400 }
       )
     }
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 
     if (!trimmedPassword) {
       return NextResponse.json(
-        { success: false, error: "Jelszo megadasa kotelezo." },
+        { success: false, error: "Jelszó megadása kötelező." },
         { status: 400 }
       )
     }
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     if (!supabaseUrl || !supabaseServiceKey) {
       console.error("[login] Missing Supabase credentials")
       return NextResponse.json(
-        { success: false, error: "Szerver hiba. Probald ujra kesobb." },
+        { success: false, error: "Szerver hiba. Próbáld újra később." },
         { status: 500 }
       )
     }
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     if (findError || !user) {
       return NextResponse.json(
-        { success: false, error: "Ervenytelen jelszo." },
+        { success: false, error: "Érvénytelen jelszó." },
         { status: 401 }
       )
     }
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
     const existingCookie = cookieStore.get("competition_session")?.value
     if (user.session_token && existingCookie !== user.session_token) {
       return NextResponse.json(
-        { success: false, error: "Ez a jelszo mar hasznalatban van." },
+        { success: false, error: "Ez a jelszó már használatban van." },
         { status: 409 }
       )
     }
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
     if (updateError) {
       console.error("[login] Failed to update session:", updateError)
       return NextResponse.json(
-        { success: false, error: "Bejelentkezes sikertelen. Probald ujra." },
+        { success: false, error: "Bejelentkezés sikertelen. Próbáld újra." },
         { status: 500 }
       )
     }
@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("[login] Unexpected error:", error)
     return NextResponse.json(
-      { success: false, error: "Bejelentkezes sikertelen. Probald ujra." },
+      { success: false, error: "Bejelentkezés sikertelen. Próbáld újra." },
       { status: 500 }
     )
   }

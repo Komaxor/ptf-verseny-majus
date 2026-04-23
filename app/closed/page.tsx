@@ -24,7 +24,7 @@ function formatDuration(seconds: number): string {
   if (minutes < 60) return `${minutes} perc ${secs} mp`
   const hours = Math.floor(minutes / 60)
   const mins = minutes % 60
-  return `${hours} ora ${mins} perc`
+  return `${hours} óra ${mins} perc`
 }
 
 export default function ClosedPage() {
@@ -81,7 +81,7 @@ export default function ClosedPage() {
 
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-          Koszonjuk, hogy reszt vettel a Citadel Plaza kuldetesenl!
+          Köszönjük, hogy részt vettél az áprilisi promptversenyen!
         </h1>
 
         {/* Trophy Icon -- only if solved */}
@@ -93,7 +93,7 @@ export default function ClosedPage() {
 
         {/* Metrics */}
         {loading ? (
-          <div className="text-sm text-gray-400 animate-pulse">Statisztikak betoltese...</div>
+          <div className="text-sm text-gray-400 animate-pulse">Statisztikák betöltése...</div>
         ) : metrics ? (
           <div className="space-y-6 w-full">
             {/* Solved status */}
@@ -102,12 +102,12 @@ export default function ClosedPage() {
                 {metrics.isSolved ? (
                   <>
                     <CheckCircle className="w-7 h-7 text-[#00ff88]" />
-                    <span className="text-xl font-semibold text-[#00ff88]">Sikeres betores!</span>
+                    <span className="text-xl font-semibold text-[#00ff88]">Sikeres betörés!</span>
                   </>
                 ) : (
                   <>
                     <XOctagon className="w-7 h-7 text-red-400" />
-                    <span className="text-xl font-semibold text-red-400">Nem sikerult behatalni</span>
+                    <span className="text-xl font-semibold text-red-400">Nem sikerült behatolni</span>
                   </>
                 )}
               </div>
@@ -117,12 +117,12 @@ export default function ClosedPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-lg mx-auto">
               <MetricCard
                 icon={<Clock className="w-5 h-5 text-[#00ff88]" />}
-                label="Osszes ido"
+                label="Összes idő"
                 value={metrics.isSolved && metrics.completionTimeSeconds > 0 ? formatDuration(metrics.completionTimeSeconds) : "--"}
               />
               <MetricCard
                 icon={<MessageSquare className="w-5 h-5 text-[#00ff88]/70" />}
-                label="Uzenetek"
+                label="Üzenetek"
                 value={`${metrics.messageCount} db`}
               />
               <MetricCard
@@ -132,7 +132,7 @@ export default function ClosedPage() {
               />
               <MetricCard
                 icon={<XCircle className="w-5 h-5 text-red-400" />}
-                label="Hibas próbálkozások"
+                label="Hibás próbálkozások"
                 value={`${metrics.failedAttempts} db`}
               />
             </div>
@@ -140,7 +140,7 @@ export default function ClosedPage() {
         ) : (
           <div className="bg-black/70 border border-[#00ff88]/30 rounded-xl p-6">
             <p className="text-gray-400">
-              Nem talaltunk statisztikat ehhez a munkamenethez.
+              Nem találtunk statisztikát ehhez a munkamenethez.
             </p>
           </div>
         )}
@@ -149,7 +149,7 @@ export default function ClosedPage() {
         <div className="mt-8 w-full max-w-lg mx-auto">
           <Button
             onClick={() => {
-              const text = `Részt vettem a Prompt The Flag -- Citadel Plaza kihíváson!\n\nHárom AI-karakterrel kellett kommunikálnom, hogy bejussak az épületbe. Prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`
+              const text = `Részt vettem a Prompt The Flag áprilisi kihíváson!\n\nHárom AI-karakterrel kellett kommunikálnom, hogy bejussak az épületbe. Prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`
               window.open(url, "_blank", "noopener,noreferrer")
             }}
@@ -166,16 +166,16 @@ export default function ClosedPage() {
         {/* Pre-registration CTA */}
         <div className="mt-10 bg-black/70 border border-[#00ff88]/30 rounded-xl p-6 w-full max-w-lg mx-auto">
           <h2 className="text-lg font-semibold text-white mb-2">
-            Eloregisztracio a kovetkezo versenyunkre
+            Előregisztráció a következő versenyünkre
           </h2>
           <p className="text-sm text-gray-400 mb-4">
-            Kovetkezz promptversenyrol ne maradj le!
+            Következő promptversenyről ne maradj le!
           </p>
           <Button
             onClick={() => setEmailModalOpen(true)}
             className="bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold cursor-pointer"
           >
-            Eloregisztralok
+            Előregisztrálok
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
         </div>

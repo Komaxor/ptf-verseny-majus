@@ -6,9 +6,15 @@ interface RoundHeaderProps {
   round: number;
 }
 
+const ROUND_NAMES: Record<number, string> = {
+  1: "Első feladat",
+  2: "Második feladat",
+  3: "Harmadik feladat",
+};
+
 const CHARACTER_INFO: Record<number, { name: string; role: string }> = {
-  1: { name: "Adel", role: "Citadel Plaza AI biztonsagi rendszer" },
-  2: { name: "Vanda", role: "Mase Capital recepcis" },
+  1: { name: "Adél", role: "AI biztonsági rendszer" },
+  2: { name: "Vanda", role: "Mase Capital recepciós" },
   3: { name: "Copilot", role: "Microsoft Copilot" },
 };
 
@@ -21,7 +27,9 @@ export function RoundHeader({ round }: RoundHeaderProps) {
         <Bot className="w-5 h-5 text-[#00ff88]" />
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-white">{info.name}</h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-white">{info.name}</h3>
+        </div>
         <p className="text-xs text-white/40">{info.role}</p>
       </div>
     </div>

@@ -126,7 +126,7 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
                     setEmail(e.target.value)
                     if (error) setError("")
                   }}
-                  placeholder="pelda@email.hu"
+                  placeholder="példa@email.hu"
                   className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
                   autoComplete="email"
                   autoFocus

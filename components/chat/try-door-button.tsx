@@ -21,7 +21,7 @@ export function TryDoorButton() {
           {
             id: crypto.randomUUID(),
             role: "assistant" as const,
-            content: "Meghuzod a kilincset, de az ajto meg se mozdul.",
+            content: "Meghúzod a kilincset, de az ajtó meg se mozdul.",
             created_at: new Date().toISOString(),
           },
         ]);
@@ -38,7 +38,7 @@ export function TryDoorButton() {
       className="flex items-center gap-1 px-3 py-1.5 text-xs text-[#00ff88]/70 hover:text-[#00ff88] border border-[#00ff88]/20 hover:border-[#00ff88]/40 rounded-lg transition-colors disabled:opacity-30"
     >
       <DoorOpen className="w-3 h-3" />
-      {isJudging ? "Probalom..." : "Megprobalom az ajtot"}
+      {isJudging ? "Próbálom..." : "Megpróbálom az ajtót"}
     </button>
   );
 }

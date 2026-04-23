@@ -67,18 +67,18 @@ export async function POST(request: NextRequest) {
     }
 
     if (!answer || typeof answer !== "string") {
-      return NextResponse.json({ success: false, error: "A valasz megadasa kotelezo" }, { status: 400 })
+      return NextResponse.json({ success: false, error: "A válasz megadása kötelező" }, { status: 400 })
     }
 
     if (!round || round < 1 || round > 3) {
-      return NextResponse.json({ success: false, error: "Ervenytelen kor" }, { status: 400 })
+      return NextResponse.json({ success: false, error: "Érvénytelen kör" }, { status: 400 })
     }
 
     const normalizedAnswer = answer.trim()
 
     if (normalizedAnswer.length > MAX_ANSWER_LENGTH) {
       return NextResponse.json(
-        { success: false, error: `A valasz maximum ${MAX_ANSWER_LENGTH} karakter lehet` },
+        { success: false, error: `A válasz maximum ${MAX_ANSWER_LENGTH} karakter lehet` },
         { status: 400 },
       )
     }
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
     const { allowed, waitTime } = await checkRateLimit(user.id, round)
     if (!allowed) {
       return NextResponse.json(
-        { success: false, error: `Kerlek varj ${waitTime} masodpercet a kovetkezo probalkozas elott`, rateLimited: true, waitTime },
+        { success: false, error: `Kérlek várj ${waitTime} másodpercet a következő próbálkozás előtt`, rateLimited: true, waitTime },
         { status: 429 },
       )
     }
@@ -127,10 +127,10 @@ export async function POST(request: NextRequest) {
         attempted_answer: normalizedAnswer.substring(0, 100),
       })
 
-      return NextResponse.json({ success: false, error: "Hibas valasz" })
+      return NextResponse.json({ success: false, error: "Hibás válasz" })
     }
   } catch (error) {
     console.error("Verification error:", error)
-    return NextResponse.json({ success: false, error: "Ellenorzes sikertelen" }, { status: 500 })
+    return NextResponse.json({ success: false, error: "Ellenőrzés sikertelen" }, { status: 500 })
   }
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
 import type { Phase } from "@/lib/config";
-import { PHASE_ROUND } from "@/lib/config";
+import { PHASE_ROUND, PHASE_VIDEOS, PHASES } from "@/lib/config";
 import type { GameState, ChatMessage } from "@/lib/types";
 
 interface GameContextType {
@@ -91,6 +91,62 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       }
     }
     load();
+  }, []);
+
+  // Sequential preloading: videos & avatars in phase order
+  const preloadStarted = useRef(false);
+  useEffect(() => {
+    if (preloadStarted.current) return;
+    preloadStarted.current = true;
+
+    const assets: string[] = [];
+
+    // Videos in phase order
+    for (const p of PHASES) {
+      const video = PHASE_VIDEOS[p];
+      if (video) assets.push(video);
+    }
+
+    // Avatar images
+    assets.push(
+      "/images/adel-avatar.png",
+      "/images/vanda-avatar.png",
+      "/images/copilot-avatar.png",
+    );
+
+    let cancelled = false;
+
+    async function preloadSequentially() {
+      for (const src of assets) {
+        if (cancelled) break;
+        try {
+          if (src.endsWith(".mp4")) {
+            const video = document.createElement("video");
+            video.preload = "auto";
+            video.src = src;
+            await new Promise<void>((resolve) => {
+              video.oncanplaythrough = () => resolve();
+              video.onerror = () => resolve();
+              // Timeout after 30s per video to avoid blocking
+              setTimeout(resolve, 30_000);
+            });
+          } else {
+            const img = new Image();
+            img.src = src;
+            await new Promise<void>((resolve) => {
+              img.onload = () => resolve();
+              img.onerror = () => resolve();
+            });
+          }
+        } catch {
+          // Continue to next asset
+        }
+      }
+    }
+
+    preloadSequentially();
+
+    return () => { cancelled = true; };
   }, []);
 
   const advancePhase = useCallback(async () => {

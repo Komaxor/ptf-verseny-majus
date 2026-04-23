@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useGame } from "@/components/game/game-provider";
-import { Lock, Unlock, Lightbulb } from "lucide-react";
+import { Lock, Unlock, Lightbulb, ChevronUp, ChevronDown } from "lucide-react";
 
 interface HintPanelProps {
   round: number;
@@ -46,6 +46,7 @@ export function HintPanel({ round }: HintPanelProps) {
         <Lightbulb className="w-3 h-3" />
         Tippek (
         {hints.filter((h) => now >= startTime + h.unlock_after_minutes * 60000).length}/3)
+        {isOpen ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
       </button>
 
       {isOpen && (
@@ -68,7 +69,7 @@ export function HintPanel({ round }: HintPanelProps) {
                 >
                   <Lock className="w-3 h-3" />
                   <span>
-                    Tipp {hint.number} -- {min}:{sec.toString().padStart(2, "0")}
+                    Tipp {hint.number} - {min}:{sec.toString().padStart(2, "0")}
                   </span>
                 </div>
               );
@@ -93,7 +94,7 @@ export function HintPanel({ round }: HintPanelProps) {
                 className="flex items-center gap-2 text-xs text-white/40 hover:text-[#00ff88] transition-colors"
               >
                 <Unlock className="w-3 h-3" />
-                <span>Tipp {hint.number} felfedese</span>
+                <span>Tipp {hint.number} felfedése</span>
               </button>
             );
           })}

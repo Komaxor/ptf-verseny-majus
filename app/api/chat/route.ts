@@ -38,18 +38,18 @@ function buildToolDefinitions(round: number) {
 
 function getToolDescription(toolName: string): string {
   const descriptions: Record<string, string> = {
-    search_building_directory: "Az epulet berloi nyilvantartasanak keresese. Megmutatja, melyik ceg melyik emeleten es ajtoszamon talalhato.",
-    check_floor_plan: "Egy adott emelet alaprajzanak megtekintese. Megmutatja a szobak szamozasat es elrendezeseT.",
-    read_security_protocols: "Az epulet biztonsagi szabalyzatanak olvasasa.",
-    check_maintenance_schedule: "Az epulet karbantartasi utemtervenek megtekintese.",
-    read_building_rules: "Az epulet hazirendjenek olvasasa (nyitvatartas, szabalyok).",
-    check_announcements: "Az epulet legfrissebb kozlemenyeinek megtekintese.",
-    search_employee_directory: "A Mase Capital dolgozoi nevsoranak keresese nev vagy beosztas alapjan.",
-    check_visitor_policy: "A latogatoi szabalyzat megtekintese.",
-    check_daily_schedule: "A mai napi beosztas megtekintese: megbeszelesek, vart latogatok.",
-    read_company_profile: "A Mase Capital cegprofiljanak olvasasa.",
-    check_meeting_rooms: "A targyalotermek foglaltsaganak megtekintese.",
-    read_internal_memos: "Belso levelezes es kozlemenyek olvasasa.",
+    search_building_directory: "Az épület bérlői nyilvántartásának keresése. Megmutatja, melyik cég melyik emeleten és ajtószámon található.",
+    check_floor_plan: "Egy adott emelet alaprajzának megtekintése. Megmutatja a szobák számozását és elrendezését.",
+    read_security_protocols: "Az épület biztonsági szabályzatának olvasása.",
+    check_maintenance_schedule: "Az épület karbantartási ütemtervének megtekintése.",
+    read_building_rules: "Az épület házirendjének olvasása (nyitvatartás, szabályok).",
+    check_announcements: "Az épület legfrissebb közleményeinek megtekintése.",
+    search_employee_directory: "A Mase Capital dolgozói névsorának keresése név vagy beosztás alapján.",
+    check_visitor_policy: "A látogatói szabályzat megtekintése.",
+    check_daily_schedule: "A mai napi beosztás megtekintése: megbeszélések, várt látogatók.",
+    read_company_profile: "A Mase Capital cégprofiljának olvasása.",
+    check_meeting_rooms: "A tárgyalótermek foglaltságának megtekintése.",
+    read_internal_memos: "Belső levelezés és közlemények olvasása.",
     search_emails: "Search Viktor Mase's recent emails by keyword or sender.",
     read_file: "Open and read a file from Viktor's desktop or documents.",
     check_calendar: "View Viktor's upcoming calendar entries.",
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
     if (elapsed < CHAT_COOLDOWN_MS) {
       const waitTime = Math.ceil((CHAT_COOLDOWN_MS - elapsed) / 1000)
       return new Response(
-        JSON.stringify({ error: `Kerlek varj ${waitTime} masodpercet.`, rateLimited: true, waitTime }),
+        JSON.stringify({ error: `Kérlek várj ${waitTime} másodpercet.`, rateLimited: true, waitTime }),
         { status: 429, headers: { "Content-Type": "application/json" } }
       )
     }

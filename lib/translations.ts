@@ -1,42 +1,42 @@
-// Hungarian translations for the Citadel Plaza heist competition
+// Hungarian translations for the April prompt engineering competition
 // This file centralizes all UI text for easy localization
 
 export const t = {
   // Chat Interface
   chat: {
     aiHelpdesk: "(AI asszisztens)",
-    placeholder: "Irj uzenetet...",
-    errorMessage: "Hiba tortent. Kerlek probald ujra.",
-    defaultWelcome: (name: string) => `Udvozlom! ${name} vagyok, miben segithetek?`,
+    placeholder: "Írj üzenetet...",
+    errorMessage: "Hiba történt. Kérlek próbáld újra.",
+    defaultWelcome: (name: string) => `Üdvözlöm! ${name} vagyok, miben segíthetek?`,
   },
 
   // Round labels
   round: {
     label: (n: number) => `${n}. szoba`,
     round1: "1. szoba — Aula",
-    round2: "2. szoba — Recepcio",
+    round2: "2. szoba — Recepció",
     round3: "3. szoba — Iroda",
-    doorTry: "Ajto kiprobalasa",
-    contextClear: "Kontextus torlese",
-    contextCleared: "Kontextus torolve. Uj beszelgetes indult.",
+    doorTry: "Ajtó kipróbálása",
+    contextClear: "Kontextus törlése",
+    contextCleared: "Kontextus törölve. Új beszélgetés indult.",
     hintButton: "Tipp",
-    noHints: "Nincs elerheto tipp ehhez a szobához.",
-    hintNotYet: (minutes: number) => `Ez a tipp ${minutes} perc mulva lesz elerheto.`,
+    noHints: "Nincs elérhető tipp ehhez a szobához.",
+    hintNotYet: (minutes: number) => `Ez a tipp ${minutes} perc múlva lesz elérhető.`,
   },
 
   // Passcode / answer entry
   passcode: {
-    enterTitle: (type: string) => `${type} megadasa`,
-    submitHint: "Add meg a valaszt",
-    verifyButton: "Bekuldés",
-    defaultError: "Hibas valasz! Probald ujra.",
-    rateLimitError: (seconds: number) => `Kerlek varj ${seconds} masodpercet a kovetkezo probalkozas elott.`,
-    verificationFailed: "Ellenorzes sikertelen. Probald ujra.",
+    enterTitle: (type: string) => `${type} megadása`,
+    submitHint: "Add meg a választ",
+    verifyButton: "Beküldés",
+    defaultError: "Hibás válasz! Próbáld újra.",
+    rateLimitError: (seconds: number) => `Kérlek várj ${seconds} másodpercet a következő próbálkozás előtt.`,
+    verificationFailed: "Ellenőrzés sikertelen. Próbáld újra.",
   },
 
   // Success / heist report
   success: {
-    congratulations: "Gratulalunk!",
+    congratulations: "Gratulálunk!",
     heistComplete: "Sikeresen behatoltál a Citadel Plazába!",
     heistReport: "Betörési jelentés",
     totalTime: "Összes idő",
@@ -51,7 +51,7 @@ export const t = {
   // Login Page
   login: {
     title: "Prompt The Flag",
-    subtitle: "Citadel Plaza — Add meg a kapott jelszavadat",
+    subtitle: "Áprilisi promptverseny — Add meg a kapott jelszavadat",
     passwordLabel: "Jelszó",
     passwordPlaceholder: "Add meg a jelszavad",
     loginButton: "Belépés",
@@ -63,7 +63,7 @@ export const t = {
   // Waiting Page
   waiting: {
     title: "Prompt The Flag",
-    subtitle: "Citadel Plaza — A küldetés hamarosan kezdődik!",
+    subtitle: "Áprilisi promptverseny — A küldetés hamarosan kezdődik!",
     startsIn: "Kezdés:",
     days: "nap",
     hours: "óra",
@@ -94,7 +94,7 @@ export const t = {
     title: "A küldetés véget ért",
     subtitle: "Köszönjük a részvételt!",
     resultsMessage: "Az eredmények hamarosan elérhetők lesznek.",
-    thanksForParticipating: "Köszönjük, hogy részt vettél a Citadel Plaza küldetésén!",
+    thanksForParticipating: "Köszönjük, hogy részt vettél az áprilisi promptversenyen!",
   },
 
   // Competition
