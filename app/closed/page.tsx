@@ -2,7 +2,8 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight, Shield } from "lucide-react"
+import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight } from "lucide-react"
+import Image from "next/image"
 import { PromptversenyFooter } from "@/components/promptverseny-footer"
 import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal"
 import { Button } from "@/components/ui/button"
@@ -74,8 +75,8 @@ export default function ClosedPage() {
       <div className="relative z-10 text-center max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center p-4">
         {/* Logo */}
         <div className="flex items-center justify-center mb-6">
-          <div className="w-20 h-20 bg-[#00ff88]/10 border-2 border-[#00ff88]/40 rounded-2xl flex items-center justify-center">
-            <Shield className="w-10 h-10 text-[#00ff88]" />
+          <div className="w-20 h-20 rounded-2xl overflow-hidden">
+            <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={80} height={80} className="w-full h-full object-cover" />
           </div>
         </div>
 

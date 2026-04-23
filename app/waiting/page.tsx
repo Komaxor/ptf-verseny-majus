@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Clock, Shield } from "lucide-react"
+import { Clock } from "lucide-react"
+import Image from "next/image"
 import { t } from "@/lib/translations"
 import MatrixBg from "@/components/matrix-bg"
 import { COMPETITION_START, COMPETITION_END } from "@/lib/config"
@@ -66,8 +67,8 @@ export default function WaitingPage() {
       <div className="relative z-10 text-center max-w-2xl mx-auto">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-20 h-20 bg-[#00ff88]/10 border-2 border-[#00ff88]/40 rounded-2xl flex items-center justify-center">
-            <Shield className="w-10 h-10 text-[#00ff88]" />
+          <div className="w-20 h-20 rounded-2xl overflow-hidden">
+            <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={80} height={80} className="w-full h-full object-cover" />
           </div>
         </div>
 

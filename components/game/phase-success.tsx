@@ -11,9 +11,9 @@ import {
   User,
   Loader2,
   Download,
-  Shield,
   ArrowRight,
 } from "lucide-react";
+import Image from "next/image";
 import { jsPDF } from "jspdf";
 import { PromptversenyFooter } from "@/components/promptverseny-footer";
 import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal";
@@ -240,8 +240,8 @@ export function PhaseSuccess() {
     <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col">
       <div className="text-center max-w-3xl mx-auto flex-1 flex flex-col items-center justify-center p-4 py-12">
         {/* Icon */}
-        <div className="w-20 h-20 rounded-full bg-[#00ff88]/10 flex items-center justify-center mb-6 border border-[#00ff88]/20">
-          <Shield className="w-10 h-10 text-[#00ff88]" />
+        <div className="w-20 h-20 rounded-2xl overflow-hidden mb-6">
+          <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={80} height={80} className="w-full h-full object-cover" />
         </div>
 
         {/* Title */}
