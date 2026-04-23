@@ -6,7 +6,14 @@ import { ChatInput } from "./chat-input";
 import { ChatMessage } from "./chat-message";
 import { ClearContextButton } from "./clear-context-button";
 import { TryDoorButton } from "./try-door-button";
-import { Loader2, Bot } from "lucide-react";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
+
+const CHAT_AVATARS: Record<number, string> = {
+  1: "/images/adel-crop.png",
+  2: "/images/vanda-crop.png",
+  3: "/images/copilot-crop.png",
+};
 
 export function ChatInterface() {
   const { chatMessages, currentRound, isChatStreaming } = useGame();
@@ -18,6 +25,7 @@ export function ChatInterface() {
   }, [chatMessages]);
 
   const isRound2 = currentRound === 2;
+  const avatarSrc = currentRound ? CHAT_AVATARS[currentRound] : null;
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
@@ -27,8 +35,12 @@ export function ChatInterface() {
         ))}
         {isChatStreaming && chatMessages[chatMessages.length - 1]?.content === "" && (
           <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-              <Bot className="w-4 h-4 text-white/60" />
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-white/10 shrink-0">
+              {avatarSrc ? (
+                <Image src={avatarSrc} alt="" width={32} height={32} className="object-cover w-full h-full" />
+              ) : (
+                <div className="w-full h-full bg-white/10" />
+              )}
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 flex items-center gap-2">
               <Loader2 className="w-4 h-4 animate-spin text-white/40" />
