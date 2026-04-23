@@ -1,6 +1,6 @@
 // April 2026 Heist Competition
-export const COMPETITION_START = new Date("2026-04-23T00:47:00Z"); // TEMP: manual testing
-export const COMPETITION_END = new Date("2026-04-23T01:47:00Z");   // TEMP: manual testing
+export const COMPETITION_START = new Date("2026-04-23T18:00:00Z"); // 20:00 CET
+export const COMPETITION_END = new Date("2026-04-23T19:00:00Z");   // 21:00 CET
 export const COMPETITION_LENGTH_MINUTES = 60;
 
 export const PHASES = [

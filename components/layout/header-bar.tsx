@@ -53,7 +53,12 @@ export function HeaderBar() {
         </div>
       )}
 
-      <div className="flex items-center gap-2 text-white/60 text-sm font-mono" title="Hátralévő idő">
+      <div
+        className={`flex items-center gap-2 text-sm font-mono ${
+          minutes < 1 ? "text-red-500" : minutes < 5 ? "text-yellow-400" : "text-white/60"
+        }`}
+        title="Hátralévő idő"
+      >
         <Timer className="w-4 h-4" />
         {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
       </div>
