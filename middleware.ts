@@ -42,12 +42,19 @@ export async function middleware(request: NextRequest) {
   }
 
   if (competitionStatus === "after") {
-    // Allow these APIs through after competition
+    // Allow post-competition APIs for everyone
     if (pathname === "/api/closed-metrics" || pathname === "/api/solve-metrics" || pathname === "/api/subscribe-email" || pathname === "/api/set-username") {
       return NextResponse.next()
     }
 
-    // After competition: solved users go to /success, everyone else to /closed
+    // Block new logins
+    if (pathname === "/api/login" || pathname === "/login") {
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json({ error: "A verseny már véget ért." }, { status: 403 })
+      }
+      return NextResponse.redirect(new URL("/closed", request.url))
+    }
+
     const sessionToken = request.cookies.get("competition_session")?.value
     if (sessionToken) {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -62,17 +69,29 @@ export async function middleware(request: NextRequest) {
             .select("id, is_solved")
             .eq("session_token", sessionToken)
             .single()
+
           if (user?.is_solved) {
+            // Already solved — go to success page
             if (pathname !== "/success") {
               return NextResponse.redirect(new URL("/success", request.url))
             }
             return NextResponse.next()
+          }
+
+          if (user) {
+            // Valid session, not solved — let them continue (overtime)
+            const requestHeaders = new Headers(request.headers)
+            requestHeaders.set("x-user-id", user.id)
+            requestHeaders.set("x-user-solved", "false")
+            return NextResponse.next({ request: { headers: requestHeaders } })
           }
         } catch {
           // If validation fails, fall through to /closed
         }
       }
     }
+
+    // No valid session — redirect to /closed
     if (pathname.startsWith("/api/")) {
       return NextResponse.json({ error: "A verseny véget ért." }, { status: 403 })
     }
