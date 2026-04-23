@@ -2979,7 +2979,7 @@ Update `public/manifest.json` with heist branding:
 
 ```json
 {
-  "name": "Prompt The Flag — Citadel Plaza",
+  "name": "Promptverseny — Citadel Plaza",
   "short_name": "PTF Heist",
   "start_url": "/",
   "display": "standalone",

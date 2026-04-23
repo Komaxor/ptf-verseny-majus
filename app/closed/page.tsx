@@ -149,7 +149,7 @@ export default function ClosedPage() {
         <div className="mt-8 w-full max-w-lg mx-auto">
           <Button
             onClick={() => {
-              const text = `Részt vettem a Prompt The Flag áprilisi kihíváson!\n\nHárom AI-karakterrel kellett kommunikálnom, hogy bejussak az épületbe. Prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`
+              const text = `Részt vettem a Promptverseny áprilisi kihívásán!\n\nHárom AI-karakterrel kellett kommunikálnom, hogy bejussak az épületbe. Prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`
               window.open(url, "_blank", "noopener,noreferrer")
             }}

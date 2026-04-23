@@ -50,7 +50,7 @@ export const t = {
 
   // Login Page
   login: {
-    title: "Prompt The Flag",
+    title: "Promptverseny",
     subtitle: "Áprilisi promptverseny — Add meg a kapott jelszavadat",
     passwordLabel: "Jelszó",
     passwordPlaceholder: "Add meg a jelszavad",
@@ -62,8 +62,8 @@ export const t = {
 
   // Waiting Page
   waiting: {
-    title: "Prompt The Flag",
-    subtitle: "Áprilisi promptverseny — A küldetés hamarosan kezdődik!",
+    title: "Áprilisi Promptverseny",
+    subtitle: "A küldetés hamarosan kezdődik!",
     startsIn: "Kezdés:",
     days: "nap",
     hours: "óra",
