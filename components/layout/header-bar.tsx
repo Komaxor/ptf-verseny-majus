@@ -1,13 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useGame } from "@/components/game/game-provider";
 import { COMPETITION_END, PHASE_ROUND } from "@/lib/config";
 import { Timer } from "lucide-react";
 
 export function HeaderBar() {
   const { gameState, phase } = useGame();
+  const router = useRouter();
   const [remaining, setRemaining] = useState(0);
+  const [givingUp, setGivingUp] = useState(false);
   const currentRound = PHASE_ROUND[phase] ?? null;
 
   // Timer: counts down to competition end
@@ -77,6 +80,20 @@ export function HeaderBar() {
           ? "LEZÁRULT"
           : `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}
       </div>
+
+      {remaining === 0 && (
+        <button
+          disabled={givingUp}
+          onClick={async () => {
+            setGivingUp(true);
+            await fetch("/api/give-up", { method: "POST" });
+            router.replace("/closed");
+          }}
+          className="px-3 py-1.5 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-sm font-medium rounded transition-colors"
+        >
+          Feladom
+        </button>
+      )}
     </header>
   );
 }
