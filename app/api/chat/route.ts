@@ -225,13 +225,13 @@ export async function POST(request: NextRequest) {
     const encoder = new TextEncoder()
     let fullContent = ""
 
-    // Stream a single OpenAI call; accumulate tool-call deltas if any.
-    // Returns true if the model called tools (caller should loop).
+    // Consume one streaming OpenAI call. Forwards text tokens to the writer
+    // and returns accumulated tool calls (empty array if none).
     async function streamOnce(
-      controller: ReadableStreamDefaultController,
-    ): Promise<boolean> {
+      writer: WritableStreamDefaultWriter<Uint8Array>,
+    ) {
       const openaiStream = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4.1-mini",
         messages,
         tools,
         stream: true,
@@ -243,15 +243,13 @@ export async function POST(request: NextRequest) {
       for await (const chunk of openaiStream) {
         const delta = chunk.choices[0]?.delta
 
-        // Forward text tokens to client immediately
         if (delta?.content) {
           fullContent += delta.content
-          controller.enqueue(
+          await writer.write(
             encoder.encode(`data: ${JSON.stringify({ content: delta.content })}\n\n`)
           )
         }
 
-        // Accumulate tool-call deltas
         if (delta?.tool_calls) {
           for (const tc of delta.tool_calls) {
             const idx = tc.index ?? 0
@@ -265,53 +263,58 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      if (accToolCalls.length === 0) return false
-
-      // Model requested tool calls — resolve them and add to messages
-      messages.push({ role: "assistant", content: null, tool_calls: accToolCalls })
-
-      await logChatMessage(
-        session.sessionId, user.id, round, "tool_call",
-        JSON.stringify({ tool_calls: accToolCalls })
-      )
-
-      for (const tc of accToolCalls) {
-        const toolResult = await resolveToolCall(tc)
-        messages.push({ role: "tool", tool_call_id: tc.id, content: toolResult })
-
-        await logChatMessage(
-          session.sessionId, user.id, round, "tool_result",
-          JSON.stringify({ tool_call_id: tc.id, content: toolResult })
-        )
-      }
-
-      return true
+      return accToolCalls
     }
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          // Stream with tool-call loop: each iteration streams tokens to the
-          // client; if the model calls tools, resolve them and stream again.
-          // eslint-disable-next-line no-empty
-          while (await streamOnce(controller)) {}
+    const { readable, writable } = new TransformStream<Uint8Array>()
+    const writer = writable.getWriter()
 
-          controller.enqueue(encoder.encode(`data: [DONE]\n\n`))
-          controller.close()
+    // Drive the stream in the background — the Response starts flushing
+    // readable to the client immediately.
+    const pump = (async () => {
+      try {
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const toolCalls = await streamOnce(writer)
+          if (toolCalls.length === 0) break
 
-          const responseTimeMs = Date.now() - requestStartTime
+          // Resolve tool calls and feed results back for the next iteration
+          messages.push({ role: "assistant", content: null, tool_calls: toolCalls } as OpenAI.Chat.Completions.ChatCompletionMessageParam)
+
           await logChatMessage(
-            session.sessionId, user.id, round, "assistant", fullContent,
-            responseTimeMs
+            session.sessionId, user.id, round, "tool_call",
+            JSON.stringify({ tool_calls: toolCalls })
           )
-        } catch (err) {
-          console.error("[chat] Stream error:", err)
-          controller.error(err)
-        }
-      },
-    })
 
-    return new Response(stream, {
+          for (const tc of toolCalls) {
+            const toolResult = await resolveToolCall(tc)
+            messages.push({ role: "tool", tool_call_id: tc.id, content: toolResult })
+
+            await logChatMessage(
+              session.sessionId, user.id, round, "tool_result",
+              JSON.stringify({ tool_call_id: tc.id, content: toolResult })
+            )
+          }
+        }
+
+        await writer.write(encoder.encode(`data: [DONE]\n\n`))
+        await writer.close()
+
+        const responseTimeMs = Date.now() - requestStartTime
+        await logChatMessage(
+          session.sessionId, user.id, round, "assistant", fullContent,
+          responseTimeMs
+        )
+      } catch (err) {
+        console.error("[chat] Stream error:", err)
+        await writer.abort(err instanceof Error ? err : new Error(String(err)))
+      }
+    })()
+
+    // Prevent unhandled rejection if pump fails after response is sent
+    pump.catch(() => {})
+
+    return new Response(readable, {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
