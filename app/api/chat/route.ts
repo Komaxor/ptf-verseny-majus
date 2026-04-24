@@ -222,71 +222,80 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Agent loop: handle tool calls with non-streaming requests first
-    let needsToolLoop = true
-    while (needsToolLoop) {
-      const response = await openai.chat.completions.create({
+    const encoder = new TextEncoder()
+    let fullContent = ""
+
+    // Stream a single OpenAI call; accumulate tool-call deltas if any.
+    // Returns true if the model called tools (caller should loop).
+    async function streamOnce(
+      controller: ReadableStreamDefaultController,
+    ): Promise<boolean> {
+      const openaiStream = await openai.chat.completions.create({
         model: "gpt-4o",
         messages,
         tools,
-        stream: false,
+        stream: true,
       })
 
-      if (response.choices[0]?.finish_reason === "tool_calls") {
-        const toolCalls = response.choices[0].message.tool_calls || []
-        messages.push(response.choices[0].message)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const accToolCalls: any[] = []
 
-        // Persist the assistant's tool_call message
-        await logChatMessage(
-          session.sessionId, user.id, round, "tool_call",
-          JSON.stringify({ tool_calls: toolCalls })
-        )
+      for await (const chunk of openaiStream) {
+        const delta = chunk.choices[0]?.delta
 
-        for (const toolCall of toolCalls) {
-          const toolResult = await resolveToolCall(toolCall)
-          messages.push({
-            role: "tool",
-            tool_call_id: toolCall.id,
-            content: toolResult,
-          })
-
-          // Persist the tool result
-          await logChatMessage(
-            session.sessionId, user.id, round, "tool_result",
-            JSON.stringify({ tool_call_id: toolCall.id, content: toolResult })
+        // Forward text tokens to client immediately
+        if (delta?.content) {
+          fullContent += delta.content
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ content: delta.content })}\n\n`)
           )
         }
-        // Continue loop — model may call more tools
-      } else {
-        // No tool calls — discard this non-streaming response,
-        // we'll re-request with streaming below
-        needsToolLoop = false
+
+        // Accumulate tool-call deltas
+        if (delta?.tool_calls) {
+          for (const tc of delta.tool_calls) {
+            const idx = tc.index ?? 0
+            if (!accToolCalls[idx]) {
+              accToolCalls[idx] = { id: "", function: { name: "", arguments: "" } }
+            }
+            if (tc.id) accToolCalls[idx].id = tc.id
+            if (tc.function?.name) accToolCalls[idx].function.name += tc.function.name
+            if (tc.function?.arguments) accToolCalls[idx].function.arguments += tc.function.arguments
+          }
+        }
       }
+
+      if (accToolCalls.length === 0) return false
+
+      // Model requested tool calls — resolve them and add to messages
+      messages.push({ role: "assistant", content: null, tool_calls: accToolCalls })
+
+      await logChatMessage(
+        session.sessionId, user.id, round, "tool_call",
+        JSON.stringify({ tool_calls: accToolCalls })
+      )
+
+      for (const tc of accToolCalls) {
+        const toolResult = await resolveToolCall(tc)
+        messages.push({ role: "tool", tool_call_id: tc.id, content: toolResult })
+
+        await logChatMessage(
+          session.sessionId, user.id, round, "tool_result",
+          JSON.stringify({ tool_call_id: tc.id, content: toolResult })
+        )
+      }
+
+      return true
     }
-
-    // Final call: stream the text response to the client
-    const finalStream = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages,
-      tools,
-      stream: true,
-    })
-
-    const encoder = new TextEncoder()
-    let fullContent = ""
 
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          for await (const chunk of finalStream) {
-            // If the model decides to call a tool during streaming, skip it
-            const delta = chunk.choices[0]?.delta?.content
-            if (delta) {
-              fullContent += delta
-              const data = JSON.stringify({ content: delta })
-              controller.enqueue(encoder.encode(`data: ${data}\n\n`))
-            }
-          }
+          // Stream with tool-call loop: each iteration streams tokens to the
+          // client; if the model calls tools, resolve them and stream again.
+          // eslint-disable-next-line no-empty
+          while (await streamOnce(controller)) {}
+
           controller.enqueue(encoder.encode(`data: [DONE]\n\n`))
           controller.close()
 
