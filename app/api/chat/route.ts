@@ -173,7 +173,9 @@ export async function POST(request: NextRequest) {
       // Stored as JSON: { tool_calls: [...] }
       try {
         const parsed = JSON.parse(m.content)
-        messages.push({ role: "assistant", content: null, tool_calls: parsed.tool_calls })
+        // Ensure each tool_call has the required `type` field
+        const toolCalls = parsed.tool_calls.map((tc: Record<string, unknown>) => ({ type: "function", ...tc }))
+        messages.push({ role: "assistant", content: null, tool_calls: toolCalls })
       } catch {
         // Skip malformed tool_call records
       }
@@ -254,7 +256,7 @@ export async function POST(request: NextRequest) {
           for (const tc of delta.tool_calls) {
             const idx = tc.index ?? 0
             if (!accToolCalls[idx]) {
-              accToolCalls[idx] = { id: "", function: { name: "", arguments: "" } }
+              accToolCalls[idx] = { id: "", type: "function", function: { name: "", arguments: "" } }
             }
             if (tc.id) accToolCalls[idx].id = tc.id
             if (tc.function?.name) accToolCalls[idx].function.name += tc.function.name
