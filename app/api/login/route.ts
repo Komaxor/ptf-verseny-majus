@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     // Find user by password
     const { data: user, error: findError } = await supabase
       .from("april_competition_users")
-      .select("id, first_login_at, is_solved, session_token")
+      .select("id, first_login_at, is_solved, session_token, gave_up_at")
       .eq("generated_password", trimmedPassword)
       .single()
 
@@ -125,11 +125,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Prevent simultaneous sessions: if someone is already logged in
-    // with this password and it's not the same person re-entering, block it
+    // Prevent simultaneous sessions: only block if a DIFFERENT user
+    // (different browser with a different active cookie) tries to use the same password.
+    // No cookie = retry from same user (lost cookie / failed redirect), allow it.
+    // Gave-up users are always allowed to re-login.
     const cookieStore = await cookies()
     const existingCookie = cookieStore.get("competition_session")?.value
-    if (user.session_token && existingCookie !== user.session_token) {
+    if (user.session_token && existingCookie && existingCookie !== user.session_token && !user.gave_up_at) {
       return NextResponse.json(
         { success: false, error: "Ez a jelszó már használatban van." },
         { status: 409 }

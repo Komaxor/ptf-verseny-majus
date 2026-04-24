@@ -209,8 +209,16 @@ export async function POST(request: NextRequest) {
         const knownFiles = roundMap ? Object.values(roundMap) : []
         if (requested && knownFiles.includes(requested)) {
           fileName = requested
+        } else if (requested) {
+          // Unknown filename — return error with available files
+          const availableFiles = knownFiles.map((f) => `${f}.md`).join(", ")
+          await logToolCall(session.sessionId, user!.id, round, toolName)
+          return `Hiba: A(z) "${args.filename}" fájl nem található. Elérhető fájlok: ${availableFiles}`
         } else {
-          fileName = getToolFileName(round, toolName)
+          // No filename provided
+          const availableFiles = knownFiles.map((f) => `${f}.md`).join(", ")
+          await logToolCall(session.sessionId, user!.id, round, toolName)
+          return `Kérlek, add meg a fájlnevet. Elérhető fájlok: ${availableFiles}`
         }
       } else {
         fileName = getToolFileName(round, toolName)
