@@ -51,7 +51,7 @@ export interface GameState {
 
 export interface ChatMessage {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "tool_call" | "tool_result";
   content: string;
   created_at: string;
   video?: string;

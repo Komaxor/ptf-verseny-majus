@@ -15,11 +15,20 @@ export function ChatInput() {
   const autoResize = useCallback(() => {
     const ta = textareaRef.current;
     if (!ta) return;
-    ta.style.height = "0";
-    const lineHeight = parseFloat(getComputedStyle(ta).lineHeight) || 20;
-    const maxHeight = lineHeight * MAX_ROWS;
-    const minHeight = lineHeight + ta.offsetHeight - ta.clientHeight; // one row + border/padding
-    ta.style.height = `${Math.max(minHeight, Math.min(ta.scrollHeight, maxHeight))}px`;
+    // Temporarily hide overflow and collapse to measure true content height
+    ta.style.overflow = "hidden";
+    ta.style.height = "auto";
+    const computed = getComputedStyle(ta);
+    const lineHeight = parseFloat(computed.lineHeight) || 20;
+    const paddingY =
+      parseFloat(computed.paddingTop) + parseFloat(computed.paddingBottom);
+    const borderY =
+      parseFloat(computed.borderTopWidth) + parseFloat(computed.borderBottomWidth);
+    const minHeight = lineHeight + paddingY + borderY;
+    const maxHeight = lineHeight * MAX_ROWS + paddingY + borderY;
+    const contentHeight = ta.scrollHeight;
+    ta.style.height = `${Math.max(minHeight, Math.min(contentHeight, maxHeight))}px`;
+    ta.style.overflow = contentHeight > maxHeight ? "auto" : "hidden";
   }, []);
 
   useEffect(() => {
@@ -53,7 +62,7 @@ export function ChatInput() {
         rows={1}
         placeholder="Írj üzenetet..."
         disabled={isSending}
-        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface resize-none leading-5 overflow-y-auto"
+        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface resize-none leading-5 overflow-hidden"
       />
       <button
         onClick={handleSubmit}

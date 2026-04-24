@@ -165,109 +165,140 @@ export async function POST(request: NextRequest) {
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: systemPrompt },
     { role: "assistant", content: welcomeMessage },
-    ...priorMessages.map((m) => ({
-      role: m.role as "user" | "assistant",
-      content: m.content,
-    })),
   ]
+
+  // Reconstruct prior messages including tool calls
+  for (const m of priorMessages) {
+    if (m.role === "tool_call") {
+      // Stored as JSON: { tool_calls: [...] }
+      try {
+        const parsed = JSON.parse(m.content)
+        messages.push({ role: "assistant", content: null, tool_calls: parsed.tool_calls })
+      } catch {
+        // Skip malformed tool_call records
+      }
+    } else if (m.role === "tool_result") {
+      // Stored as JSON: { tool_call_id, content }
+      try {
+        const parsed = JSON.parse(m.content)
+        messages.push({ role: "tool", tool_call_id: parsed.tool_call_id, content: parsed.content })
+      } catch {
+        // Skip malformed tool_result records
+      }
+    } else {
+      messages.push({ role: m.role as "user" | "assistant", content: m.content })
+    }
+  }
 
   // Tool definitions
   const tools = buildToolDefinitions(round)
 
-  try {
-    // Agent loop: call OpenAI, handle tool calls, repeat until text response
-    let response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages,
-      tools,
-      stream: false,
-    })
-
-    // Handle tool calls iteratively
-    while (response.choices[0]?.finish_reason === "tool_calls") {
-      const toolCalls = response.choices[0].message.tool_calls || []
-      messages.push(response.choices[0].message)
-
-      for (const toolCall of toolCalls) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const fn = (toolCall as any).function as { name: string; arguments: string }
-        const toolName = fn.name
-        let toolResult: string
-
-        try {
-          let fileName: string
-          if (toolName === "read_file") {
-            // Parse the filename argument from the model's tool call
-            const args = JSON.parse(fn.arguments || "{}")
-            const requested = (args.filename || "").replace(/\.md$/, "")
-            // Validate against known files for this round
-            const roundMap = TOOL_FILE_MAP[round]
-            const knownFiles = roundMap ? Object.values(roundMap) : []
-            if (requested && knownFiles.includes(requested)) {
-              fileName = requested
-            } else {
-              fileName = getToolFileName(round, toolName)
-            }
-          } else {
-            fileName = getToolFileName(round, toolName)
-          }
-          toolResult = loadToolFile(round, fileName)
-          // Log tool call
-          await logToolCall(session.sessionId, user.id, round, toolName)
-        } catch {
-          toolResult = JSON.stringify({ error: "File not found" })
+  // Helper: resolve a tool call to its result string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async function resolveToolCall(toolCall: any): Promise<string> {
+    const fn = toolCall.function as { name: string; arguments: string }
+    const toolName = fn.name
+    try {
+      let fileName: string
+      if (toolName === "read_file") {
+        const args = JSON.parse(fn.arguments || "{}")
+        const requested = (args.filename || "").replace(/\.md$/, "")
+        const roundMap = TOOL_FILE_MAP[round]
+        const knownFiles = roundMap ? Object.values(roundMap) : []
+        if (requested && knownFiles.includes(requested)) {
+          fileName = requested
+        } else {
+          fileName = getToolFileName(round, toolName)
         }
-
-        messages.push({
-          role: "tool",
-          tool_call_id: toolCall.id,
-          content: toolResult,
-        })
+      } else {
+        fileName = getToolFileName(round, toolName)
       }
+      const result = loadToolFile(round, fileName)
+      await logToolCall(session.sessionId, user.id, round, toolName)
+      return result
+    } catch {
+      return JSON.stringify({ error: "File not found" })
+    }
+  }
 
-      // Call again with tool results
-      response = await openai.chat.completions.create({
+  try {
+    // Agent loop: handle tool calls with non-streaming requests first
+    let needsToolLoop = true
+    while (needsToolLoop) {
+      const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages,
         tools,
         stream: false,
       })
+
+      if (response.choices[0]?.finish_reason === "tool_calls") {
+        const toolCalls = response.choices[0].message.tool_calls || []
+        messages.push(response.choices[0].message)
+
+        // Persist the assistant's tool_call message
+        await logChatMessage(
+          session.sessionId, user.id, round, "tool_call",
+          JSON.stringify({ tool_calls: toolCalls })
+        )
+
+        for (const toolCall of toolCalls) {
+          const toolResult = await resolveToolCall(toolCall)
+          messages.push({
+            role: "tool",
+            tool_call_id: toolCall.id,
+            content: toolResult,
+          })
+
+          // Persist the tool result
+          await logChatMessage(
+            session.sessionId, user.id, round, "tool_result",
+            JSON.stringify({ tool_call_id: toolCall.id, content: toolResult })
+          )
+        }
+        // Continue loop — model may call more tools
+      } else {
+        // No tool calls — discard this non-streaming response,
+        // we'll re-request with streaming below
+        needsToolLoop = false
+      }
     }
 
-    // Get the final response content
-    const finalContent = response.choices[0]?.message?.content || ""
-    const responseTimeMs = Date.now() - requestStartTime
-    const usage = response.usage
+    // Final call: stream the text response to the client
+    const finalStream = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages,
+      tools,
+      stream: true,
+    })
 
-    // Log assistant message
-    await logChatMessage(
-      session.sessionId, user.id, round, "assistant", finalContent,
-      responseTimeMs,
-      usage ? {
-        prompt_tokens: usage.prompt_tokens,
-        completion_tokens: usage.completion_tokens,
-        total_tokens: usage.total_tokens,
-      } : undefined
-    )
-
-    // Stream the response via SSE (simulated streaming for consistent UX)
     const encoder = new TextEncoder()
+    let fullContent = ""
+
     const stream = new ReadableStream({
-      start(controller) {
-        const words = finalContent.split(" ")
-        let i = 0
-        const interval = setInterval(() => {
-          if (i < words.length) {
-            const chunk = (i === 0 ? "" : " ") + words[i]
-            const data = JSON.stringify({ content: chunk })
-            controller.enqueue(encoder.encode(`data: ${data}\n\n`))
-            i++
-          } else {
-            controller.enqueue(encoder.encode(`data: [DONE]\n\n`))
-            controller.close()
-            clearInterval(interval)
+      async start(controller) {
+        try {
+          for await (const chunk of finalStream) {
+            // If the model decides to call a tool during streaming, skip it
+            const delta = chunk.choices[0]?.delta?.content
+            if (delta) {
+              fullContent += delta
+              const data = JSON.stringify({ content: delta })
+              controller.enqueue(encoder.encode(`data: ${data}\n\n`))
+            }
           }
-        }, 30) // ~30ms per word for natural feel
+          controller.enqueue(encoder.encode(`data: [DONE]\n\n`))
+          controller.close()
+
+          const responseTimeMs = Date.now() - requestStartTime
+          await logChatMessage(
+            session.sessionId, user.id, round, "assistant", fullContent,
+            responseTimeMs
+          )
+        } catch (err) {
+          console.error("[chat] Stream error:", err)
+          controller.error(err)
+        }
       },
     })
 

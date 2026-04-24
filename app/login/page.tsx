@@ -4,6 +4,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 
 import { Loader2, AlertTriangle, KeyRound } from "lucide-react"
+import { SoundToggle } from "@/components/sound-toggle"
 import Image from "next/image"
 import { COMPETITION_END } from "@/lib/config"
 import MatrixBg from "@/components/matrix-bg"
@@ -126,8 +127,13 @@ export default function LoginPage() {
           </form>
         </div>
 
+        {/* Sound toggle */}
+        <div className="flex items-center justify-center mt-6">
+          <SoundToggle />
+        </div>
+
         {/* Footer hint */}
-        <p className="text-center text-xs text-white/60 mt-6">
+        <p className="text-center text-xs text-white/60 mt-4">
           A kódot a szervezők küldték emailen. Nem kaptál belépő kódot? Hívd a +36 30 477 5557 telefonszámot és Márk ad neked.
         </p>
       </main>

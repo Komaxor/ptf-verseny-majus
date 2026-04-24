@@ -166,7 +166,7 @@ export async function logChatMessage(
   sessionId: string | null,
   userId: string,
   round: number,
-  role: "user" | "assistant",
+  role: "user" | "assistant" | "tool_call" | "tool_result",
   content: string,
   responseTimeMs?: number,
   tokenUsage?: TokenUsage,

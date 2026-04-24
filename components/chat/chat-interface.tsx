@@ -42,9 +42,11 @@ export function ChatInterface() {
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
-        {chatMessages.map((msg) => (
-          <ChatMessage key={msg.id} message={msg} />
-        ))}
+        {chatMessages.map((msg) =>
+          msg.role === "assistant" && msg.content === "" ? null : (
+            <ChatMessage key={msg.id} message={msg} />
+          )
+        )}
         {isChatStreaming && chatMessages[chatMessages.length - 1]?.content === "" && (
           <div className="flex gap-3" role="status" aria-live="polite">
             <div className="w-8 h-8 rounded-full overflow-hidden bg-white/10 shrink-0">

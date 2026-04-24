@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Clock } from "lucide-react"
+import { SoundToggle } from "@/components/sound-toggle"
 import Image from "next/image"
 import { t } from "@/lib/translations"
 import MatrixBg from "@/components/matrix-bg"
@@ -134,6 +135,9 @@ export default function WaitingPage() {
           </button>
         )}
 
+        <div className="flex items-center justify-center mb-4">
+          <SoundToggle />
+        </div>
         <p className="text-sm text-gray-400 text-center">Áprilisi promptverseny</p>
       </main>
     </div>

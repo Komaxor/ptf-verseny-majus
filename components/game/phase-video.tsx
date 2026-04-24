@@ -14,7 +14,7 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
   const [showSkip, setShowSkip] = useState(false);
   const [isMuted, setIsMuted] = useState(() => {
     if (typeof window === "undefined") return true;
-    return localStorage.getItem("video_muted") !== "false";
+    return localStorage.getItem("video_muted") === "true";
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
   const handlePlay = () => {
     const video = videoRef.current;
     if (!video) return;
-    if (localStorage.getItem("video_muted") === "false") {
+    if (localStorage.getItem("video_muted") !== "true") {
       try {
         video.muted = false;
         setIsMuted(false);

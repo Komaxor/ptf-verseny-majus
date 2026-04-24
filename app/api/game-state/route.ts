@@ -51,9 +51,14 @@ export async function GET() {
     .select("round, hint_number")
     .eq("user_id", user.id)
 
+  // Filter out tool_call/tool_result messages — only show user/assistant to frontend
+  const displayMessages = (chatMessages || []).filter(
+    (m) => m.role === "user" || m.role === "assistant"
+  )
+
   return NextResponse.json({
     gameState,
-    chatMessages: chatMessages || [],
+    chatMessages: displayMessages,
     revealedHints: revealedHints || [],
   })
 }
