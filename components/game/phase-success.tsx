@@ -207,7 +207,7 @@ export function PhaseSuccess() {
     doc.setTextColor(100, 100, 100);
     doc.text("promptverseny.hu", w / 2, 190, { align: "center" });
 
-    doc.save(`heist-report-${name.toLowerCase().replace(/\s+/g, "-")}.pdf`);
+    doc.save(`Promptverseny április oklevél ${name}.pdf`);
   };
 
   const handleUsernameSubmit = async (e: React.FormEvent) => {
