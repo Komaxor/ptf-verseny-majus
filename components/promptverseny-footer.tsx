@@ -149,7 +149,7 @@ export function PromptversenyFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="text-white/60 hover:text-[#00ff88] transition-colors"
+                  className="text-white/60 hover:text-brand transition-colors"
                 >
                   {social.icon}
                 </Link>

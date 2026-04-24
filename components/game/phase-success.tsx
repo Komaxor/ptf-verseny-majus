@@ -239,7 +239,7 @@ export function PhaseSuccess() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col">
+    <div className="min-h-screen bg-surface text-white flex flex-col">
       <main className="text-center max-w-3xl mx-auto flex-1 flex flex-col items-center justify-center p-4 py-12">
         {/* Icon */}
         <div className="w-20 h-20 rounded-2xl overflow-hidden mb-6">
@@ -255,7 +255,7 @@ export function PhaseSuccess() {
         </p>
 
         {/* Status banner */}
-        <div className="inline-flex items-center gap-2 bg-[#00ff88]/10 border border-[#00ff88]/20 text-[#00ff88] px-5 py-2.5 rounded-full text-sm font-medium mb-10">
+        <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-5 py-2.5 rounded-full text-sm font-medium mb-10">
           <Check className="w-4 h-4" />
           Küldetés teljesítve
         </div>
@@ -270,17 +270,17 @@ export function PhaseSuccess() {
             {/* Total stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
               <MetricCard
-                icon={<Clock className="w-5 h-5 text-[#00ff88]" />}
+                icon={<Clock className="w-5 h-5 text-brand" />}
                 label="Összes idő"
                 value={formatDuration(metrics.totalTimeSeconds)}
               />
               <MetricCard
-                icon={<MessageSquare className="w-5 h-5 text-[#00ff88]" />}
+                icon={<MessageSquare className="w-5 h-5 text-brand" />}
                 label="Üzenetek"
                 value={`${metrics.totalMessages} db`}
               />
               <MetricCard
-                icon={<Lightbulb className="w-5 h-5 text-[#00ff88]" />}
+                icon={<Lightbulb className="w-5 h-5 text-brand" />}
                 label="Tippek"
                 value={`${metrics.totalHints} db`}
               />
@@ -294,7 +294,7 @@ export function PhaseSuccess() {
             {/* Per-round breakdown */}
             {metrics.rounds && metrics.rounds.length > 0 && (
               <div className="space-y-3">
-                <h2 className="text-sm uppercase tracking-wider text-white/60 font-medium">
+                <h2 className="text-base sm:text-lg font-semibold text-white text-left">
                   Szobáról szobára
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -303,7 +303,7 @@ export function PhaseSuccess() {
                       key={r.round}
                       className="bg-white/5 border border-white/10 rounded-xl p-4"
                     >
-                      <h3 className="text-sm font-semibold text-[#00ff88] mb-3">
+                      <h3 className="text-sm font-semibold text-brand mb-3">
                         Round {r.round}: {ROUND_NAMES[r.round]}
                       </h3>
                       <div className="space-y-1 text-xs text-white/60">
@@ -336,13 +336,13 @@ export function PhaseSuccess() {
         <div className="mt-8 w-full max-w-lg mx-auto">
           {usernameSaved ? (
             <div className="space-y-3">
-              <div className="flex items-center justify-center gap-2 bg-[#00ff88]/10 border border-[#00ff88]/20 text-[#00ff88] px-4 py-3 rounded-xl text-sm font-medium">
+              <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
                 <Check className="w-4 h-4" />
                 Név mentve: <span className="font-bold">{username}</span>
               </div>
               <button
                 onClick={() => generateCertificate(username)}
-                className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+                className="w-full bg-brand hover:bg-brand/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
                 <Download className="w-4 h-4" />
                 Oklevél letöltése
@@ -351,7 +351,7 @@ export function PhaseSuccess() {
           ) : (
             <div className="bg-white/5 border border-white/10 rounded-xl p-5">
               <label htmlFor="success-username" className="flex items-center gap-2 mb-3">
-                <User className="w-4 h-4 text-[#00ff88]" />
+                <User className="w-4 h-4 text-brand" />
                 <span className="text-sm font-medium text-white">Add meg a teljes neved</span>
               </label>
               <form onSubmit={handleUsernameSubmit} className="flex gap-2">
@@ -365,14 +365,14 @@ export function PhaseSuccess() {
                   }}
                   placeholder="Teljes név"
                   maxLength={50}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
                   autoComplete="off"
                   disabled={usernameSubmitting}
                 />
                 <button
                   type="submit"
                   disabled={usernameSubmitting || !username.trim()}
-                  className="px-6 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+                  className="px-6 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
                 >
                   {usernameSubmitting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -396,7 +396,7 @@ export function PhaseSuccess() {
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
               window.open(url, "_blank", "noopener,noreferrer");
             }}
-            className="w-full flex items-center justify-center gap-2 border border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white px-4 py-3 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+            className="w-full flex items-center justify-center gap-2 border border-linkedin text-linkedin hover:bg-linkedin hover:text-white px-4 py-3 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-linkedin focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             <LinkedInIcon className="w-5 h-5" />
             Megosztás LinkedIn-en
@@ -404,7 +404,7 @@ export function PhaseSuccess() {
         </div>
 
         {/* Pre-registration CTA */}
-        <div className="mt-10 bg-white/5 border border-[#00ff88]/20 rounded-xl p-6 w-full max-w-lg mx-auto">
+        <div className="mt-10 bg-white/5 border border-brand/20 rounded-xl p-6 w-full max-w-lg mx-auto">
           <h2 className="text-lg font-semibold text-white mb-2">
             Előregisztráció a következő versenyünkre
           </h2>
@@ -413,7 +413,7 @@ export function PhaseSuccess() {
           </p>
           <button
             onClick={() => setEmailModalOpen(true)}
-            className="inline-flex items-center gap-2 bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] cursor-pointer"
+            className="inline-flex items-center gap-2 bg-brand hover:bg-brand/80 text-black font-semibold px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface cursor-pointer"
           >
             Előregisztrálok
             <ArrowRight className="w-4 h-4" />

@@ -43,7 +43,7 @@ export function HintPanel({ round }: HintPanelProps) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-controls="hints-panel-body"
-        className="w-full flex items-center gap-2 min-h-[44px] px-4 py-3 text-sm text-white/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+        className="w-full flex items-center gap-2 min-h-[44px] px-4 py-3 text-sm text-white/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
         <Lightbulb className="w-4 h-4" />
         Tippek (
@@ -81,7 +81,7 @@ export function HintPanel({ round }: HintPanelProps) {
               return (
                 <div
                   key={hint.number}
-                  className="flex items-start gap-2 text-sm text-[#00ff88]/90"
+                  className="flex items-start gap-2 text-sm text-brand/90"
                 >
                   <Lightbulb className="w-4 h-4 mt-0.5 shrink-0" />
                   <span>{hint.text}</span>
@@ -93,7 +93,7 @@ export function HintPanel({ round }: HintPanelProps) {
               <button
                 key={hint.number}
                 onClick={() => revealHint(round, hint.number)}
-                className="flex items-center gap-2 min-h-[40px] px-2 -mx-2 text-sm text-white/70 hover:text-[#00ff88] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] rounded"
+                className="flex items-center gap-2 min-h-[40px] px-2 -mx-2 text-sm text-white/70 hover:text-brand transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface rounded"
               >
                 <Unlock className="w-4 h-4" />
                 <span>Tipp {hint.number} felfedése</span>

@@ -23,7 +23,7 @@ export function RoundHeader({ round }: RoundHeaderProps) {
 
   return (
     <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10 bg-white/[0.02]">
-      <div className="w-12 h-12 md:w-10 md:h-10 rounded-full overflow-hidden bg-white/10 shrink-0 ring-1 ring-[#00ff88]/20">
+      <div className="w-12 h-12 md:w-10 md:h-10 rounded-full overflow-hidden bg-white/10 shrink-0 ring-1 ring-brand/20">
         <Image src={info.avatar} alt={info.name} width={48} height={48} className="object-cover w-full h-full" />
       </div>
       <div className="min-w-0">

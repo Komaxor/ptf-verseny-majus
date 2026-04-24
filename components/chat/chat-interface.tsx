@@ -21,14 +21,20 @@ export function ChatInterface() {
 
   // Auto-scroll on new messages, but only if the user is already near the bottom
   // (preserves scroll position when the user has scrolled up to re-read earlier turns).
+  // During streaming use instant scroll so token-by-token updates don't stack
+  // concurrent smooth-scroll animations; honor reduced-motion preferences.
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    if (distanceFromBottom <= 80) {
-      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-    }
-  }, [chatMessages]);
+    if (distanceFromBottom > 80) return;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const behavior: ScrollBehavior =
+      isChatStreaming || prefersReducedMotion ? "auto" : "smooth";
+    el.scrollTo({ top: el.scrollHeight, behavior });
+  }, [chatMessages, isChatStreaming]);
 
   const isRound2 = currentRound === 2;
   const avatarSrc = currentRound ? CHAT_AVATARS[currentRound] : null;

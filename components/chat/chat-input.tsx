@@ -52,12 +52,12 @@ export function ChatInput() {
         rows={1}
         placeholder="Írj üzenetet..."
         disabled={isSending}
-        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] resize-none leading-5 overflow-y-auto"
+        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface resize-none leading-5 overflow-y-auto"
       />
       <button
         onClick={handleSubmit}
         disabled={isSending || !input.trim()}
-        className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+        className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         aria-label="Üzenet küldése"
       >
         <Send className="w-4 h-4" />

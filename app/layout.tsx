@@ -48,15 +48,15 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.openai.com" />
       </head>
-      <body className={`font-sans antialiased bg-[#0a0a0f] text-white`}>
+      <body className={`font-sans antialiased bg-surface text-white`}>
         {children}
         <Toaster
           position="bottom-left"
           theme="dark"
           toastOptions={{
             classNames: {
-              toast: "!bg-[#0a0a0f] !border !border-[#00ff88]/30 !text-white",
-              error: "!bg-[#0a0a0f] !border !border-red-500/40 !text-white",
+              toast: "!bg-surface !border !border-brand/30 !text-white",
+              error: "!bg-surface !border !border-red-500/40 !text-white",
             },
           }}
         />

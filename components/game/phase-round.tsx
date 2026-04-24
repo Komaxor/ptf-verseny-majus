@@ -14,7 +14,7 @@ export function PhaseRound() {
   const round = PHASE_ROUND[phase]!;
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a0a0f] text-white">
+    <div className="flex flex-col h-screen bg-surface text-white">
       <HeaderBar />
       <main className="flex flex-1 overflow-hidden">
         {/* Left: Scene Visual + Answer Entry */}

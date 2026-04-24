@@ -58,7 +58,7 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-screen bg-transparent flex flex-col">
       <MatrixBg />
-      <div className="absolute inset-0 bg-[#0a0a0f]/80 z-[1] pointer-events-none" />
+      <div className="absolute inset-0 bg-surface/80 z-[1] pointer-events-none" />
       <main className="relative z-10 w-full max-w-md mx-auto flex-1 flex flex-col items-center justify-center p-4">
         {/* Logo */}
         <div className="flex flex-col items-center justify-center mb-8">
@@ -70,10 +70,10 @@ export default function LoginPage() {
         </div>
 
         {/* Login Card */}
-        <div className="bg-[#0a0a0f]/90 border border-[#00ff88]/20 rounded-xl p-6 shadow-lg backdrop-blur-sm w-full">
+        <div className="bg-surface/90 border border-brand/20 rounded-xl p-6 shadow-lg backdrop-blur-sm w-full">
           <div className="text-center mb-6">
-            <div className="w-12 h-12 bg-[#00ff88]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <KeyRound className="w-6 h-6 text-[#00ff88]" />
+            <div className="w-12 h-12 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <KeyRound className="w-6 h-6 text-brand" />
             </div>
             <h2 className="text-xl font-semibold text-white mb-2">
               Bejelentkezés
@@ -94,9 +94,8 @@ export default function LoginPage() {
                   if (error) setError(null)
                 }}
                 placeholder="Add meg a kódod"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
                 autoComplete="off"
-                autoFocus
                 disabled={isLoading}
               />
             </div>
@@ -111,7 +110,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading || !password.trim()}
-              className="w-full bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium py-3 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+              className="w-full bg-brand hover:bg-brand/80 text-black font-medium py-3 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">

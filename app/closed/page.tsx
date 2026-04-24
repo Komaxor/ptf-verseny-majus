@@ -70,7 +70,7 @@ export default function ClosedPage() {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] flex flex-col">
+    <div className="relative min-h-screen bg-surface flex flex-col">
       <MatrixBg />
       <div className="absolute inset-0 bg-black/60 z-[1] pointer-events-none" />
 
@@ -90,7 +90,7 @@ export default function ClosedPage() {
         {/* Trophy Icon -- only if solved */}
         {metrics?.isSolved && (
           <div className="mb-8">
-            <Trophy className="w-20 h-20 text-[#00ff88] mx-auto" />
+            <Trophy className="w-20 h-20 text-brand mx-auto" />
           </div>
         )}
 
@@ -100,12 +100,12 @@ export default function ClosedPage() {
         ) : metrics ? (
           <div className="space-y-6 w-full">
             {/* Solved status */}
-            <div className="bg-black/70 border border-[#00ff88]/30 rounded-xl p-5">
+            <div className="bg-black/70 border border-brand/30 rounded-xl p-5">
               <div className="flex items-center justify-center gap-3">
                 {metrics.isSolved ? (
                   <>
-                    <CheckCircle className="w-7 h-7 text-[#00ff88]" />
-                    <span className="text-xl font-semibold text-[#00ff88]">Sikeres betörés!</span>
+                    <CheckCircle className="w-7 h-7 text-brand" />
+                    <span className="text-xl font-semibold text-brand">Sikeres betörés!</span>
                   </>
                 ) : (
                   <>
@@ -120,19 +120,19 @@ export default function ClosedPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-lg mx-auto">
               <MetricCard
                 tone="accent"
-                icon={<Clock className="w-5 h-5 text-[#00ff88]" />}
+                icon={<Clock className="w-5 h-5 text-brand" />}
                 label="Összes idő"
                 value={metrics.isSolved && metrics.completionTimeSeconds > 0 ? formatDuration(metrics.completionTimeSeconds) : "--"}
               />
               <MetricCard
                 tone="accent"
-                icon={<MessageSquare className="w-5 h-5 text-[#00ff88]/70" />}
+                icon={<MessageSquare className="w-5 h-5 text-brand/70" />}
                 label="Üzenetek"
                 value={`${metrics.messageCount} db`}
               />
               <MetricCard
                 tone="accent"
-                icon={<Lightbulb className="w-5 h-5 text-[#00ff88]/70" />}
+                icon={<Lightbulb className="w-5 h-5 text-brand/70" />}
                 label="Tippek"
                 value={`${metrics.hintClicks} db`}
               />
@@ -145,7 +145,7 @@ export default function ClosedPage() {
             </div>
           </div>
         ) : (
-          <div className="bg-black/70 border border-[#00ff88]/30 rounded-xl p-6">
+          <div className="bg-black/70 border border-brand/30 rounded-xl p-6">
             <p className="text-gray-300">
               Ezen a böngészőn nincs aktív munkamenet. Ha részt vettél a versenyen, használd ugyanazt az eszközt és böngészőt, mint a verseny alatt.
             </p>
@@ -160,8 +160,8 @@ export default function ClosedPage() {
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`
               window.open(url, "_blank", "noopener,noreferrer")
             }}
-            variant="outline"
-            className="w-full flex items-center justify-center gap-2 border-[#00ff88]/50 text-[#00ff88] hover:bg-[#00ff88]/10 hover:text-[#00ff88] cursor-pointer"
+            variant="brand-outline"
+            className="w-full cursor-pointer"
           >
             <LinkedInIcon className="w-5 h-5" />
             Megosztás LinkedIn-en
@@ -169,7 +169,7 @@ export default function ClosedPage() {
         </div>
 
         {/* Pre-registration CTA */}
-        <div className="mt-10 bg-black/70 border border-[#00ff88]/30 rounded-xl p-6 w-full max-w-lg mx-auto">
+        <div className="mt-10 bg-black/70 border border-brand/30 rounded-xl p-6 w-full max-w-lg mx-auto">
           <h2 className="text-lg font-semibold text-white mb-2">
             Előregisztráció a következő versenyünkre
           </h2>
@@ -178,7 +178,8 @@ export default function ClosedPage() {
           </p>
           <Button
             onClick={() => setEmailModalOpen(true)}
-            className="bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold cursor-pointer"
+            variant="brand"
+            className="cursor-pointer"
           >
             Előregisztrálok
             <ArrowRight className="w-4 h-4 ml-2" />

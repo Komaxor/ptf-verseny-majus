@@ -60,43 +60,47 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
   if (round === 1) {
     return (
       <div className="p-4 border-t border-white/10">
-        <span id="round1-label" className="text-xs text-white/60 uppercase tracking-wider mb-2 block">
-          Válaszod
-        </span>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 flex-1">
-            <input
-              id="round1-floor"
-              aria-labelledby="round1-label"
-              aria-label="Emelet"
-              value={floor}
-              onChange={(e) => handleAlphanumericChange(e.target.value, setFloor)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSubmit();
-              }}
-              placeholder="Emelet"
-              maxLength={3}
-              className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
-            />
-            <span aria-hidden="true" className="text-white/50 text-lg font-bold">+</span>
-            <input
-              ref={doorRef}
-              id="round1-door"
-              aria-label="Ajtó"
-              value={door}
-              onChange={(e) => handleAlphanumericChange(e.target.value, setDoor)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSubmit();
-              }}
-              placeholder="Ajtó"
-              maxLength={3}
-              className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
-            />
+        <div className="flex items-end gap-2">
+          <div className="flex items-end gap-1.5 flex-1">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="round1-floor" className="text-[10px] text-white/60 uppercase tracking-wider">
+                Emelet
+              </label>
+              <input
+                id="round1-floor"
+                value={floor}
+                onChange={(e) => handleAlphanumericChange(e.target.value, setFloor)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSubmit();
+                }}
+                placeholder="pl. 07"
+                maxLength={3}
+                className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/40 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              />
+            </div>
+            <span aria-hidden="true" className="text-white/50 text-lg font-bold pb-2">+</span>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="round1-door" className="text-[10px] text-white/60 uppercase tracking-wider">
+                Ajtó
+              </label>
+              <input
+                ref={doorRef}
+                id="round1-door"
+                value={door}
+                onChange={(e) => handleAlphanumericChange(e.target.value, setDoor)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSubmit();
+                }}
+                placeholder="pl. 12"
+                maxLength={3}
+                className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/40 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              />
+            </div>
           </div>
           <button
             onClick={handleSubmit}
             disabled={isSubmitting || isCoolingDown || !canSubmit}
-            className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+            className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             Beküldés
           </button>
@@ -124,12 +128,12 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
           maxLength={8}
           inputMode="numeric"
           pattern="[0-9]*"
-          className="w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center font-mono tracking-[0.3em] placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+          className="w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center font-mono tracking-[0.3em] placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         />
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || isCoolingDown || !canSubmit}
-          className="px-4 py-2 bg-[#00ff88] hover:bg-[#00ff88]/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+          className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
           Beküldés
         </button>

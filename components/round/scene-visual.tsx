@@ -20,7 +20,7 @@ const SCENE_DESCRIPTIONS: Record<number, string> = {
 
 export function SceneVisual({ round }: SceneVisualProps) {
   return (
-    <div className="flex-1 relative overflow-hidden bg-[#0a0a0f]">
+    <div className="flex-1 relative overflow-hidden bg-surface">
       <Image
         src={SCENE_AVATARS[round]}
         alt={SCENE_DESCRIPTIONS[round] ?? ""}

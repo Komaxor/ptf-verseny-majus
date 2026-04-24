@@ -61,7 +61,7 @@ export default function WaitingPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] flex flex-col items-center justify-center p-4">
+    <div className="relative min-h-screen bg-surface flex flex-col items-center justify-center p-4">
       <MatrixBg />
       <div className="absolute inset-0 bg-black/60 z-[1] pointer-events-none" />
       <main className="relative z-10 text-center max-w-2xl mx-auto">
@@ -76,37 +76,37 @@ export default function WaitingPage() {
         <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
           {t.waiting.title}
         </h1>
-        <p className="text-base sm:text-xl text-[#00ff88]/70 mb-12">
+        <p className="text-base sm:text-xl text-brand/70 mb-12">
           {t.waiting.subtitle}
         </p>
 
         {/* Countdown */}
         <div className="mb-12">
           <p className="text-lg text-gray-400 mb-6 flex items-center justify-center gap-2">
-            <Clock className="w-5 h-5 text-[#00ff88]" />
+            <Clock className="w-5 h-5 text-brand" />
             {t.waiting.startsIn}
           </p>
           <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto">
-            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
+            <div className="bg-black/70 border border-brand/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-brand font-mono">
                 {String(timeRemaining.days).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.days}</div>
             </div>
-            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
+            <div className="bg-black/70 border border-brand/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-brand font-mono">
                 {String(timeRemaining.hours).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.hours}</div>
             </div>
-            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
+            <div className="bg-black/70 border border-brand/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-brand font-mono">
                 {String(timeRemaining.minutes).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.minutes}</div>
             </div>
-            <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-2 sm:p-4">
-              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#00ff88] font-mono">
+            <div className="bg-black/70 border border-brand/30 rounded-lg p-2 sm:p-4">
+              <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-brand font-mono">
                 {String(timeRemaining.seconds).padStart(2, "0")}
               </div>
               <div className="text-[10px] sm:text-xs text-gray-400 uppercase mt-1">{t.waiting.seconds}</div>
@@ -115,7 +115,7 @@ export default function WaitingPage() {
         </div>
 
         {/* Info */}
-        <div className="bg-black/70 border border-[#00ff88]/30 rounded-lg p-6 mb-8 backdrop-blur-sm">
+        <div className="bg-black/70 border border-brand/30 rounded-lg p-6 mb-8 backdrop-blur-sm">
           <h2 className="text-lg font-semibold text-white mb-2">
             {t.waiting.getReady}
           </h2>
@@ -128,18 +128,13 @@ export default function WaitingPage() {
         {timeRemaining.days === 0 && timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds === 0 && (
           <button
             onClick={() => window.location.href = "/login"}
-            className="mb-8 px-6 py-3 bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-semibold rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+            className="mb-8 px-6 py-3 bg-brand hover:bg-brand/80 text-black font-semibold rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             Belépés
           </button>
         )}
 
-        {/* Decorative elements */}
-        <div className="flex items-center justify-center gap-2 text-gray-400">
-          <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
-          <span className="text-sm">Áprilisi promptverseny</span>
-          <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
-        </div>
+        <p className="text-sm text-gray-400 text-center">Áprilisi promptverseny</p>
       </main>
     </div>
   )

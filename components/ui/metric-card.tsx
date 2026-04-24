@@ -10,7 +10,7 @@ interface MetricCardProps {
 export function MetricCard({ icon, label, value, tone = "subtle" }: MetricCardProps) {
   const surface =
     tone === "accent"
-      ? "bg-black/70 border-[#00ff88]/20"
+      ? "bg-black/70 border-brand/20"
       : "bg-white/5 border-white/10";
   const labelTone = tone === "accent" ? "text-gray-400" : "text-white/60";
 

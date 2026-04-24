@@ -20,8 +20,8 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
       {isUser ? (
-        <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-[#00ff88]/20">
-          <User className="w-4 h-4 text-[#00ff88]" />
+        <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-brand/20">
+          <User className="w-4 h-4 text-brand" />
         </div>
       ) : (
         <div className="w-8 h-8 rounded-full overflow-hidden bg-white/10 shrink-0">
@@ -35,7 +35,7 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
       <div
         className={`max-w-[80%] min-w-0 rounded-lg px-4 py-2 ${
           isUser
-            ? "bg-[#00ff88]/10 border border-[#00ff88]/20"
+            ? "bg-brand/10 border border-brand/20"
             : "bg-white/5 border border-white/10"
         }`}
       >

@@ -81,12 +81,12 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md bg-[#0a0a0f] border-[#00ff88]/20 text-white">
+      <DialogContent className="sm:max-w-md bg-surface border-brand/20 text-white">
         {isSuccess ? (
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-white">
-                <Check className="w-5 h-5 text-[#00ff88]" />
+                <Check className="w-5 h-5 text-brand" />
                 Sikeres regisztráció!
               </DialogTitle>
               <DialogDescription className="text-white/70">
@@ -96,7 +96,8 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
             <div className="flex justify-end pt-4">
               <Button
                 onClick={handleClose}
-                className="bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium cursor-pointer focus-visible:ring-[#00ff88] focus-visible:ring-offset-[#0a0a0f]"
+                variant="brand"
+                className="cursor-pointer"
               >
                 Bezárás
               </Button>
@@ -106,7 +107,7 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-white">
-                <Mail className="w-5 h-5 text-[#00ff88]" />
+                <Mail className="w-5 h-5 text-brand" />
                 Előregisztráció
               </DialogTitle>
               <DialogDescription className="text-white/70">
@@ -127,9 +128,8 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
                     if (error) setError("")
                   }}
                   placeholder="példa@email.hu"
-                  className="bg-white/5 border-white/10 text-white placeholder:text-white/50 focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/50"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/50 focus-visible:border-brand/50 focus-visible:ring-brand/50"
                   autoComplete="email"
-                  autoFocus
                 />
               </div>
               <label className="flex items-center gap-2 text-xs text-white/60 cursor-pointer">
@@ -140,7 +140,7 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
                     setTermsAccepted(e.target.checked)
                     if (error) setError("")
                   }}
-                  className="w-3.5 h-3.5 accent-[#00ff88] cursor-pointer"
+                  className="w-3.5 h-3.5 accent-brand cursor-pointer"
                 />
                 <span>
                   Elfogadom az{" "}
@@ -174,7 +174,8 @@ export function PromptversenyEmailModal({ open, onClose, source }: Promptverseny
                 <Button
                   type="submit"
                   disabled={isLoading || !isEmailValid || !termsAccepted}
-                  className="bg-[#00ff88] hover:bg-[#00ff88]/80 text-black font-medium cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 focus-visible:ring-[#00ff88] focus-visible:ring-offset-[#0a0a0f]"
+                  variant="brand"
+                  className="cursor-pointer disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <>
