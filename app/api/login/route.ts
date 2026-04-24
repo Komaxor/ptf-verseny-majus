@@ -88,6 +88,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    if (!/^[a-zA-Z0-9]+$/.test(trimmedPassword) || trimmedPassword.length > 12) {
+      return NextResponse.json(
+        { success: false, error: "Érvénytelen kód formátum." },
+        { status: 400 }
+      )
+    }
+
     // Validate Supabase credentials
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY

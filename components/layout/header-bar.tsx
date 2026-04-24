@@ -27,8 +27,8 @@ export function HeaderBar() {
 
   return (
     <header className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 bg-surface border-b border-white/10">
-      <div className="flex items-center gap-3 min-w-0">
-        <span className="text-brand font-bold text-lg tracking-tight">PTF</span>
+      <div className="flex items-center gap-2 min-w-0">
+        <img src="/promptverseny-logo.jpg" alt="Promptverseny" className="w-6 h-6 rounded-sm" />
         <span className="text-white/60 text-sm hidden sm:inline truncate">Áprilisi promptverseny</span>
       </div>
 
@@ -38,13 +38,12 @@ export function HeaderBar() {
             {[1, 2, 3].map((r) => (
               <div
                 key={r}
-                className={`w-2 h-2 rounded-full ${
-                  r < currentRound
+                className={`w-2 h-2 rounded-full ${r < currentRound
                     ? "bg-brand"
                     : r === currentRound
-                    ? "bg-brand animate-pulse"
-                    : "bg-white/30"
-                }`}
+                      ? "bg-brand animate-pulse"
+                      : "bg-white/30"
+                  }`}
               />
             ))}
           </div>
@@ -63,15 +62,14 @@ export function HeaderBar() {
             ? "A verseny lezárult"
             : `Hátralévő idő: ${minutes} perc ${seconds} másodperc`
         }
-        className={`flex items-center gap-2 text-sm font-mono ${
-          remaining === 0
+        className={`flex items-center gap-2 text-sm font-mono ${remaining === 0
             ? "text-red-500 font-bold"
             : minutes < 1
-            ? "text-red-500"
-            : minutes < 5
-            ? "text-yellow-400"
-            : "text-white/80"
-        }`}
+              ? "text-red-500"
+              : minutes < 5
+                ? "text-yellow-400"
+                : "text-white/80"
+          }`}
         title="Hátralévő idő"
       >
         <Timer className="w-4 h-4" aria-hidden="true" />

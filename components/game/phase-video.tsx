@@ -12,12 +12,28 @@ interface PhaseVideoProps {
 export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showSkip, setShowSkip] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return localStorage.getItem("video_muted") !== "false";
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSkip(true), VIDEO_SKIP_DELAY_MS);
     return () => clearTimeout(timer);
   }, []);
+
+  const handlePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (localStorage.getItem("video_muted") === "false") {
+      try {
+        video.muted = false;
+        setIsMuted(false);
+      } catch {
+        // Browser blocked unmute — stay muted
+      }
+    }
+  };
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -25,6 +41,7 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
     const next = !video.muted;
     video.muted = next;
     setIsMuted(next);
+    localStorage.setItem("video_muted", String(next));
   };
 
   return (
@@ -35,6 +52,7 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
         autoPlay
         muted
         playsInline
+        onPlay={handlePlay}
         onEnded={onComplete}
         className="w-full h-full object-cover"
       />

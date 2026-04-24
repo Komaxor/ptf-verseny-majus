@@ -4,7 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { useGame } from "@/components/game/game-provider";
 import { Send } from "lucide-react";
 
-const MAX_ROWS = 5;
+const MAX_ROWS = 3;
 
 export function ChatInput() {
   const { sendMessage } = useGame();
@@ -15,10 +15,11 @@ export function ChatInput() {
   const autoResize = useCallback(() => {
     const ta = textareaRef.current;
     if (!ta) return;
-    ta.style.height = "auto";
+    ta.style.height = "0";
     const lineHeight = parseFloat(getComputedStyle(ta).lineHeight) || 20;
     const maxHeight = lineHeight * MAX_ROWS;
-    ta.style.height = `${Math.min(ta.scrollHeight, maxHeight)}px`;
+    const minHeight = lineHeight + ta.offsetHeight - ta.clientHeight; // one row + border/padding
+    ta.style.height = `${Math.max(minHeight, Math.min(ta.scrollHeight, maxHeight))}px`;
   }, []);
 
   useEffect(() => {

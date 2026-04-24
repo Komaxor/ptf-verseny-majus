@@ -113,7 +113,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
   return (
     <div className="p-4 border-t border-white/10">
       <label htmlFor="round3-safe" className="text-xs text-white/60 uppercase tracking-wider mb-2 block">
-        Széfkód (4-8 számjegy)
+        Széfkód
       </label>
       <div className="flex gap-2">
         <input
@@ -124,7 +124,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
             if (v.length <= 8) setAnswer(v);
           }}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-          placeholder="00000000"
+          placeholder="000000"
           maxLength={8}
           inputMode="numeric"
           pattern="[0-9]*"

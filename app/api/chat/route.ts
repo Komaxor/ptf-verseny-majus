@@ -8,6 +8,7 @@ import {
   loadToolFile,
   getToolFileName,
   extractWelcomeMessage,
+  TOOL_FILE_MAP,
 } from "@/lib/round-loader"
 import {
   getOrCreateChatSession,
@@ -29,7 +30,18 @@ function buildToolDefinitions(round: number) {
       function: {
         name: toolName,
         description: getToolDescription(toolName),
-        parameters: { type: "object" as const, properties: {}, required: [] },
+        parameters: toolName === "read_file"
+          ? {
+              type: "object" as const,
+              properties: {
+                filename: {
+                  type: "string",
+                  description: "A megnyitandó fájl neve (pl. personal-notes.md, safe-config.md, emails-recent.md)",
+                },
+              },
+              required: ["filename"],
+            }
+          : { type: "object" as const, properties: {}, required: [] },
       },
     })
   )
@@ -177,11 +189,28 @@ export async function POST(request: NextRequest) {
       messages.push(response.choices[0].message)
 
       for (const toolCall of toolCalls) {
-        const toolName = toolCall.function.name
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const fn = (toolCall as any).function as { name: string; arguments: string }
+        const toolName = fn.name
         let toolResult: string
 
         try {
-          const fileName = getToolFileName(round, toolName)
+          let fileName: string
+          if (toolName === "read_file") {
+            // Parse the filename argument from the model's tool call
+            const args = JSON.parse(fn.arguments || "{}")
+            const requested = (args.filename || "").replace(/\.md$/, "")
+            // Validate against known files for this round
+            const roundMap = TOOL_FILE_MAP[round]
+            const knownFiles = roundMap ? Object.values(roundMap) : []
+            if (requested && knownFiles.includes(requested)) {
+              fileName = requested
+            } else {
+              fileName = getToolFileName(round, toolName)
+            }
+          } else {
+            fileName = getToolFileName(round, toolName)
+          }
           toolResult = loadToolFile(round, fileName)
           // Log tool call
           await logToolCall(session.sessionId, user.id, round, toolName)

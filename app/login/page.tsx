@@ -90,9 +90,11 @@ export default function LoginPage() {
                 type="text"
                 value={password}
                 onChange={(e) => {
-                  setPassword(e.target.value)
+                  const filtered = e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                  setPassword(filtered)
                   if (error) setError(null)
                 }}
+                maxLength={12}
                 placeholder="Add meg a kódod"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
                 autoComplete="off"
@@ -126,7 +128,7 @@ export default function LoginPage() {
 
         {/* Footer hint */}
         <p className="text-center text-xs text-white/60 mt-6">
-          A kódot a szervezőktől kaptad
+          A kódot a szervezők küldték emailen. Nem kaptál belépő kódot? Hívd a +36 30 477 5557 telefonszámot és Márk ad neked.
         </p>
       </main>
     </div>

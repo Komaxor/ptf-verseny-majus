@@ -48,7 +48,7 @@ export function extractWelcomeMessage(systemPromptContent: string): string {
     .trim();
 }
 
-const TOOL_FILE_MAP: Record<number, Record<string, string>> = {
+export const TOOL_FILE_MAP: Record<number, Record<string, string>> = {
   1: {
     search_building_directory: "building-directory",
     check_floor_plan: "floor-plans",

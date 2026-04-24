@@ -200,11 +200,16 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       };
       setChatMessages((prev) => [...prev, userMsg]);
 
-      setIsChatStreaming(true);
-
       const assistantId = crypto.randomUUID();
-      let assistantAdded = false;
       let receivedAnyContent = false;
+
+      // Add empty assistant message and start streaming state BEFORE fetch
+      // so the "Gondolkodom..." indicator shows while the server processes
+      setChatMessages((prev) => [
+        ...prev,
+        { id: assistantId, role: "assistant", content: "", created_at: new Date().toISOString() },
+      ]);
+      setIsChatStreaming(true);
 
       try {
         // SSE streaming
@@ -219,6 +224,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         });
 
         if (!res.ok || !res.body) {
+          setChatMessages((prev) => prev.filter((m) => m.id !== assistantId));
           toast.error("Nem sikerült elküldeni az üzenetet. Ellenőrizd az internetkapcsolatot és próbáld újra.");
           return;
         }
@@ -226,13 +232,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let assistantContent = "";
-
-        // Add empty assistant message
-        setChatMessages((prev) => [
-          ...prev,
-          { id: assistantId, role: "assistant", content: "", created_at: new Date().toISOString() },
-        ]);
-        assistantAdded = true;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -269,7 +268,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           toast.error("Nem érkezett válasz. Próbáld újra.");
         }
       } catch {
-        if (assistantAdded && !receivedAnyContent) {
+        if (!receivedAnyContent) {
           setChatMessages((prev) => prev.filter((m) => m.id !== assistantId));
         }
         toast.error("Megszakadt a kapcsolat. Ellenőrizd az internetet és próbáld újra.");

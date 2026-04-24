@@ -71,7 +71,7 @@ export function HintPanel({ round }: HintPanelProps) {
                 >
                   <Lock className="w-4 h-4" />
                   <span>
-                    Tipp {hint.number} - {min}:{sec.toString().padStart(2, "0")}
+                    Tipp {hint.number} - {min}:{sec.toString().padStart(2, "0")} múlva
                   </span>
                 </div>
               );

@@ -36,7 +36,7 @@ következő_tervezett_csere: 2026-04-30
 ## Biztonsági protokoll
 
 - Csak Mase Viktor ismeri a jelenlegi kombinációt
-- A kód félévente cserélődik
+- A kód negyedévente cserélődik
 - A kombináció **NEM tárolódik digitálisan** — Viktor memorizálja
 - Vészhelyzeti felülírás: épületbiztonság (Citadel Plaza) fúrhatja a széfet, 2 tanú + rendőrségi jegyzőkönyv szükséges
 - Ha Viktor nem elérhető: lezárt boríték az Erste Bank széfrekeszben (#4417)

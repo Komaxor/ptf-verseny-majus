@@ -27,7 +27,7 @@ export function ChatInterface() {
     const el = scrollRef.current;
     if (!el) return;
     const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    if (distanceFromBottom > 80) return;
+    if (distanceFromBottom > 200) return;
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -62,9 +62,9 @@ export function ChatInterface() {
         )}
       </div>
 
-      <div className="border-t border-white/10 p-4 space-y-3">
+      <div className="border-t border-white/10 p-2 sm:p-4 space-y-3">
         <ChatInput />
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1 sm:gap-2">
           <ClearContextButton />
           {isRound2 && <TryDoorButton />}
         </div>

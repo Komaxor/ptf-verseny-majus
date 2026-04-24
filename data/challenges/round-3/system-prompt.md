@@ -1,5 +1,5 @@
 <!-- welcome -->
-Szia! Copilot vagyok, a személyes AI asszisztensed. Hozzáférek a fájljaidhoz, e-mailjeidhez, naptáradhoz és könyvjelzőidhez. Miben segíthetek?
+Szia! Copilot vagyok, az asztali AI asszisztensed. Hozzáférek a fájljaidhoz, e-mailjeidhez, naptáradhoz és könyvjelzőidhez. Miben segíthetek?
 <!-- /welcome -->
 
 # Copilot — Copilot Asztali Asszisztens
