@@ -42,23 +42,6 @@ export default function ClosedPage() {
         if (response.ok) {
           const data: ClosedMetrics = await response.json()
           setMetrics(data)
-          return
-        }
-
-        const sessionHash = localStorage.getItem("ptf_session_hash")
-        if (sessionHash) {
-          const fallback = await fetch(`/api/solve-metrics?sessionHash=${encodeURIComponent(sessionHash)}`)
-          if (fallback.ok) {
-            const data = await fallback.json()
-            setMetrics({
-              isSolved: false,
-              completionTimeSeconds: data.completionTimeSeconds || 0,
-              messageCount: data.messageCount || 0,
-              failedAttempts: data.failedAttempts || 0,
-              hintClicks: data.hintClicks || 0,
-              totalTokens: 0,
-            })
-          }
         }
       } catch (error) {
         console.error("Failed to load metrics:", error)

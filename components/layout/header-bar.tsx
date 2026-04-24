@@ -85,9 +85,26 @@ export function HeaderBar() {
         <button
           disabled={givingUp}
           onClick={async () => {
+            if (!confirm("Biztosan feladod? Ez a művelet nem vonható vissza.")) return;
             setGivingUp(true);
-            await fetch("/api/give-up", { method: "POST" });
-            router.replace("/closed");
+            try {
+              const res = await fetch("/api/give-up", { method: "POST" });
+              if (res.ok) {
+                router.replace("/closed");
+                return;
+              }
+              const body = await res.json().catch(() => ({}));
+              // Middleware 403 for already-gave-up users — safe to redirect
+              if (res.status === 403 && body.error === "Feladtad a versenyt.") {
+                router.replace("/closed");
+                return;
+              }
+              alert(body.error || "Hiba történt, próbáld újra.");
+              setGivingUp(false);
+            } catch {
+              alert("Hálózati hiba, próbáld újra.");
+              setGivingUp(false);
+            }
           }}
           className="px-3 py-1.5 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-sm font-medium rounded transition-colors"
         >

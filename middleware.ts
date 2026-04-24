@@ -66,7 +66,7 @@ export async function middleware(request: NextRequest) {
           })
           const { data: user } = await supabase
             .from("april_competition_users")
-            .select("id, is_solved")
+            .select("id, is_solved, gave_up_at")
             .eq("session_token", sessionToken)
             .single()
 
@@ -74,6 +74,20 @@ export async function middleware(request: NextRequest) {
             // Already solved — go to success page
             if (pathname !== "/success") {
               return NextResponse.redirect(new URL("/success", request.url))
+            }
+            return NextResponse.next()
+          }
+
+          if (user?.gave_up_at) {
+            // Gave up — allow metrics APIs, redirect everything else to /closed
+            if (pathname === "/api/closed-metrics" || pathname === "/api/solve-metrics") {
+              return NextResponse.next()
+            }
+            if (pathname.startsWith("/api/")) {
+              return NextResponse.json({ error: "Feladtad a versenyt." }, { status: 403 })
+            }
+            if (pathname !== "/closed") {
+              return NextResponse.redirect(new URL("/closed", request.url))
             }
             return NextResponse.next()
           }
@@ -160,7 +174,7 @@ export async function middleware(request: NextRequest) {
 
     const { data: user, error } = await supabase
       .from("april_competition_users")
-      .select("id, session_token, is_solved")
+      .select("id, session_token, is_solved, gave_up_at")
       .eq("session_token", sessionToken)
       .single()
 
@@ -173,6 +187,14 @@ export async function middleware(request: NextRequest) {
       // Clear the invalid cookie
       response.cookies.delete("competition_session")
       return response
+    }
+
+    // Gave up — block from competition even during window
+    if (user.gave_up_at) {
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json({ error: "Feladtad a versenyt." }, { status: 403 })
+      }
+      return NextResponse.redirect(new URL("/closed", request.url))
     }
 
     // Valid session - add user ID to headers for downstream use

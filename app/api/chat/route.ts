@@ -216,7 +216,7 @@ export async function POST(request: NextRequest) {
         fileName = getToolFileName(round, toolName)
       }
       const result = loadToolFile(round, fileName)
-      await logToolCall(session.sessionId, user.id, round, toolName)
+      await logToolCall(session.sessionId, user!.id, round, toolName)
       return result
     } catch {
       return JSON.stringify({ error: "File not found" })
