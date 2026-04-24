@@ -15,10 +15,10 @@ export function MetricCard({ icon, label, value, tone = "subtle" }: MetricCardPr
   const labelTone = tone === "accent" ? "text-gray-400" : "text-white/60";
 
   return (
-    <div className={`${surface} border rounded-xl p-4 text-center`}>
+    <div className={`${surface} border rounded-xl p-3 sm:p-4 text-center`}>
       <div className="flex justify-center mb-2">{icon}</div>
-      <div className="text-lg font-bold text-white">{value}</div>
-      <div className={`text-xs ${labelTone}`}>{label}</div>
+      <div className="text-sm sm:text-lg font-bold text-white truncate">{value}</div>
+      <div className={`text-[10px] sm:text-xs ${labelTone} truncate`}>{label}</div>
     </div>
   );
 }

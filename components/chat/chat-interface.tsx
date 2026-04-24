@@ -64,7 +64,7 @@ export function ChatInterface() {
 
       <div className="border-t border-white/10 p-4 space-y-3">
         <ChatInput />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <ClearContextButton />
           {isRound2 && <TryDoorButton />}
         </div>

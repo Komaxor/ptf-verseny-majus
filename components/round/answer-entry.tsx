@@ -61,7 +61,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
     return (
       <div className="p-4 border-t border-white/10">
         <div className="flex items-end gap-2">
-          <div className="flex items-end gap-1.5 flex-1">
+          <div className="flex items-end gap-1.5 min-w-0">
             <div className="flex flex-col gap-1">
               <label htmlFor="round1-floor" className="text-[10px] text-white/60 uppercase tracking-wider">
                 Emelet
@@ -75,7 +75,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
                 }}
                 placeholder="pl. 07"
                 maxLength={3}
-                className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/40 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                className="w-16 sm:w-20 bg-white/5 border border-white/10 rounded-lg px-2 sm:px-3 py-2 text-white text-sm text-center placeholder-white/40 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               />
             </div>
             <span aria-hidden="true" className="text-white/50 text-lg font-bold pb-2">+</span>
@@ -93,14 +93,14 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
                 }}
                 placeholder="pl. 12"
                 maxLength={3}
-                className="w-20 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center placeholder-white/40 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                className="w-16 sm:w-20 bg-white/5 border border-white/10 rounded-lg px-2 sm:px-3 py-2 text-white text-sm text-center placeholder-white/40 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               />
             </div>
           </div>
           <button
             onClick={handleSubmit}
             disabled={isSubmitting || isCoolingDown || !canSubmit}
-            className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+            className="px-3 sm:px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             Beküldés
           </button>
@@ -128,12 +128,12 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
           maxLength={8}
           inputMode="numeric"
           pattern="[0-9]*"
-          className="w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center font-mono tracking-[0.3em] placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          className="flex-1 min-w-0 max-w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-center font-mono tracking-[0.3em] placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         />
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || isCoolingDown || !canSubmit}
-          className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
           Beküldés
         </button>
