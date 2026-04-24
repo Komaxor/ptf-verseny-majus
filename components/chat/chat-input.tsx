@@ -52,7 +52,7 @@ export function ChatInput() {
         rows={1}
         placeholder="Írj üzenetet..."
         disabled={isSending}
-        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/30 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] resize-none leading-5 overflow-y-auto"
+        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] resize-none leading-5 overflow-y-auto"
       />
       <button
         onClick={handleSubmit}

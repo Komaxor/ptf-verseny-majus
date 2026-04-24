@@ -33,7 +33,7 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
         </div>
       )}
       <div
-        className={`max-w-[80%] rounded-lg px-4 py-2 ${
+        className={`max-w-[80%] min-w-0 rounded-lg px-4 py-2 ${
           isUser
             ? "bg-[#00ff88]/10 border border-[#00ff88]/20"
             : "bg-white/5 border border-white/10"
@@ -51,7 +51,7 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
             aria-label="Asszisztens videóüzenete"
           />
         )}
-        <p className="text-sm text-white/90 whitespace-pre-wrap">{message.content}</p>
+        <p className="text-sm text-white/90 whitespace-pre-wrap break-words [overflow-wrap:anywhere]">{message.content}</p>
       </div>
     </div>
   );

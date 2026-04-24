@@ -12,7 +12,7 @@ export function GameShell() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#0a0a0f] text-white">
-        <div className="animate-pulse text-lg">Betöltés...</div>
+        <div role="status" aria-live="polite" className="animate-pulse text-lg">Betöltés...</div>
       </div>
     );
   }

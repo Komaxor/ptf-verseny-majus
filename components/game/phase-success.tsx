@@ -17,6 +17,8 @@ import Image from "next/image";
 import { jsPDF } from "jspdf";
 import { PromptversenyFooter } from "@/components/promptverseny-footer";
 import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal";
+import { LinkedInIcon } from "@/components/icons/linkedin-icon";
+import { MetricCard } from "@/components/ui/metric-card";
 
 interface RoundMetrics {
   round: number;
@@ -238,7 +240,7 @@ export function PhaseSuccess() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col">
-      <div className="text-center max-w-3xl mx-auto flex-1 flex flex-col items-center justify-center p-4 py-12">
+      <main className="text-center max-w-3xl mx-auto flex-1 flex flex-col items-center justify-center p-4 py-12">
         {/* Icon */}
         <div className="w-20 h-20 rounded-2xl overflow-hidden mb-6">
           <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={80} height={80} className="w-full h-full object-cover" />
@@ -260,7 +262,7 @@ export function PhaseSuccess() {
 
         {/* Overall metrics */}
         {loading ? (
-          <div className="text-sm text-white/40 animate-pulse">
+          <div role="status" aria-live="polite" className="text-sm text-white/70 animate-pulse">
             Statisztikák betöltése...
           </div>
         ) : metrics ? (
@@ -292,7 +294,7 @@ export function PhaseSuccess() {
             {/* Per-round breakdown */}
             {metrics.rounds && metrics.rounds.length > 0 && (
               <div className="space-y-3">
-                <h2 className="text-sm uppercase tracking-wider text-white/30 font-medium">
+                <h2 className="text-sm uppercase tracking-wider text-white/60 font-medium">
                   Szobáról szobára
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -363,7 +365,7 @@ export function PhaseSuccess() {
                   }}
                   placeholder="Teljes név"
                   maxLength={50}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/30 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
                   autoComplete="off"
                   disabled={usernameSubmitting}
                 />
@@ -396,14 +398,7 @@ export function PhaseSuccess() {
             }}
             className="w-full flex items-center justify-center gap-2 border border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white px-4 py-3 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5"
-            >
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-            </svg>
+            <LinkedInIcon className="w-5 h-5" />
             Megosztás LinkedIn-en
           </button>
         </div>
@@ -424,7 +419,7 @@ export function PhaseSuccess() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-      </div>
+      </main>
       <div className="relative z-10">
         <PromptversenyFooter />
       </div>
@@ -438,20 +433,3 @@ export function PhaseSuccess() {
   );
 }
 
-function MetricCard({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-      <div className="flex justify-center mb-2">{icon}</div>
-      <div className="text-lg font-bold text-white">{value}</div>
-      <div className="text-xs text-white/40">{label}</div>
-    </div>
-  );
-}

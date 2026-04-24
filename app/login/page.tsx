@@ -59,14 +59,14 @@ export default function LoginPage() {
     <div className="relative min-h-screen bg-transparent flex flex-col">
       <MatrixBg />
       <div className="absolute inset-0 bg-[#0a0a0f]/80 z-[1] pointer-events-none" />
-      <div className="relative z-10 w-full max-w-md mx-auto flex-1 flex flex-col items-center justify-center p-4">
+      <main className="relative z-10 w-full max-w-md mx-auto flex-1 flex flex-col items-center justify-center p-4">
         {/* Logo */}
         <div className="flex flex-col items-center justify-center mb-8">
           <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4">
             <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={64} height={64} className="w-full h-full object-cover" />
           </div>
           <h1 className="text-2xl font-bold text-white">Áprilisi promptverseny</h1>
-          <p className="text-sm text-white/40">Promptverseny - Április 2026</p>
+          <p className="text-sm text-white/70">Promptverseny - Április 2026</p>
         </div>
 
         {/* Login Card */}
@@ -94,7 +94,7 @@ export default function LoginPage() {
                   if (error) setError(null)
                 }}
                 placeholder="Add meg a kódod"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/20 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-center text-lg tracking-wider placeholder-white/50 focus:border-[#00ff88]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff88] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]"
                 autoComplete="off"
                 autoFocus
                 disabled={isLoading}
@@ -126,10 +126,10 @@ export default function LoginPage() {
         </div>
 
         {/* Footer hint */}
-        <p className="text-center text-xs text-white/20 mt-6">
+        <p className="text-center text-xs text-white/60 mt-6">
           A kódot a szervezőktől kaptad
         </p>
-      </div>
+      </main>
     </div>
   )
 }

@@ -26,14 +26,14 @@ export function HeaderBar() {
   const isUrgent = remaining === 0 || minutes < 1;
 
   return (
-    <header className="flex items-center justify-between px-6 py-3 bg-[#0a0a0f] border-b border-white/10">
-      <div className="flex items-center gap-3">
+    <header className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 bg-[#0a0a0f] border-b border-white/10">
+      <div className="flex items-center gap-3 min-w-0">
         <span className="text-[#00ff88] font-bold text-lg tracking-tight">PTF</span>
-        <span className="text-white/60 text-sm">Áprilisi promptverseny</span>
+        <span className="text-white/60 text-sm hidden sm:inline truncate">Áprilisi promptverseny</span>
       </div>
 
       {currentRound && (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className="flex gap-1" aria-label={`${currentRound}. feladat / 3`}>
             {[1, 2, 3].map((r) => (
               <div
@@ -48,7 +48,7 @@ export function HeaderBar() {
               />
             ))}
           </div>
-          <span className="text-white/60 text-sm">
+          <span className="text-white/60 text-sm hidden sm:inline">
             {currentRound === 1 ? "Első" : currentRound === 2 ? "Második" : "Harmadik"} feladat
           </span>
         </div>

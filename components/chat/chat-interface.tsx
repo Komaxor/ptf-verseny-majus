@@ -40,7 +40,7 @@ export function ChatInterface() {
           <ChatMessage key={msg.id} message={msg} />
         ))}
         {isChatStreaming && chatMessages[chatMessages.length - 1]?.content === "" && (
-          <div className="flex gap-3">
+          <div className="flex gap-3" role="status" aria-live="polite">
             <div className="w-8 h-8 rounded-full overflow-hidden bg-white/10 shrink-0">
               {avatarSrc ? (
                 <Image src={avatarSrc} alt="" width={32} height={32} className="object-cover w-full h-full" />
@@ -49,8 +49,8 @@ export function ChatInterface() {
               )}
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 flex items-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin text-white/40" />
-              <span className="text-sm text-white/40">Gondolkodom...</span>
+              <Loader2 className="w-4 h-4 animate-spin text-white/60" aria-hidden="true" />
+              <span className="text-sm text-white/60">Gondolkodom...</span>
             </div>
           </div>
         )}

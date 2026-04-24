@@ -16,7 +16,7 @@ export function PhaseRound() {
   return (
     <div className="flex flex-col h-screen bg-[#0a0a0f] text-white">
       <HeaderBar />
-      <div className="flex flex-1 overflow-hidden">
+      <main className="flex flex-1 overflow-hidden">
         {/* Left: Scene Visual + Answer Entry */}
         <div className="hidden md:flex md:w-[40%] lg:w-[35%] flex-col border-r border-white/10">
           <SceneVisual round={round} />
@@ -33,7 +33,7 @@ export function PhaseRound() {
             <AnswerEntry round={round} />
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

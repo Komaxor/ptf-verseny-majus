@@ -8,6 +8,8 @@ import { PromptversenyFooter } from "@/components/promptverseny-footer"
 import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal"
 import { Button } from "@/components/ui/button"
 import MatrixBg from "@/components/matrix-bg"
+import { LinkedInIcon } from "@/components/icons/linkedin-icon"
+import { MetricCard } from "@/components/ui/metric-card"
 
 interface ClosedMetrics {
   isSolved: boolean
@@ -72,7 +74,7 @@ export default function ClosedPage() {
       <MatrixBg />
       <div className="absolute inset-0 bg-black/60 z-[1] pointer-events-none" />
 
-      <div className="relative z-10 text-center max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center p-4">
+      <main className="relative z-10 text-center max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center p-4">
         {/* Logo */}
         <div className="flex items-center justify-center mb-6">
           <div className="w-20 h-20 rounded-2xl overflow-hidden">
@@ -94,7 +96,7 @@ export default function ClosedPage() {
 
         {/* Metrics */}
         {loading ? (
-          <div className="text-sm text-gray-400 animate-pulse">Statisztikák betöltése...</div>
+          <div role="status" aria-live="polite" className="text-sm text-gray-400 animate-pulse">Statisztikák betöltése...</div>
         ) : metrics ? (
           <div className="space-y-6 w-full">
             {/* Solved status */}
@@ -117,21 +119,25 @@ export default function ClosedPage() {
             {/* Metric cards grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-lg mx-auto">
               <MetricCard
+                tone="accent"
                 icon={<Clock className="w-5 h-5 text-[#00ff88]" />}
                 label="Összes idő"
                 value={metrics.isSolved && metrics.completionTimeSeconds > 0 ? formatDuration(metrics.completionTimeSeconds) : "--"}
               />
               <MetricCard
+                tone="accent"
                 icon={<MessageSquare className="w-5 h-5 text-[#00ff88]/70" />}
                 label="Üzenetek"
                 value={`${metrics.messageCount} db`}
               />
               <MetricCard
+                tone="accent"
                 icon={<Lightbulb className="w-5 h-5 text-[#00ff88]/70" />}
                 label="Tippek"
                 value={`${metrics.hintClicks} db`}
               />
               <MetricCard
+                tone="accent"
                 icon={<XCircle className="w-5 h-5 text-red-400" />}
                 label="Hibás próbálkozások"
                 value={`${metrics.failedAttempts} db`}
@@ -157,9 +163,7 @@ export default function ClosedPage() {
             variant="outline"
             className="w-full flex items-center justify-center gap-2 border-[#00ff88]/50 text-[#00ff88] hover:bg-[#00ff88]/10 hover:text-[#00ff88] cursor-pointer"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-            </svg>
+            <LinkedInIcon className="w-5 h-5" />
             Megosztás LinkedIn-en
           </Button>
         </div>
@@ -181,7 +185,7 @@ export default function ClosedPage() {
           </Button>
         </div>
 
-      </div>
+      </main>
       <div className="relative z-10">
         <PromptversenyFooter />
       </div>
@@ -195,12 +199,3 @@ export default function ClosedPage() {
   )
 }
 
-function MetricCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return (
-    <div className="bg-black/70 border border-[#00ff88]/20 rounded-xl p-4 text-center">
-      <div className="flex justify-center mb-2">{icon}</div>
-      <div className="text-lg font-bold text-white">{value}</div>
-      <div className="text-xs text-gray-400">{label}</div>
-    </div>
-  )
-}

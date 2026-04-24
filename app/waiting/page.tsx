@@ -64,7 +64,7 @@ export default function WaitingPage() {
     <div className="relative min-h-screen bg-[#0a0a0f] flex flex-col items-center justify-center p-4">
       <MatrixBg />
       <div className="absolute inset-0 bg-black/60 z-[1] pointer-events-none" />
-      <div className="relative z-10 text-center max-w-2xl mx-auto">
+      <main className="relative z-10 text-center max-w-2xl mx-auto">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-8">
           <div className="w-20 h-20 rounded-2xl overflow-hidden">
@@ -135,12 +135,12 @@ export default function WaitingPage() {
         )}
 
         {/* Decorative elements */}
-        <div className="flex items-center justify-center gap-2 text-gray-400/50">
+        <div className="flex items-center justify-center gap-2 text-gray-400">
           <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
           <span className="text-sm">Áprilisi promptverseny</span>
           <div className="w-2 h-2 bg-[#00ff88] rounded-full animate-pulse" />
         </div>
-      </div>
+      </main>
     </div>
   )
 }
