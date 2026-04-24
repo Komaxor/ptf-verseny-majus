@@ -19,7 +19,24 @@ export function loadRoundConfig(round: number): RoundConfig {
 
 export function loadSystemPrompt(round: number): string {
   const filePath = path.join(CHALLENGES_DIR, `round-${round}`, "system-prompt.md");
-  return fs.readFileSync(filePath, "utf-8");
+  let prompt = fs.readFileSync(filePath, "utf-8");
+
+  // Inject copilot-config.md if it exists for this round
+  const configPath = path.join(CHALLENGES_DIR, `round-${round}`, "copilot-config.md");
+  if (fs.existsSync(configPath)) {
+    const copilotConfig = fs.readFileSync(configPath, "utf-8");
+    // Insert after the welcome block, before the rest of the prompt
+    const welcomeEnd = "<!-- /welcome -->";
+    const insertIndex = prompt.indexOf(welcomeEnd);
+    if (insertIndex !== -1) {
+      const insertAt = insertIndex + welcomeEnd.length;
+      prompt = prompt.slice(0, insertAt) + "\n\n" + copilotConfig + "\n" + prompt.slice(insertAt);
+    } else {
+      prompt = copilotConfig + "\n\n" + prompt;
+    }
+  }
+
+  return prompt;
 }
 
 export function loadToolFile(round: number, filename: string): string {
