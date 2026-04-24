@@ -95,11 +95,11 @@ export function PhaseSuccess() {
     const h = 210;
 
     // Background
-    doc.setFillColor(10, 10, 15);
+    doc.setFillColor(255, 255, 255);
     doc.rect(0, 0, w, h, "F");
 
     // Decorative border
-    doc.setDrawColor(0, 255, 136);
+    doc.setDrawColor(37, 99, 235);
     doc.setLineWidth(2);
     doc.rect(10, 10, w - 20, h - 20);
     doc.setLineWidth(0.5);
@@ -136,60 +136,56 @@ export function PhaseSuccess() {
     // Title
     doc.setFont("helvetica", "bold");
     doc.setFontSize(36);
-    doc.setTextColor(0, 255, 136);
-    doc.text("HEIST REPORT", w / 2, 70, { align: "center" });
+    doc.setTextColor(37, 99, 235);
+    doc.text("OKLEVÉL", w / 2, 70, { align: "center" });
 
     // Subtitle
     doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
-    doc.setTextColor(180, 180, 180);
-    doc.text("Promptverseny -- Április 2026", w / 2, 82, { align: "center" });
+    doc.setTextColor(100, 100, 100);
+    doc.text("Promptverseny — Áprilisi kihívás", w / 2, 82, { align: "center" });
 
     // Decorative line
-    doc.setDrawColor(0, 255, 136);
+    doc.setDrawColor(37, 99, 235);
     doc.setLineWidth(0.5);
     doc.line(w / 2 - 50, 88, w / 2 + 50, 88);
 
-    // "Agent" text
+    // "Awarded to" text
     doc.setFontSize(12);
-    doc.setTextColor(160, 160, 160);
-    doc.text("Infiltrator:", w / 2, 100, { align: "center" });
+    doc.setTextColor(120, 120, 120);
+    doc.text("Ezt az oklevelet kapta:", w / 2, 100, { align: "center" });
 
     // Name
     doc.setFont("helvetica", "bold");
     doc.setFontSize(28);
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(30, 30, 30);
     doc.text(name, w / 2, 115, { align: "center" });
 
     // Decorative line under name
-    doc.setDrawColor(0, 255, 136);
+    doc.setDrawColor(37, 99, 235);
     doc.line(w / 2 - 60, 120, w / 2 + 60, 120);
 
     // Achievement text
     doc.setFont("helvetica", "normal");
     doc.setFontSize(13);
-    doc.setTextColor(180, 180, 180);
-    doc.text(
-      "Sikeresen teljesítette az áprilisi promptverseny kihívásait.",
-      w / 2,
-      132,
-      { align: "center" }
-    );
+    doc.setTextColor(80, 80, 80);
+    doc.text("A promptverseny áprilisi kihívásának sikeres megoldásáért.", w / 2, 132, { align: "center" });
+    doc.text("Sikeresen behatolt a Citadel Plaza épületbe és megszerezte a privát kulcsot.", w / 2, 140, { align: "center" });
 
     // Metrics if available
     if (metrics) {
       doc.setFontSize(10);
-      doc.setTextColor(0, 255, 136);
+      doc.setTextColor(120, 120, 120);
       const metricsText = [
         metrics.totalTimeSeconds > 0
-          ? `Idő: ${formatDuration(metrics.totalTimeSeconds)}`
+          ? `Megoldási idő: ${formatDuration(metrics.totalTimeSeconds)}`
           : null,
         `Üzenetek: ${metrics.totalMessages} db`,
         `Tippek: ${metrics.totalHints} db`,
       ]
         .filter(Boolean)
-        .join("  |  ");
-      doc.text(metricsText, w / 2, 148, { align: "center" });
+        .join("  •  ");
+      doc.text(metricsText, w / 2, 154, { align: "center" });
     }
 
     // Date
@@ -204,10 +200,10 @@ export function PhaseSuccess() {
 
     // Footer
     doc.setFontSize(9);
-    doc.setTextColor(100, 100, 100);
+    doc.setTextColor(160, 160, 160);
     doc.text("promptverseny.hu", w / 2, 190, { align: "center" });
 
-    doc.save(`Promptverseny április oklevél ${name}.pdf`);
+    doc.save(`oklevel-promptverseny-${name.toLowerCase().replace(/\s+/g, "-")}.pdf`);
   };
 
   const handleUsernameSubmit = async (e: React.FormEvent) => {
