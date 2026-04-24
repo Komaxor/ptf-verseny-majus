@@ -208,33 +208,35 @@ export async function logChatMessage(
       slog(userId, "Message logged successfully")
     }
 
-    // Increment session message count
-    const { data: currentSession, error: fetchError } = await supabase
-      .from("april_chat_sessions")
-      .select("message_count")
-      .eq("id", sessionId)
-      .single()
+    // Increment session message count (only for user messages)
+    if (role === "user") {
+      const { data: currentSession, error: fetchError } = await supabase
+        .from("april_chat_sessions")
+        .select("message_count")
+        .eq("id", sessionId)
+        .single()
 
-    if (fetchError) {
-      slogError(userId, "Error fetching current count:", fetchError.message)
-      return
-    }
+      if (fetchError) {
+        slogError(userId, "Error fetching current count:", fetchError.message)
+        return
+      }
 
-    const currentCount = currentSession?.message_count || 0
-    const newCount = currentCount + 1
+      const currentCount = currentSession?.message_count || 0
+      const newCount = currentCount + 1
 
-    const { error: updateError } = await supabase
-      .from("april_chat_sessions")
-      .update({
-        message_count: newCount,
-        last_activity_at: new Date().toISOString(),
-      })
-      .eq("id", sessionId)
+      const { error: updateError } = await supabase
+        .from("april_chat_sessions")
+        .update({
+          message_count: newCount,
+          last_activity_at: new Date().toISOString(),
+        })
+        .eq("id", sessionId)
 
-    if (updateError) {
-      slogError(userId, "Error updating message count:", updateError.message)
-    } else {
-      slog(userId, "Message count updated to:", newCount)
+      if (updateError) {
+        slogError(userId, "Error updating message count:", updateError.message)
+      } else {
+        slog(userId, "Message count updated to:", newCount)
+      }
     }
   } catch (error) {
     slogError(userId, "Unexpected error in logChatMessage:", error)

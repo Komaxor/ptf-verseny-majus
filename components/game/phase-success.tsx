@@ -248,10 +248,10 @@ export function PhaseSuccess() {
 
         {/* Title */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
-          Infiltráció sikeres!
+          Gratulálunk!
         </h1>
         <p className="text-base sm:text-xl text-white/60 mb-4">
-          Sikeresen teljesítetted az áprilisi promptverseny kihívásait.
+          Mindhárom szobát feltörted — a küldetés teljesítve.
         </p>
 
         {/* Status banner */}
@@ -333,7 +333,7 @@ export function PhaseSuccess() {
         ) : null}
 
         {/* Username input */}
-        <div className="mt-8 w-full max-w-lg mx-auto">
+        <div className="mt-8 w-full">
           {usernameSaved ? (
             <div className="space-y-3">
               <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
@@ -389,7 +389,7 @@ export function PhaseSuccess() {
         </div>
 
         {/* LinkedIn Share */}
-        <div className="mt-8 w-full max-w-lg mx-auto">
+        <div className="mt-8 w-full">
           <button
             onClick={() => {
               const text = `Sikeresen teljesítettem a promptverseny áprilisi kihívását!\n\nHárom AI-karakter meggyőzésével kellett megszereznem a privát kulcsot -- prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`;
@@ -404,7 +404,7 @@ export function PhaseSuccess() {
         </div>
 
         {/* Pre-registration CTA */}
-        <div className="mt-10 bg-white/5 border border-brand/20 rounded-xl p-6 w-full max-w-lg mx-auto">
+        <div className="mt-10 bg-white/5 border border-brand/20 rounded-xl p-6 w-full">
           <h2 className="text-lg font-semibold text-white mb-2">
             Előregisztráció a következő versenyünkre
           </h2>
