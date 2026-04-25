@@ -54,7 +54,7 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
         playsInline
         onPlay={handlePlay}
         onEnded={onComplete}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain sm:object-cover"
       />
       <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 flex items-center justify-between gap-2">
         <button

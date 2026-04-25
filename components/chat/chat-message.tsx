@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRef, useEffect } from "react";
 import { User } from "lucide-react";
 import { useGame } from "@/components/game/game-provider";
 import type { ChatMessage as ChatMessageType } from "@/lib/types";
@@ -14,6 +15,13 @@ const CHAT_AVATARS: Record<number, string> = {
 export function ChatMessage({ message }: { message: ChatMessageType }) {
   const isUser = message.role === "user";
   const { currentRound } = useGame();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [message.video]);
 
   const avatarSrc = currentRound ? CHAT_AVATARS[currentRound] : null;
 
@@ -41,13 +49,14 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
       >
         {message.video && (
           <video
+            ref={videoRef}
             src={message.video}
             autoPlay
             muted
             playsInline
             controls
             preload="metadata"
-            className="rounded-md w-full max-w-xs mb-2"
+            className="rounded-md w-full mb-2"
             aria-label="Asszisztens videóüzenete"
           />
         )}
