@@ -422,7 +422,16 @@ export function PhaseSuccess() {
             Előregisztráció a következő versenyünkre
           </h2>
           <p className="text-sm text-white/60 mb-4">
-            Következő promptversenyről ne maradj le!
+            A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
+            <a
+              href="https://craft-conf.com/2026"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand hover:underline"
+            >
+              CraftHub Konferencia
+            </a>{" "}
+            jegy több, mint 150.000 Forint értékben!
           </p>
           <button
             onClick={() => setEmailModalOpen(true)}
