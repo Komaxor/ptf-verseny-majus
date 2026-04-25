@@ -16,6 +16,7 @@ import {
   logToolCall,
   getMessagesAfterLastClear,
   extractUserIp,
+  type TokenUsage,
 } from "@/lib/chat-logger"
 import { CHAT_COOLDOWN_MS } from "@/lib/config"
 
@@ -245,10 +246,12 @@ export async function POST(request: NextRequest) {
         messages,
         tools,
         stream: true,
+        stream_options: { include_usage: true },
       })
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const accToolCalls: any[] = []
+      let usage: TokenUsage | undefined
 
       for await (const chunk of openaiStream) {
         const delta = chunk.choices[0]?.delta
@@ -271,9 +274,17 @@ export async function POST(request: NextRequest) {
             if (tc.function?.arguments) accToolCalls[idx].function.arguments += tc.function.arguments
           }
         }
+
+        if (chunk.usage) {
+          usage = {
+            prompt_tokens: chunk.usage.prompt_tokens,
+            completion_tokens: chunk.usage.completion_tokens,
+            total_tokens: chunk.usage.total_tokens,
+          }
+        }
       }
 
-      return accToolCalls
+      return { toolCalls: accToolCalls, usage }
     }
 
     const { readable, writable } = new TransformStream<Uint8Array>()
@@ -283,9 +294,18 @@ export async function POST(request: NextRequest) {
     // readable to the client immediately.
     const pump = (async () => {
       try {
+        const totalUsage: TokenUsage = { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 }
+
         // eslint-disable-next-line no-constant-condition
         while (true) {
-          const toolCalls = await streamOnce(writer)
+          const { toolCalls, usage } = await streamOnce(writer)
+
+          if (usage) {
+            totalUsage.prompt_tokens! += usage.prompt_tokens ?? 0
+            totalUsage.completion_tokens! += usage.completion_tokens ?? 0
+            totalUsage.total_tokens! += usage.total_tokens ?? 0
+          }
+
           if (toolCalls.length === 0) break
 
           // Resolve tool calls and feed results back for the next iteration
@@ -313,7 +333,8 @@ export async function POST(request: NextRequest) {
         const responseTimeMs = Date.now() - requestStartTime
         await logChatMessage(
           session.sessionId, user.id, round, "assistant", fullContent,
-          responseTimeMs
+          responseTimeMs,
+          totalUsage
         )
       } catch (err) {
         console.error("[chat] Stream error:", err)

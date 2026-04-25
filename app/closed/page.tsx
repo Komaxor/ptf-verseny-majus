@@ -100,7 +100,7 @@ export default function ClosedPage() {
             </div>
 
             {/* Metric cards grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-lg mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full">
               <MetricCard
                 tone="accent"
                 icon={<Clock className="w-5 h-5 text-brand" />}
@@ -136,7 +136,7 @@ export default function ClosedPage() {
         )}
 
         {/* LinkedIn Share */}
-        <div className="mt-8 w-full max-w-lg mx-auto">
+        <div className="mt-8 w-full">
           <Button
             onClick={() => {
               const text = `Részt vettem a Promptverseny áprilisi kihívásán!\n\nHárom AI-karakterrel kellett kommunikálnom, hogy bejussak az épületbe. Prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`
@@ -152,7 +152,7 @@ export default function ClosedPage() {
         </div>
 
         {/* Pre-registration CTA */}
-        <div className="mt-10 bg-black/70 border border-brand/30 rounded-xl p-6 w-full max-w-lg mx-auto">
+        <div className="mt-10 bg-black/70 border border-brand/30 rounded-xl p-6 w-full">
           <h2 className="text-lg font-semibold text-white mb-2">
             Előregisztráció a következő versenyünkre
           </h2>
