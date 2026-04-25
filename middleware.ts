@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js"
 import { COMPETITION_START, COMPETITION_END } from "@/lib/config"
 
 // Routes that don't require authentication
-const PUBLIC_ROUTES = ["/login", "/waiting", "/closed", "/api/login"]
+const PUBLIC_ROUTES = ["/login", "/waiting", "/closed", "/oklevel", "/api/login"]
 
 // Routes that should be protected (require valid session)
 const PROTECTED_ROUTES = ["/", "/api/chat", "/api/verify-passcode", "/api/hint-click", "/api/solve-metrics", "/api/game-state", "/api/judge", "/api/context-clear"]
@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
 
   if (competitionStatus === "after") {
     // Allow post-competition APIs for everyone
-    if (pathname === "/api/closed-metrics" || pathname === "/api/solve-metrics" || pathname === "/api/subscribe-email" || pathname === "/api/set-username") {
+    if (pathname === "/api/closed-metrics" || pathname === "/api/solve-metrics" || pathname === "/api/subscribe-email" || pathname === "/api/set-username" || pathname === "/oklevel") {
       return NextResponse.next()
     }
 

@@ -11,6 +11,7 @@ import {
   User,
   Loader2,
   Download,
+  Pencil,
   ArrowRight,
   AlertTriangle,
 } from "lucide-react";
@@ -297,6 +298,14 @@ export function PhaseSuccess() {
               <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
                 <Check className="w-4 h-4" />
                 Név mentve: <span className="font-bold">{username}</span>
+                <button
+                  type="button"
+                  onClick={() => setUsernameSaved(false)}
+                  className="ml-1 text-brand hover:text-brand/70 transition-colors cursor-pointer"
+                  aria-label="Név szerkesztése"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </button>
               </div>
               <button
                 onClick={() => generateCertificate(username)}
