@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight, Download, User } from "lucide-react"
+import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight, Download, User, Pencil } from "lucide-react"
 import { jsPDF } from "jspdf"
 import Image from "next/image"
 import { PromptversenyFooter } from "@/components/promptverseny-footer"
@@ -281,6 +281,13 @@ export default function ClosedPage() {
               <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
                 <User className="w-4 h-4" />
                 <span className="font-bold">{certName}</span>
+                <button
+                  onClick={() => { setCertReady(false) }}
+                  className="ml-1 text-brand hover:text-brand/70 transition-colors cursor-pointer"
+                  aria-label="Név szerkesztése"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </button>
               </div>
               <button
                 onClick={() => generateCertificate(certName)}
@@ -288,12 +295,6 @@ export default function ClosedPage() {
               >
                 <Download className="w-4 h-4" />
                 Oklevél letöltése
-              </button>
-              <button
-                onClick={() => { setCertReady(false); setCertName("") }}
-                className="w-full text-white/40 hover:text-white/60 text-xs py-1 transition-colors cursor-pointer"
-              >
-                Név módosítása
               </button>
             </div>
           ) : (
