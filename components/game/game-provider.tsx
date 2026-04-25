@@ -157,34 +157,39 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     });
-    if (res.ok) {
-      const data = await res.json();
-      setGameState(data.gameState);
-
-      // If entering a round, load welcome message
-      const newPhase = data.gameState.current_phase as Phase;
-      const newRound = PHASE_ROUND[newPhase];
-      if (newRound) {
-        try {
-          const challengeRes = await fetch(`/api/challenge?round=${newRound}`);
-          if (challengeRes.ok) {
-            const challengeData = await challengeRes.json();
-            if (challengeData.welcomeMessage) {
-              setChatMessages([{
-                id: crypto.randomUUID(),
-                role: "assistant",
-                content: challengeData.welcomeMessage,
-                created_at: new Date().toISOString(),
-              }]);
-              return;
-            }
-          }
-        } catch {
-          // Fall through to empty messages
-        }
+    if (!res.ok) {
+      // Competition ended while user was watching a video — redirect to /closed
+      if (res.status === 403 || res.status === 401) {
+        window.location.href = "/closed";
       }
-      setChatMessages([]); // New phase = fresh chat
+      return;
     }
+    const data = await res.json();
+    setGameState(data.gameState);
+
+    // If entering a round, load welcome message
+    const newPhase = data.gameState.current_phase as Phase;
+    const newRound = PHASE_ROUND[newPhase];
+    if (newRound) {
+      try {
+        const challengeRes = await fetch(`/api/challenge?round=${newRound}`);
+        if (challengeRes.ok) {
+          const challengeData = await challengeRes.json();
+          if (challengeData.welcomeMessage) {
+            setChatMessages([{
+              id: crypto.randomUUID(),
+              role: "assistant",
+              content: challengeData.welcomeMessage,
+              created_at: new Date().toISOString(),
+            }]);
+            return;
+          }
+        }
+      } catch {
+        // Fall through to empty messages
+      }
+    }
+    setChatMessages([]); // New phase = fresh chat
   }, []);
 
   const sendMessage = useCallback(

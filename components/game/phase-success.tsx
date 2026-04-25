@@ -273,6 +273,32 @@ export function PhaseSuccess() {
         )}
         {!metrics?.isLateSolve && <div className="mb-6" />}
 
+        {/* Pre-registration CTA */}
+        <div className="mt-4 mb-8 bg-white/5 border border-brand/20 rounded-xl p-6 w-full">
+          <h2 className="text-lg font-semibold text-white mb-2">
+            Előregisztráció a következő versenyünkre
+          </h2>
+          <p className="text-sm text-white/60 mb-4">
+            A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
+            <a
+              href="https://craft-conf.com/2026"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand hover:underline"
+            >
+              CraftHub Konferencia
+            </a>{" "}
+            jegy több, mint 150.000 Forint értékben!
+          </p>
+          <button
+            onClick={() => setEmailModalOpen(true)}
+            className="inline-flex items-center gap-2 bg-brand hover:bg-brand/80 text-black font-semibold px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface cursor-pointer"
+          >
+            Előregisztrálok
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+
         {/* Overall metrics */}
         {loading ? (
           <div role="status" aria-live="polite" className="text-sm text-white/70 animate-pulse">
@@ -413,32 +439,6 @@ export function PhaseSuccess() {
           >
             <LinkedInIcon className="w-5 h-5" />
             Megosztás LinkedIn-en
-          </button>
-        </div>
-
-        {/* Pre-registration CTA */}
-        <div className="mt-10 bg-white/5 border border-brand/20 rounded-xl p-6 w-full">
-          <h2 className="text-lg font-semibold text-white mb-2">
-            Előregisztráció a következő versenyünkre
-          </h2>
-          <p className="text-sm text-white/60 mb-4">
-            A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
-            <a
-              href="https://craft-conf.com/2026"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand hover:underline"
-            >
-              CraftHub Konferencia
-            </a>{" "}
-            jegy több, mint 150.000 Forint értékben!
-          </p>
-          <button
-            onClick={() => setEmailModalOpen(true)}
-            className="inline-flex items-center gap-2 bg-brand hover:bg-brand/80 text-black font-semibold px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface cursor-pointer"
-          >
-            Előregisztrálok
-            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 

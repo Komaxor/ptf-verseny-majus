@@ -99,6 +99,33 @@ export default function ClosedPage() {
               </div>
             </div>
 
+            {/* Pre-registration CTA */}
+            <div className="bg-black/70 border border-brand/30 rounded-xl p-6">
+              <h2 className="text-lg font-semibold text-white mb-2">
+                Előregisztráció a következő versenyünkre
+              </h2>
+              <p className="text-sm text-gray-400 mb-4">
+                A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
+                <a
+                  href="https://craft-conf.com/2026"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand hover:underline"
+                >
+                  CraftHub Konferencia
+                </a>{" "}
+                jegy több, mint 150.000 Forint értékben!
+              </p>
+              <Button
+                onClick={() => setEmailModalOpen(true)}
+                variant="brand"
+                className="cursor-pointer"
+              >
+                Előregisztrálok
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+
             {/* Metric cards grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full">
               <MetricCard
@@ -148,33 +175,6 @@ export default function ClosedPage() {
           >
             <LinkedInIcon className="w-5 h-5" />
             Megosztás LinkedIn-en
-          </Button>
-        </div>
-
-        {/* Pre-registration CTA */}
-        <div className="mt-10 bg-black/70 border border-brand/30 rounded-xl p-6 w-full">
-          <h2 className="text-lg font-semibold text-white mb-2">
-            Előregisztráció a következő versenyünkre
-          </h2>
-          <p className="text-sm text-gray-400 mb-4">
-            A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
-            <a
-              href="https://craft-conf.com/2026"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand hover:underline"
-            >
-              CraftHub Konferencia
-            </a>{" "}
-            jegy több, mint 150.000 Forint értékben!
-          </p>
-          <Button
-            onClick={() => setEmailModalOpen(true)}
-            variant="brand"
-            className="cursor-pointer"
-          >
-            Előregisztrálok
-            <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
 
