@@ -175,6 +175,11 @@ export async function logChatMessage(
     return
   }
 
+  // tool_call and tool_result are tracked in april_tool_calls, skip chat log
+  if (role === "tool_call" || role === "tool_result") {
+    return
+  }
+
   if (!sessionId) {
     slogWarn(userId, "No session ID provided - cannot log message")
     return
