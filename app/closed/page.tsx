@@ -2,7 +2,8 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight } from "lucide-react"
+import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight, Download, User } from "lucide-react"
+import { jsPDF } from "jspdf"
 import Image from "next/image"
 import { PromptversenyFooter } from "@/components/promptverseny-footer"
 import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal"
@@ -34,6 +35,8 @@ export default function ClosedPage() {
   const [metrics, setMetrics] = useState<ClosedMetrics | null>(null)
   const [loading, setLoading] = useState(true)
   const [emailModalOpen, setEmailModalOpen] = useState(false)
+  const [certName, setCertName] = useState("")
+  const [certReady, setCertReady] = useState(false)
 
   useEffect(() => {
     async function loadMetrics() {
@@ -51,6 +54,121 @@ export default function ClosedPage() {
     }
     loadMetrics()
   }, [])
+
+  const generateCertificate = async (name: string) => {
+    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" })
+    const w = 297
+    const h = 210
+
+    // Background
+    doc.setFillColor(255, 255, 255)
+    doc.rect(0, 0, w, h, "F")
+
+    // Decorative border
+    doc.setDrawColor(37, 99, 235)
+    doc.setLineWidth(2)
+    doc.rect(10, 10, w - 20, h - 20)
+    doc.setLineWidth(0.5)
+    doc.rect(14, 14, w - 28, h - 28)
+
+    // Corner accents
+    const cornerSize = 20
+    doc.setLineWidth(2)
+    const corners = [
+      [14, 14, 14 + cornerSize, 14, 14, 14 + cornerSize],
+      [w - 14, 14, w - 14 - cornerSize, 14, w - 14, 14 + cornerSize],
+      [14, h - 14, 14 + cornerSize, h - 14, 14, h - 14 - cornerSize],
+      [w - 14, h - 14, w - 14 - cornerSize, h - 14, w - 14, h - 14 - cornerSize],
+    ]
+    for (const [x1, y1, x2, y2, x3, y3] of corners) {
+      doc.line(x2, y2, x1, y1)
+      doc.line(x1, y1, x3, y3)
+    }
+
+    // Logo
+    try {
+      const response = await fetch("/promptverseny-logo.jpg")
+      const blob = await response.blob()
+      const dataUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve(reader.result as string)
+        reader.readAsDataURL(blob)
+      })
+      doc.addImage(dataUrl, "JPEG", w / 2 - 12, 28, 24, 24)
+    } catch {
+      // Skip logo if it fails to load
+    }
+
+    // Title
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(36)
+    doc.setTextColor(37, 99, 235)
+    doc.text("OKLEVEL", w / 2, 70, { align: "center" })
+
+    // Subtitle
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(14)
+    doc.setTextColor(100, 100, 100)
+    doc.text("Promptverseny — Aprilisi kihivas", w / 2, 82, { align: "center" })
+
+    // Decorative line
+    doc.setDrawColor(37, 99, 235)
+    doc.setLineWidth(0.5)
+    doc.line(w / 2 - 50, 88, w / 2 + 50, 88)
+
+    // "Awarded to" text
+    doc.setFontSize(12)
+    doc.setTextColor(120, 120, 120)
+    doc.text("Ezt az oklevelet kapta:", w / 2, 100, { align: "center" })
+
+    // Name
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(28)
+    doc.setTextColor(30, 30, 30)
+    doc.text(name, w / 2, 115, { align: "center" })
+
+    // Decorative line under name
+    doc.setDrawColor(37, 99, 235)
+    doc.line(w / 2 - 60, 120, w / 2 + 60, 120)
+
+    // Achievement text — different for solvers vs participants
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(13)
+    doc.setTextColor(80, 80, 80)
+    if (metrics?.isSolved) {
+      doc.text("A promptverseny aprilisi kihivasanak sikeres megoldasaert.", w / 2, 132, { align: "center" })
+      doc.text("Sikeresen behatolt a Citadel Plaza epuletbe es megszerezte a privat kulcsot.", w / 2, 140, { align: "center" })
+    } else {
+      doc.text("A promptverseny aprilisi kihivasaban valo reszvetelert.", w / 2, 132, { align: "center" })
+      doc.text("Megkiserlte feltorni a Citadel Plaza biztonsagi rendszereit.", w / 2, 140, { align: "center" })
+    }
+
+    // Metrics if available
+    if (metrics) {
+      doc.setFontSize(10)
+      doc.setTextColor(120, 120, 120)
+      const parts = [
+        metrics.isSolved && metrics.completionTimeSeconds > 0
+          ? `Megoldasi ido: ${formatDuration(metrics.completionTimeSeconds)}`
+          : null,
+        `Uzenetek: ${metrics.messageCount} db`,
+        `Tippek: ${metrics.hintClicks} db`,
+      ].filter(Boolean).join("  •  ")
+      doc.text(parts, w / 2, 154, { align: "center" })
+    }
+
+    // Date
+    doc.setFontSize(11)
+    doc.setTextColor(120, 120, 120)
+    doc.text("Budapest, 2025. aprilis 24.", w / 2, 170, { align: "center" })
+
+    // Footer
+    doc.setFontSize(9)
+    doc.setTextColor(160, 160, 160)
+    doc.text("promptverseny.hu", w / 2, 190, { align: "center" })
+
+    doc.save(`oklevel-promptverseny-${name.toLowerCase().replace(/\s+/g, "-")}.pdf`)
+  }
 
   return (
     <div className="relative min-h-screen bg-surface flex flex-col">
@@ -154,13 +272,64 @@ export default function ClosedPage() {
               />
             </div>
           </div>
-        ) : (
-          <div className="bg-black/70 border border-brand/30 rounded-xl p-6">
-            <p className="text-gray-300">
-              Ezen a böngészőn nincs aktív munkamenet. Ha részt vettél a versenyen, használd ugyanazt az eszközt és böngészőt, mint a verseny alatt.
-            </p>
-          </div>
-        )}
+        ) : null}
+
+        {/* Certificate */}
+        <div className="mt-8 w-full">
+          {certReady ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
+                <User className="w-4 h-4" />
+                <span className="font-bold">{certName}</span>
+              </div>
+              <button
+                onClick={() => generateCertificate(certName)}
+                className="w-full bg-brand hover:bg-brand/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              >
+                <Download className="w-4 h-4" />
+                Oklevél letöltése
+              </button>
+              <button
+                onClick={() => { setCertReady(false); setCertName("") }}
+                className="w-full text-white/40 hover:text-white/60 text-xs py-1 transition-colors cursor-pointer"
+              >
+                Név módosítása
+              </button>
+            </div>
+          ) : (
+            <div className="bg-black/70 border border-brand/30 rounded-xl p-5">
+              <label htmlFor="cert-name" className="flex items-center gap-2 mb-3">
+                <User className="w-4 h-4 text-brand" />
+                <span className="text-sm font-medium text-white">Add meg a neved az oklevélhez</span>
+              </label>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  if (certName.trim()) setCertReady(true)
+                }}
+                className="flex gap-2"
+              >
+                <input
+                  id="cert-name"
+                  type="text"
+                  value={certName}
+                  onChange={(e) => setCertName(e.target.value.slice(0, 50))}
+                  placeholder="Teljes név"
+                  maxLength={50}
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                  autoComplete="off"
+                />
+                <button
+                  type="submit"
+                  disabled={!certName.trim()}
+                  className="px-6 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                >
+                  Tovább
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
 
         {/* LinkedIn Share */}
         <div className="mt-8 w-full">
