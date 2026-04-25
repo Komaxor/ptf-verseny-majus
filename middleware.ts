@@ -93,11 +93,17 @@ export async function middleware(request: NextRequest) {
           }
 
           if (user) {
-            // Valid session, not solved — let them continue (overtime)
-            const requestHeaders = new Headers(request.headers)
-            requestHeaders.set("x-user-id", user.id)
-            requestHeaders.set("x-user-solved", "false")
-            return NextResponse.next({ request: { headers: requestHeaders } })
+            // Valid session, not solved — competition is over, redirect to /closed
+            if (pathname === "/api/closed-metrics" || pathname === "/api/solve-metrics") {
+              return NextResponse.next()
+            }
+            if (pathname.startsWith("/api/")) {
+              return NextResponse.json({ error: "A verseny már véget ért." }, { status: 403 })
+            }
+            if (pathname !== "/closed") {
+              return NextResponse.redirect(new URL("/closed", request.url))
+            }
+            return NextResponse.next()
           }
         } catch {
           // If validation fails, fall through to /closed

@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createServiceClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
+import { COMPETITION_END } from "@/lib/config"
 
 export async function GET(_request: NextRequest) {
   try {
@@ -86,6 +87,9 @@ export async function GET(_request: NextRequest) {
         failedAttempts: failed?.filter((f) => f.round === r.round).length || 0,
       })),
       solvedAt: gameState.round3_completed_at,
+      isLateSolve: gameState.round3_completed_at
+        ? new Date(gameState.round3_completed_at) > COMPETITION_END
+        : false,
     })
   } catch (error) {
     console.error("Solve metrics error:", error)

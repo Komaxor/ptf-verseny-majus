@@ -12,6 +12,7 @@ import {
   Loader2,
   Download,
   ArrowRight,
+  AlertTriangle,
 } from "lucide-react";
 import Image from "next/image";
 import { jsPDF } from "jspdf";
@@ -36,6 +37,7 @@ interface SolveMetrics {
   totalHints: number;
   totalFailedAttempts: number;
   rounds: RoundMetrics[];
+  isLateSolve: boolean;
 }
 
 function formatDuration(seconds: number): string {
@@ -172,6 +174,12 @@ export function PhaseSuccess() {
     doc.text("A promptverseny áprilisi kihívásának sikeres megoldásáért.", w / 2, 132, { align: "center" });
     doc.text("Sikeresen behatolt a Citadel Plaza épületbe és megszerezte a privát kulcsot.", w / 2, 140, { align: "center" });
 
+    if (metrics?.isLateSolve) {
+      doc.setFontSize(10);
+      doc.setTextColor(180, 140, 40);
+      doc.text("(Az időkorlát lejárta után megoldva — nem hivatalos eredmény)", w / 2, 148, { align: "center" });
+    }
+
     // Metrics if available
     if (metrics) {
       doc.setFontSize(10);
@@ -251,10 +259,19 @@ export function PhaseSuccess() {
         </p>
 
         {/* Status banner */}
-        <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-5 py-2.5 rounded-full text-sm font-medium mb-10">
+        <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-5 py-2.5 rounded-full text-sm font-medium mb-4">
           <Check className="w-4 h-4" />
           Küldetés teljesítve
         </div>
+
+        {/* Late solve warning */}
+        {metrics?.isLateSolve && (
+          <div className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-5 py-2.5 rounded-full text-sm font-medium mb-10">
+            <AlertTriangle className="w-4 h-4" />
+            Az időkorlát lejárta után oldottad meg — az eredményed nem számít bele a ranglistába.
+          </div>
+        )}
+        {!metrics?.isLateSolve && <div className="mb-6" />}
 
         {/* Overall metrics */}
         {loading ? (
@@ -388,7 +405,7 @@ export function PhaseSuccess() {
         <div className="mt-8 w-full">
           <button
             onClick={() => {
-              const text = `Sikeresen teljesítettem a promptverseny áprilisi kihívását!\n\nHárom AI-karakter meggyőzésével kellett megszereznem a privát kulcsot -- prompt engineering tudás és kreatív gondolkodás kellett hozzá.\n\nHa te is kipróbálnád magad, kövesd a @promptverseny oldalt!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering`;
+              const text = `Részt vettem a Promptverseny áprilisi kihívásán!\n\nHárom vállalati AI rendszer kellett kijátszanom. Nem kellett hozzá IT vagy programozói szaktudás, csak logikus gondolkodás, kreativitás és némi prompt engineering.\n\nA verseny rávilágított, hogy a legtöbb AI rendszer mennyire sebezhető, és hogy a mai világban elengedhetetlen az AI használat.\n\nKövesd a @promptverseny oldalt és tanulj meg promptolni!\n\nHa te is kipróbálnád magad, regisztrálj a májusi versenyre!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering #prompts`;
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
               window.open(url, "_blank", "noopener,noreferrer");
             }}
