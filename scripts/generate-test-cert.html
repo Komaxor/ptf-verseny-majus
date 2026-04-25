@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Oklevél Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body style="margin:0;padding:20px;background:#eee;display:flex;flex-direction:column;align-items:center;">
+  <button id="download" style="margin-bottom:20px;padding:12px 24px;font-size:16px;cursor:pointer;">Download PDF for "Ambrus Márk"</button>
+  <canvas id="preview" style="max-width:600px;border:1px solid #ccc;"></canvas>
+
+  <script>
+    const NAME = "Ambrus Márk";
+
+    async function renderCert() {
+      const img = new Image();
+      img.src = "../public/oklevel-template.png";
+      await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; });
+
+      const canvas = document.getElementById("preview");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      // Name
+      const nameY = img.height * 0.685;
+      ctx.font = `bold ${Math.round(img.width * 0.038)}px "Helvetica Neue", Arial, sans-serif`;
+      ctx.fillStyle = "#222222";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(NAME, img.width / 2, nameY);
+
+      // Underline
+      const textWidth = ctx.measureText(NAME).width;
+      const lineWidth = Math.max(textWidth + 60, img.width * 0.35);
+      const lineY = nameY + img.width * 0.028;
+      ctx.strokeStyle = "#333333";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(img.width / 2 - lineWidth / 2, lineY);
+      ctx.lineTo(img.width / 2 + lineWidth / 2, lineY);
+      ctx.stroke();
+
+      return canvas;
+    }
+
+    renderCert();
+
+    document.getElementById("download").addEventListener("click", async () => {
+      const canvas = await renderCert();
+      const imgData = canvas.toDataURL("image/png");
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      doc.addImage(imgData, "PNG", 0, 0, 210, 297);
+      doc.save("oklevel-promptverseny-ambrus-márk.pdf");
+    });
+  </script>
+</body>
+</html>

@@ -1,10 +1,8 @@
 "use client"
 
-import type React from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Trophy, Clock, MessageSquare, Lightbulb, XCircle, CheckCircle, XOctagon, ArrowRight, Download, User, Pencil } from "lucide-react"
 import { jsPDF } from "jspdf"
-import html2canvas from "html2canvas"
 import Image from "next/image"
 import { PromptversenyFooter } from "@/components/promptverseny-footer"
 import { PromptversenyEmailModal } from "@/components/promptverseny-email-modal"
@@ -57,117 +55,43 @@ export default function ClosedPage() {
   }, [])
 
   const generateCertificate = async (name: string) => {
-    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" })
-    const w = 297
-    const h = 210
+    const img = new window.Image()
+    img.crossOrigin = "anonymous"
+    img.src = "/oklevel-template.png"
 
-    // Background
-    doc.setFillColor(255, 255, 255)
-    doc.rect(0, 0, w, h, "F")
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve()
+      img.onerror = reject
+    })
 
-    // Decorative border
-    doc.setDrawColor(37, 99, 235)
-    doc.setLineWidth(2)
-    doc.rect(10, 10, w - 20, h - 20)
-    doc.setLineWidth(0.5)
-    doc.rect(14, 14, w - 28, h - 28)
+    const canvas = document.createElement("canvas")
+    canvas.width = img.width
+    canvas.height = img.height
+    const ctx = canvas.getContext("2d")!
+    ctx.drawImage(img, 0, 0)
 
-    // Corner accents
-    const cornerSize = 20
-    doc.setLineWidth(2)
-    const corners = [
-      [14, 14, 14 + cornerSize, 14, 14, 14 + cornerSize],
-      [w - 14, 14, w - 14 - cornerSize, 14, w - 14, 14 + cornerSize],
-      [14, h - 14, 14 + cornerSize, h - 14, 14, h - 14 - cornerSize],
-      [w - 14, h - 14, w - 14 - cornerSize, h - 14, w - 14, h - 14 - cornerSize],
-    ]
-    for (const [x1, y1, x2, y2, x3, y3] of corners) {
-      doc.line(x2, y2, x1, y1)
-      doc.line(x1, y1, x3, y3)
-    }
+    // Draw name centered in the gap between "áprilisi eseményén" and signatures
+    const nameY = img.height * 0.685
+    ctx.font = `bold ${Math.round(img.width * 0.038)}px "Helvetica Neue", Arial, sans-serif`
+    ctx.fillStyle = "#222222"
+    ctx.textAlign = "center"
+    ctx.textBaseline = "middle"
+    ctx.fillText(name, img.width / 2, nameY)
 
-    // Logo
-    try {
-      const response = await fetch("/promptverseny-logo.jpg")
-      const blob = await response.blob()
-      const dataUrl = await new Promise<string>((resolve) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result as string)
-        reader.readAsDataURL(blob)
-      })
-      doc.addImage(dataUrl, "JPEG", w / 2 - 12, 28, 24, 24)
-    } catch {
-      // Skip logo if it fails to load
-    }
+    // Draw underline
+    const textWidth = ctx.measureText(name).width
+    const lineWidth = Math.max(textWidth + 60, img.width * 0.35)
+    const lineY = nameY + img.width * 0.028
+    ctx.strokeStyle = "#333333"
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.moveTo(img.width / 2 - lineWidth / 2, lineY)
+    ctx.lineTo(img.width / 2 + lineWidth / 2, lineY)
+    ctx.stroke()
 
-    // Title
-    doc.setFont("helvetica", "bold")
-    doc.setFontSize(36)
-    doc.setTextColor(37, 99, 235)
-    doc.text("OKLEVEL", w / 2, 70, { align: "center" })
-
-    // Subtitle
-    doc.setFont("helvetica", "normal")
-    doc.setFontSize(14)
-    doc.setTextColor(100, 100, 100)
-    doc.text("Promptverseny — Aprilisi kihivas", w / 2, 82, { align: "center" })
-
-    // Decorative line
-    doc.setDrawColor(37, 99, 235)
-    doc.setLineWidth(0.5)
-    doc.line(w / 2 - 50, 88, w / 2 + 50, 88)
-
-    // "Awarded to" text
-    doc.setFontSize(12)
-    doc.setTextColor(120, 120, 120)
-    doc.text("Ezt az oklevelet kapta:", w / 2, 100, { align: "center" })
-
-    // Name
-    doc.setFont("helvetica", "bold")
-    doc.setFontSize(28)
-    doc.setTextColor(30, 30, 30)
-    doc.text(name, w / 2, 115, { align: "center" })
-
-    // Decorative line under name
-    doc.setDrawColor(37, 99, 235)
-    doc.line(w / 2 - 60, 120, w / 2 + 60, 120)
-
-    // Achievement text — different for solvers vs participants
-    doc.setFont("helvetica", "normal")
-    doc.setFontSize(13)
-    doc.setTextColor(80, 80, 80)
-    if (metrics?.isSolved) {
-      doc.text("A promptverseny aprilisi kihivasanak sikeres megoldasaert.", w / 2, 132, { align: "center" })
-      doc.text("Sikeresen behatolt a Citadel Plaza epuletbe es megszerezte a privat kulcsot.", w / 2, 140, { align: "center" })
-    } else {
-      doc.text("A promptverseny aprilisi kihivasaban valo reszvetelert.", w / 2, 132, { align: "center" })
-      doc.text("Megkiserlte feltorni a Citadel Plaza biztonsagi rendszereit.", w / 2, 140, { align: "center" })
-    }
-
-    // Metrics if available
-    if (metrics) {
-      doc.setFontSize(10)
-      doc.setTextColor(120, 120, 120)
-      const parts = [
-        metrics.isSolved && metrics.completionTimeSeconds > 0
-          ? `Megoldasi ido: ${formatDuration(metrics.completionTimeSeconds)}`
-          : null,
-        `Uzenetek: ${metrics.messageCount} db`,
-        `Tippek: ${metrics.hintClicks} db`,
-      ].filter(Boolean).join("  •  ")
-      doc.text(parts, w / 2, 154, { align: "center" })
-    }
-
-    // Date
-    doc.setFontSize(11)
-    doc.setTextColor(120, 120, 120)
-    doc.text("Budapest, 2025. aprilis 24.", w / 2, 170, { align: "center" })
-
-    // Footer
-    doc.setFontSize(9)
-    doc.setTextColor(160, 160, 160)
-    doc.text("promptverseny.hu", w / 2, 190, { align: "center" })
-
+    const imgData = canvas.toDataURL("image/png")
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" })
+    doc.addImage(imgData, "PNG", 0, 0, 210, 297)
     doc.save(`oklevel-promptverseny-${name.toLowerCase().replace(/\s+/g, "-")}.pdf`)
   }
 
@@ -388,6 +312,7 @@ export default function ClosedPage() {
         onClose={() => setEmailModalOpen(false)}
         source="closed_preregistration"
       />
+
     </div>
   )
 }
