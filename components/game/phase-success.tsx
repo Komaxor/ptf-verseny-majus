@@ -373,6 +373,7 @@ export function PhaseSuccess() {
 
         {/* Username input */}
         <div className="mt-8 w-full">
+          <h2 className="text-lg font-semibold text-white mb-3">Töltsd le az okleveled itt!</h2>
           {usernameSaved ? (
             <div className="space-y-3">
               <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
