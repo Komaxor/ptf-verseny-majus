@@ -207,7 +207,7 @@ describe("POST /api/set-username", () => {
     let userCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") {
+        if (table === "may_competition_users") {
           userCallCount++;
           return userCallCount === 1 ? userChain : updateChain;
         }
@@ -241,7 +241,7 @@ describe("POST /api/set-username", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
     };
@@ -273,7 +273,7 @@ describe("POST /api/set-username", () => {
     let userCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") {
+        if (table === "may_competition_users") {
           userCallCount++;
           return userCallCount === 1 ? userChain : updateChain;
         }

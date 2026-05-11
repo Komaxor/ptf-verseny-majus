@@ -197,7 +197,7 @@ describe("POST /api/chat", () => {
     );
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return noMsgChain;
       }),
     };
@@ -229,7 +229,7 @@ describe("POST /api/chat", () => {
     );
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return noMsgChain;
       }),
     };
@@ -263,7 +263,7 @@ describe("POST /api/chat", () => {
     );
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return noMsgChain;
       }),
     };
@@ -295,7 +295,7 @@ describe("POST /api/chat", () => {
     );
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return noMsgChain;
       }),
     };
@@ -327,7 +327,7 @@ describe("POST /api/chat", () => {
     );
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return noMsgChain;
       }),
     };
@@ -368,8 +368,8 @@ describe("POST /api/chat", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_chat_messages") return lastMsgChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_chat_messages") return lastMsgChain;
         return makeChain();
       }),
     };
@@ -414,8 +414,8 @@ describe("POST /api/chat", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_chat_messages") return lastMsgChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_chat_messages") return lastMsgChain;
         return noDataChain;
       }),
       rpc: vi.fn().mockResolvedValue({ data: null, error: null }),

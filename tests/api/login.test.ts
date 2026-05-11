@@ -370,11 +370,11 @@ describe("POST /api/login", () => {
     let gsCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") {
+        if (table === "may_competition_users") {
           userCallCount++;
           return userCallCount === 1 ? userSelectChain : userUpdateChain;
         }
-        if (table === "april_game_state") {
+        if (table === "may_game_state") {
           gsCallCount++;
           return gsCallCount === 1 ? gsSelectChain : gsInsertChain;
         }
@@ -442,11 +442,11 @@ describe("POST /api/login", () => {
     let userCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") {
+        if (table === "may_competition_users") {
           userCallCount++;
           return userCallCount === 1 ? userSelectChain : userUpdateChain;
         }
-        if (table === "april_game_state") return gsSelectChain;
+        if (table === "may_game_state") return gsSelectChain;
         return makeChain();
       }),
     };
@@ -494,7 +494,7 @@ describe("POST /api/login", () => {
     let userCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") {
+        if (table === "may_competition_users") {
           userCallCount++;
           return userCallCount === 1 ? userSelectChain : updateChain;
         }

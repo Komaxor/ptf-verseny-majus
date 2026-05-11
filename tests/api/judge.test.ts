@@ -96,10 +96,10 @@ function makeRequest(): Request {
 
 /**
  * Build a full Supabase client mock for the happy path.
- * - april_competition_users: returns user with given id
- * - april_chat_messages: returns last assistant message
- * - april_judge_attempts: returns no previous judge attempt (select), insert succeeds
- * - april_game_state: update succeeds
+ * - may_competition_users: returns user with given id
+ * - may_chat_messages: returns last assistant message
+ * - may_judge_attempts: returns no previous judge attempt (select), insert succeeds
+ * - may_game_state: update succeeds
  */
 function makeHappyPathClient(
   userId: string,
@@ -132,17 +132,17 @@ function makeHappyPathClient(
 
   const client = {
     from: vi.fn((table: string) => {
-      if (table === "april_competition_users") return userChain;
-      if (table === "april_chat_messages") {
+      if (table === "may_competition_users") return userChain;
+      if (table === "may_chat_messages") {
         chatMsgCallCount++;
         return assistantMsgChain;
       }
-      if (table === "april_judge_attempts") {
+      if (table === "may_judge_attempts") {
         judgeCallCount++;
         // First call is the select (rate limit check), subsequent calls are inserts
         return judgeCallCount === 1 ? judgeAttemptChain : insertChain;
       }
-      if (table === "april_game_state") return updateChain;
+      if (table === "may_game_state") return updateChain;
       return makeChain();
     }),
   };
@@ -226,8 +226,8 @@ describe("POST /api/judge", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_chat_messages") return noMsgChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_chat_messages") return noMsgChain;
         return makeChain();
       }),
     };

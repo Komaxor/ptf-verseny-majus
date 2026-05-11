@@ -14,7 +14,7 @@ export async function GET() {
 
     // Get user from session token
     const { data: user, error: userError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id, is_solved, solved_at, total_chat_messages, total_passcode_attempts, total_hint_clicks")
       .eq("session_token", competitionSession)
       .single()
@@ -25,7 +25,7 @@ export async function GET() {
 
     // Get game state for round timing
     const { data: gameState } = await supabase
-      .from("april_game_state")
+      .from("may_game_state")
       .select("round1_started_at, round1_completed_at, round2_started_at, round2_completed_at, round3_started_at, round3_completed_at")
       .eq("user_id", user.id)
       .single()
@@ -47,7 +47,7 @@ export async function GET() {
 
     // Get total tokens from chat messages
     const { data: tokenData } = await supabase
-      .from("april_chat_messages")
+      .from("may_chat_messages")
       .select("total_tokens")
       .eq("user_id", user.id)
 

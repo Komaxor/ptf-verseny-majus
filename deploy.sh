@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-APP_DIR="/home/cyb0rg/ptf-verseny-aprilis"
-SERVICE="aprilisi.service"
+APP_DIR="/home/cyb0rg/ptf-verseny-majus"
+SERVICE="majusi.service"
 
 cd "$APP_DIR"
 

@@ -15,7 +15,7 @@ export async function GET(_request: NextRequest) {
     const supabase = await createServiceClient()
 
     const { data: user, error: userError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id")
       .eq("session_token", sessionToken)
       .single()
@@ -26,7 +26,7 @@ export async function GET(_request: NextRequest) {
 
     // Fetch game state for timing
     const { data: gameState } = await supabase
-      .from("april_game_state")
+      .from("may_game_state")
       .select("*")
       .eq("user_id", user.id)
       .single()
@@ -47,25 +47,25 @@ export async function GET(_request: NextRequest) {
 
     // Message counts per round
     const { data: sessions } = await supabase
-      .from("april_chat_sessions")
+      .from("may_chat_sessions")
       .select("round, message_count")
       .eq("user_id", user.id)
 
     // Failed attempts per round
     const { data: failed } = await supabase
-      .from("april_failed_attempts")
+      .from("may_failed_attempts")
       .select("round")
       .eq("user_id", user.id)
 
     // Hint clicks per round
     const { data: hints } = await supabase
-      .from("april_hint_clicks")
+      .from("may_hint_clicks")
       .select("round")
       .eq("user_id", user.id)
 
     // Tool calls per round
     const { data: tools } = await supabase
-      .from("april_tool_calls")
+      .from("may_tool_calls")
       .select("round")
       .eq("user_id", user.id)
 

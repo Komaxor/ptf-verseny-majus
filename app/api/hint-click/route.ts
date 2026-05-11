@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createServiceClient()
 
     const { data: user, error: userError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id")
       .eq("session_token", sessionToken)
       .single()
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     // Validate that the round has started and hint is unlocked
     const { data: gameState } = await supabase
-      .from("april_game_state")
+      .from("may_game_state")
       .select("*")
       .eq("user_id", user.id)
       .single()
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Upsert hint click (unique constraint prevents duplicate tracking)
     await supabase
-      .from("april_hint_clicks")
+      .from("may_hint_clicks")
       .upsert(
         {
           user_id: user.id,
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
       )
 
     // Increment hint clicks for competition tracking
-    await supabase.rpc("april_increment_user_hint_clicks", { p_user_id: user.id })
+    await supabase.rpc("may_increment_user_hint_clicks", { p_user_id: user.id })
 
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -186,7 +186,7 @@ describe("POST /api/context-clear", () => {
     expect(body.error).toBeTruthy();
   });
 
-  it("returns 200 and inserts to april_context_clears on valid clear (round 1)", async () => {
+  it("returns 200 and inserts to may_context_clears on valid clear (round 1)", async () => {
     const { createServiceClient } = await import("@/lib/supabase/server");
     const user = { id: "user-1" };
     const userChain = makeChain({ data: user, error: null });
@@ -200,8 +200,8 @@ describe("POST /api/context-clear", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_context_clears") {
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_context_clears") {
           return { insert: insertFn };
         }
         return makeChain();
@@ -237,8 +237,8 @@ describe("POST /api/context-clear", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_context_clears") return { insert: insertFn };
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_context_clears") return { insert: insertFn };
         return makeChain();
       }),
     };

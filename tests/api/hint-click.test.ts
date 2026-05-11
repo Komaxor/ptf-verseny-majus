@@ -199,8 +199,8 @@ describe("POST /api/hint-click", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -242,8 +242,8 @@ describe("POST /api/hint-click", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -293,9 +293,9 @@ describe("POST /api/hint-click", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
-        if (table === "april_hint_clicks") return upsertChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
+        if (table === "may_hint_clicks") return upsertChain;
         return makeChain();
       }),
       rpc: vi.fn(() => rpcChain),

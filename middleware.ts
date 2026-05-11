@@ -65,7 +65,7 @@ export async function middleware(request: NextRequest) {
             auth: { autoRefreshToken: false, persistSession: false },
           })
           const { data: user } = await supabase
-            .from("april_competition_users")
+            .from("may_competition_users")
             .select("id, is_solved, gave_up_at")
             .eq("session_token", sessionToken)
             .single()
@@ -137,7 +137,7 @@ export async function middleware(request: NextRequest) {
               auth: { autoRefreshToken: false, persistSession: false },
             })
             const { data: user } = await supabase
-              .from("april_competition_users")
+              .from("may_competition_users")
               .select("id")
               .eq("session_token", sessionToken)
               .single()
@@ -179,7 +179,7 @@ export async function middleware(request: NextRequest) {
     })
 
     const { data: user, error } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id, session_token, is_solved, gave_up_at")
       .eq("session_token", sessionToken)
       .single()

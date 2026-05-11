@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { data: user } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id")
       .eq("session_token", sessionToken)
       .single()
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid round" }, { status: 400 })
     }
 
-    await supabase.from("april_context_clears").insert({
+    await supabase.from("may_context_clears").insert({
       user_id: user.id,
       round,
     })

@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     // Find user by password
     const { data: user, error: findError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id, first_login_at, is_solved, session_token, gave_up_at")
       .eq("generated_password", trimmedPassword)
       .single()
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { error: updateError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .update(updateData)
       .eq("id", user.id)
 
@@ -175,7 +175,7 @@ export async function POST(request: NextRequest) {
 
     // Check for existing game state
     const { data: existingState } = await supabase
-      .from("april_game_state")
+      .from("may_game_state")
       .select("*")
       .eq("user_id", user.id)
       .single()
@@ -185,7 +185,7 @@ export async function POST(request: NextRequest) {
     if (!existingState) {
       // First login - create game state
       const { data: newState, error: stateError } = await supabase
-        .from("april_game_state")
+        .from("may_game_state")
         .insert({ user_id: user.id, current_phase: "VIDEO_INTRO" })
         .select()
         .single()

@@ -103,8 +103,8 @@ function mockVerifyAnswer(returnValue: boolean) {
 
 /**
  * Build a Supabase client where:
- *  - april_competition_users returns `userResult` on `.single()`
- *  - april_failed_attempts returns `rateLimitData` (array) on await
+ *  - may_competition_users returns `userResult` on `.single()`
+ *  - may_failed_attempts returns `rateLimitData` (array) on await
  *  - rpc always resolves to { data: null, error: null }
  */
 function makeClientWithUser(
@@ -121,8 +121,8 @@ function makeClientWithUser(
 
   return {
     from: vi.fn((table: string) => {
-      if (table === "april_competition_users") return userChain;
-      if (table === "april_failed_attempts") return rateChain;
+      if (table === "may_competition_users") return userChain;
+      if (table === "may_failed_attempts") return rateChain;
       return makeChain();
     }),
     rpc: vi.fn(() => makeChain({ data: null, error: null })),
@@ -381,7 +381,7 @@ describe("POST /api/verify-passcode", () => {
     expect(res.status).not.toBe(429);
   });
 
-  // ── Wrong answer (logged to april_failed_attempts) ───────────────────────
+  // ── Wrong answer (logged to may_failed_attempts) ───────────────────────
   // Note: the route returns HTTP 200 with success: false for wrong answers
   // (no explicit status code is set, so Next.js defaults to 200).
 
@@ -406,13 +406,13 @@ describe("POST /api/verify-passcode", () => {
     expect(body.error).toBe("Hibás válasz");
   });
 
-  it("inserts to april_failed_attempts on wrong answer", async () => {
+  it("inserts to may_failed_attempts on wrong answer", async () => {
     mockConfig();
     mockVerifyAnswer(false);
 
     const { createServiceClient } = await import("@/lib/supabase/server");
 
-    // Track calls to april_failed_attempts separately
+    // Track calls to may_failed_attempts separately
     const failedAttemptsInsertChain = makeChain({ data: null, error: null });
     const failedAttemptsSelectChain = makeChain({ data: [], error: null }); // empty = not rate limited
 
@@ -424,8 +424,8 @@ describe("POST /api/verify-passcode", () => {
     let failedAttemptsCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_failed_attempts") {
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_failed_attempts") {
           failedAttemptsCallCount++;
           // First call is the rate-limit SELECT, second is the INSERT
           return failedAttemptsCallCount === 1
@@ -458,7 +458,7 @@ describe("POST /api/verify-passcode", () => {
 
   // ── 200: correct answer (updates game state) ──────────────────────────────
 
-  it("returns 200 and updates april_game_state on correct answer", async () => {
+  it("returns 200 and updates may_game_state on correct answer", async () => {
     mockConfig();
     mockVerifyAnswer(true);
 
@@ -474,9 +474,9 @@ describe("POST /api/verify-passcode", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_failed_attempts") return failedAttemptsSelectChain;
-        if (table === "april_game_state") return gameStateUpdateChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_failed_attempts") return failedAttemptsSelectChain;
+        if (table === "may_game_state") return gameStateUpdateChain;
         return makeChain();
       }),
       rpc: vi.fn(() => makeChain({ data: null, error: null })),
@@ -496,7 +496,7 @@ describe("POST /api/verify-passcode", () => {
     expect(body.success).toBe(true);
 
     // game state update should have been called
-    expect(client.from).toHaveBeenCalledWith("april_game_state");
+    expect(client.from).toHaveBeenCalledWith("may_game_state");
   });
 
   it("calls verifyAnswer with the correct round number and trimmed answer", async () => {
@@ -532,7 +532,7 @@ describe("POST /api/verify-passcode", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
       rpc: vi.fn(() => makeChain({ data: null, error: null })),
@@ -569,7 +569,7 @@ describe("POST /api/verify-passcode", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
       rpc: vi.fn(() => makeChain({ data: null, error: null })),
@@ -601,7 +601,7 @@ describe("POST /api/verify-passcode", () => {
     const rpcMock = vi.fn(() => makeChain({ data: null, error: null }));
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
       rpc: rpcMock,
@@ -615,7 +615,7 @@ describe("POST /api/verify-passcode", () => {
     await POST(makeRequest({ answer: "WRONG", round: 1 }) as never);
 
     expect(rpcMock).toHaveBeenCalledWith(
-      "april_increment_user_passcode_attempts",
+      "may_increment_user_passcode_attempts",
       { p_user_id: VALID_USER.id },
     );
   });
@@ -635,7 +635,7 @@ describe("POST /api/verify-passcode", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
       rpc: vi.fn(() => makeChain({ data: null, error: null })),
@@ -666,7 +666,7 @@ describe("POST /api/verify-passcode", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
       rpc: vi.fn(() => makeChain({ data: null, error: null })),
@@ -697,7 +697,7 @@ describe("POST /api/verify-passcode", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
+        if (table === "may_competition_users") return userChain;
         return makeChain();
       }),
       rpc: vi.fn(() => makeChain({ data: null, error: null })),

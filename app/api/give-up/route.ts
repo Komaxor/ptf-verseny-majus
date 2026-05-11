@@ -17,7 +17,7 @@ export async function POST() {
 
   const supabase = await createServiceClient()
   const { data: user } = await supabase
-    .from("april_competition_users")
+    .from("may_competition_users")
     .select("id, is_solved, gave_up_at")
     .eq("session_token", sessionToken)
     .single()
@@ -37,7 +37,7 @@ export async function POST() {
 
   // Flag as gave up — session_token stays intact for retrospective analysis
   const { error: updateError } = await supabase
-    .from("april_competition_users")
+    .from("may_competition_users")
     .update({ gave_up_at: new Date().toISOString() })
     .eq("id", user.id)
 

@@ -14,7 +14,7 @@ async function getAuthenticatedUser(sessionToken: string | undefined) {
   try {
     const supabase = await createServiceClient()
     const { data: user, error } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id, is_solved, total_passcode_attempts")
       .eq("session_token", sessionToken)
       .single()
@@ -32,7 +32,7 @@ async function checkRateLimit(userId: string, round: number): Promise<{ allowed:
     const cutoffTime = new Date(Date.now() - ANSWER_COOLDOWN_MS).toISOString()
 
     const { data } = await supabase
-      .from("april_failed_attempts")
+      .from("may_failed_attempts")
       .select("created_at")
       .eq("user_id", userId)
       .eq("round", round)
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
 
     // Increment user's passcode attempts
     const supabase = await createServiceClient()
-    await supabase.rpc("april_increment_user_passcode_attempts", { p_user_id: user.id })
+    await supabase.rpc("may_increment_user_passcode_attempts", { p_user_id: user.id })
 
     // Verify the answer
     const isCorrect = verifyAnswer(round, normalizedAnswer)
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
       const completedField = `round${round}_completed_at`
       const answerField = `round${round}_answer`
       await supabase
-        .from("april_game_state")
+        .from("may_game_state")
         .update({
           [completedField]: new Date().toISOString(),
           [answerField]: normalizedAnswer.substring(0, 100),
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true })
     } else {
       // Log failed attempt
-      await supabase.from("april_failed_attempts").insert({
+      await supabase.from("may_failed_attempts").insert({
         user_id: user.id,
         session_hash: sessionHash || "unknown",
         round,

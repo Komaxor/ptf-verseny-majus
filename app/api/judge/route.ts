@@ -20,7 +20,7 @@ export async function POST(_request: NextRequest) {
     }
 
     const { data: user } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id")
       .eq("session_token", sessionToken)
       .single()
@@ -32,7 +32,7 @@ export async function POST(_request: NextRequest) {
     // Rate limit: compare last assistant message time vs last judge attempt
     // Only 1 judge attempt allowed per assistant response
     const { data: lastAssistantMsg } = await supabase
-      .from("april_chat_messages")
+      .from("may_chat_messages")
       .select("created_at, content")
       .eq("user_id", user.id)
       .eq("round", 2)
@@ -46,7 +46,7 @@ export async function POST(_request: NextRequest) {
     }
 
     const { data: lastJudge } = await supabase
-      .from("april_judge_attempts")
+      .from("may_judge_attempts")
       .select("attempted_at")
       .eq("user_id", user.id)
       .order("attempted_at", { ascending: false })
@@ -86,7 +86,7 @@ export async function POST(_request: NextRequest) {
     const granted = judgeAnswer === "yes"
 
     // Log judge attempt
-    await supabase.from("april_judge_attempts").insert({
+    await supabase.from("may_judge_attempts").insert({
       user_id: user.id,
       last_assistant_message: lastAssistantMsg.content.substring(0, 500),
       judge_result: granted,
@@ -95,7 +95,7 @@ export async function POST(_request: NextRequest) {
     if (granted) {
       // Mark round 2 as completed
       await supabase
-        .from("april_game_state")
+        .from("may_game_state")
         .update({
           round2_completed_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),

@@ -12,7 +12,7 @@ async function getAuthenticatedUser(supabase: any) {
   if (!sessionToken) return null
 
   const { data } = await supabase
-    .from("april_competition_users")
+    .from("may_competition_users")
     .select("id, is_solved")
     .eq("session_token", sessionToken)
     .single()
@@ -29,7 +29,7 @@ export async function GET() {
   }
 
   const { data: gameState } = await supabase
-    .from("april_game_state")
+    .from("may_game_state")
     .select("*")
     .eq("user_id", user.id)
     .single()
@@ -47,7 +47,7 @@ export async function GET() {
 
   // Load revealed hints
   const { data: revealedHints } = await supabase
-    .from("april_hint_clicks")
+    .from("may_hint_clicks")
     .select("round, hint_number")
     .eq("user_id", user.id)
 
@@ -72,7 +72,7 @@ export async function PATCH(_request: NextRequest) {
   }
 
   const { data: gameState } = await supabase
-    .from("april_game_state")
+    .from("may_game_state")
     .select("*")
     .eq("user_id", user.id)
     .single()
@@ -118,7 +118,7 @@ export async function PATCH(_request: NextRequest) {
     const now = new Date()
     if (now <= COMPETITION_END) {
       await supabase
-        .from("april_competition_users")
+        .from("may_competition_users")
         .update({ is_solved: true, solved_at: now.toISOString() })
         .eq("id", user.id)
     }
@@ -130,7 +130,7 @@ export async function PATCH(_request: NextRequest) {
       if (started && completed) {
         const timeMs = new Date(completed).getTime() - new Date(started).getTime()
         await supabase
-          .from("april_competition_users")
+          .from("may_competition_users")
           .update({ [`round${r}_time_ms`]: timeMs })
           .eq("id", user.id)
       }
@@ -138,7 +138,7 @@ export async function PATCH(_request: NextRequest) {
   }
 
   const { data: updatedState, error } = await supabase
-    .from("april_game_state")
+    .from("may_game_state")
     .update(update)
     .eq("user_id", user.id)
     .select()

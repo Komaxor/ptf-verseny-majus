@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
   }
 
   const { data: user } = await supabase
-    .from("april_competition_users")
+    .from("may_competition_users")
     .select("id")
     .eq("session_token", sessionToken)
     .single()
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
 
   // Rate limiting (3s cooldown)
   const { data: lastMsg } = await supabase
-    .from("april_chat_messages")
+    .from("may_chat_messages")
     .select("created_at")
     .eq("user_id", user.id)
     .eq("round", round)
@@ -148,11 +148,11 @@ export async function POST(request: NextRequest) {
   const session = await getOrCreateChatSession(sessionHash, round, userIp, user.id)
 
   // Increment message count
-  await supabase.rpc("april_increment_user_chat_messages", { p_user_id: user.id })
+  await supabase.rpc("may_increment_user_chat_messages", { p_user_id: user.id })
 
   // Link user to session
   await supabase
-    .from("april_user_session_links")
+    .from("may_user_session_links")
     .upsert({ user_id: user.id, session_hash: sessionHash }, { onConflict: "user_id,session_hash" })
 
   // Log user message

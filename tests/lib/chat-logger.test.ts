@@ -144,7 +144,7 @@ describe("getOrCreateChatSession", () => {
     expect(result.round).toBe(1);
     expect(result.sessionHash).toBe("hash123");
     expect(result.userId).toBe("user1");
-    expect(client.from).toHaveBeenCalledWith("april_chat_sessions");
+    expect(client.from).toHaveBeenCalledWith("may_chat_sessions");
   });
 
   it("creates new session when none exists", async () => {
@@ -173,7 +173,7 @@ describe("getOrCreateChatSession", () => {
     const result = await getOrCreateChatSession("hash456", 2, "1.2.3.4", "user2");
 
     expect(result.sessionId).toBe("new-session-id");
-    expect(client.from).toHaveBeenCalledWith("april_chat_sessions");
+    expect(client.from).toHaveBeenCalledWith("may_chat_sessions");
   });
 
   it("handles select error gracefully and returns fallback", async () => {
@@ -240,7 +240,7 @@ describe("logChatMessage", () => {
     expect(client.from).not.toHaveBeenCalled();
   });
 
-  it("inserts into april_chat_messages table", async () => {
+  it("inserts into may_chat_messages table", async () => {
     const { createClient } = await import("@supabase/supabase-js");
 
     const messagesChain = makeChain({ data: null, error: null });
@@ -254,10 +254,10 @@ describe("logChatMessage", () => {
     let callCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_chat_messages") {
+        if (table === "may_chat_messages") {
           return messagesChain;
         }
-        // april_chat_sessions calls: first fetch count, then update
+        // may_chat_sessions calls: first fetch count, then update
         callCount++;
         return callCount === 1 ? sessionFetchChain : sessionUpdateChain;
       }),
@@ -271,8 +271,8 @@ describe("logChatMessage", () => {
       total_tokens: 30,
     });
 
-    expect(client.from).toHaveBeenCalledWith("april_chat_messages");
-    expect(client.from).toHaveBeenCalledWith("april_chat_sessions");
+    expect(client.from).toHaveBeenCalledWith("may_chat_messages");
+    expect(client.from).toHaveBeenCalledWith("may_chat_sessions");
   });
 
   it("handles message insert error gracefully", async () => {
@@ -312,7 +312,7 @@ describe("logToolCall", () => {
     vi.resetModules();
   });
 
-  it("inserts into april_tool_calls table", async () => {
+  it("inserts into may_tool_calls table", async () => {
     const { createClient } = await import("@supabase/supabase-js");
     const chain = makeChain({ data: null, error: null });
     const client = { from: vi.fn(() => chain) };
@@ -321,7 +321,7 @@ describe("logToolCall", () => {
     const { logToolCall } = await import("@/lib/chat-logger");
     await logToolCall("session-1", "user1", 2, "search_files");
 
-    expect(client.from).toHaveBeenCalledWith("april_tool_calls");
+    expect(client.from).toHaveBeenCalledWith("may_tool_calls");
   });
 
   it("skips when sessionId is null", async () => {
@@ -352,7 +352,7 @@ describe("logContextClear", () => {
     vi.resetModules();
   });
 
-  it("inserts into april_context_clears table", async () => {
+  it("inserts into may_context_clears table", async () => {
     const { createClient } = await import("@supabase/supabase-js");
     const chain = makeChain({ data: null, error: null });
     const client = { from: vi.fn(() => chain) };
@@ -361,7 +361,7 @@ describe("logContextClear", () => {
     const { logContextClear } = await import("@/lib/chat-logger");
     await logContextClear("user1", 3);
 
-    expect(client.from).toHaveBeenCalledWith("april_context_clears");
+    expect(client.from).toHaveBeenCalledWith("may_context_clears");
   });
 
   it("handles error gracefully", async () => {
@@ -413,7 +413,7 @@ describe("getMessagesAfterLastClear", () => {
     }
   });
 
-  it("returns messages from april_chat_messages when no prior clear", async () => {
+  it("returns messages from may_chat_messages when no prior clear", async () => {
     const { createClient } = await import("@supabase/supabase-js");
 
     const messages = [
@@ -421,18 +421,18 @@ describe("getMessagesAfterLastClear", () => {
       { id: "m2", role: "assistant", content: "hello", created_at: "2024-01-01T10:01:00Z" },
     ];
 
-    // april_context_clears .single() returns null (no prior clear)
+    // may_context_clears .single() returns null (no prior clear)
     const clearChain = makeChain({ data: null, error: null });
     (clearChain as Record<string, unknown>).single = vi.fn(() =>
       Promise.resolve({ data: null, error: null }),
     );
 
-    // april_chat_messages returns the messages list
+    // may_chat_messages returns the messages list
     const messagesChain = makeChain({ data: messages, error: null });
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_context_clears") return clearChain;
+        if (table === "may_context_clears") return clearChain;
         return messagesChain;
       }),
     };
@@ -443,8 +443,8 @@ describe("getMessagesAfterLastClear", () => {
 
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe("m1");
-    expect(client.from).toHaveBeenCalledWith("april_context_clears");
-    expect(client.from).toHaveBeenCalledWith("april_chat_messages");
+    expect(client.from).toHaveBeenCalledWith("may_context_clears");
+    expect(client.from).toHaveBeenCalledWith("may_chat_messages");
   });
 
   it("filters messages after last clear timestamp", async () => {
@@ -464,7 +464,7 @@ describe("getMessagesAfterLastClear", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_context_clears") return clearChain;
+        if (table === "may_context_clears") return clearChain;
         return messagesChain;
       }),
     };
@@ -489,7 +489,7 @@ describe("getMessagesAfterLastClear", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_context_clears") return clearChain;
+        if (table === "may_context_clears") return clearChain;
         return errorChain;
       }),
     };
@@ -551,7 +551,7 @@ describe("markRoundComplete", () => {
     const { markRoundComplete } = await import("@/lib/chat-logger");
     await markRoundComplete("user1", 1, "abc12345");
 
-    expect(client.from).toHaveBeenCalledWith("april_chat_sessions");
+    expect(client.from).toHaveBeenCalledWith("may_chat_sessions");
   });
 
   it("skips update if session already completed", async () => {

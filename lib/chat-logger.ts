@@ -87,7 +87,7 @@ export async function getOrCreateChatSession(
 
     // Try to find existing session
     const { data: existing, error: selectError } = await supabase
-      .from("april_chat_sessions")
+      .from("may_chat_sessions")
       .select("id, message_count")
       .eq("session_hash", sessionHash)
       .eq("round", round)
@@ -112,7 +112,7 @@ export async function getOrCreateChatSession(
 
     // Create new session
     const { data: newSession, error: insertError } = await supabase
-      .from("april_chat_sessions")
+      .from("may_chat_sessions")
       .insert({
         user_id: userId,
         session_hash: sessionHash,
@@ -129,7 +129,7 @@ export async function getOrCreateChatSession(
       if (insertError.code === "23505") {
         slog(userId, "Race condition - session already exists, fetching...")
         const { data: retry } = await supabase
-          .from("april_chat_sessions")
+          .from("may_chat_sessions")
           .select("id")
           .eq("session_hash", sessionHash)
           .eq("round", round)
@@ -175,7 +175,7 @@ export async function logChatMessage(
     return
   }
 
-  // tool_call and tool_result are tracked in april_tool_calls, skip chat log
+  // tool_call and tool_result are tracked in may_tool_calls, skip chat log
   if (role === "tool_call" || role === "tool_result") {
     return
   }
@@ -195,7 +195,7 @@ export async function logChatMessage(
     }
 
     // Insert message record
-    const { error: messageError } = await supabase.from("april_chat_messages").insert({
+    const { error: messageError } = await supabase.from("may_chat_messages").insert({
       session_id: sessionId,
       user_id: userId,
       round,
@@ -216,7 +216,7 @@ export async function logChatMessage(
     // Increment session message count (only for user messages)
     if (role === "user") {
       const { data: currentSession, error: fetchError } = await supabase
-        .from("april_chat_sessions")
+        .from("may_chat_sessions")
         .select("message_count")
         .eq("id", sessionId)
         .single()
@@ -230,7 +230,7 @@ export async function logChatMessage(
       const newCount = currentCount + 1
 
       const { error: updateError } = await supabase
-        .from("april_chat_sessions")
+        .from("may_chat_sessions")
         .update({
           message_count: newCount,
           last_activity_at: new Date().toISOString(),
@@ -260,7 +260,7 @@ export async function logToolCall(
     const supabase = createLoggingClient()
     if (!supabase) return
 
-    const { error } = await supabase.from("april_tool_calls").insert({
+    const { error } = await supabase.from("may_tool_calls").insert({
       session_id: sessionId,
       user_id: userId,
       round,
@@ -287,7 +287,7 @@ export async function logContextClear(
     const supabase = createLoggingClient()
     if (!supabase) return
 
-    const { error } = await supabase.from("april_context_clears").insert({
+    const { error } = await supabase.from("may_context_clears").insert({
       user_id: userId,
       round,
     })
@@ -312,7 +312,7 @@ export async function getMessagesAfterLastClear(
 
     // Find the most recent context clear for this user/round
     const { data: lastClear } = await supabase
-      .from("april_context_clears")
+      .from("may_context_clears")
       .select("cleared_at")
       .eq("user_id", userId)
       .eq("round", round)
@@ -322,7 +322,7 @@ export async function getMessagesAfterLastClear(
 
     // Query messages after the last clear (or all if no clear)
     let query = supabase
-      .from("april_chat_messages")
+      .from("may_chat_messages")
       .select("id, role, content, created_at")
       .eq("user_id", userId)
       .eq("round", round)
@@ -360,7 +360,7 @@ export async function markRoundComplete(
     slog(userId, "Marking round", round, "session complete:", sessionHash.substring(0, 8) + "...")
 
     const { data: session, error: findError } = await supabase
-      .from("april_chat_sessions")
+      .from("may_chat_sessions")
       .select("id, started_at, message_count, completed_at, completed")
       .eq("session_hash", sessionHash)
       .eq("round", round)
@@ -389,7 +389,7 @@ export async function markRoundComplete(
     const completionTimeSeconds = Math.floor((completedAt.getTime() - startedAt.getTime()) / 1000)
 
     const { error } = await supabase
-      .from("april_chat_sessions")
+      .from("may_chat_sessions")
       .update({
         completed: true,
         completed_at: completedAt.toISOString(),

@@ -122,8 +122,8 @@ describe("GET /api/solve-metrics", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -165,33 +165,33 @@ describe("GET /api/solve-metrics", () => {
       Promise.resolve({ data: gameState, error: null }),
     );
 
-    // april_chat_sessions: two sessions — one for round 1, one for round 2
+    // may_chat_sessions: two sessions — one for round 1, one for round 2
     const sessions = [
       { round: 1, message_count: 5 },
       { round: 2, message_count: 3 },
     ];
     const sessionsChain = makeChain({ data: sessions, error: null });
 
-    // april_failed_attempts: two failures in round 1
+    // may_failed_attempts: two failures in round 1
     const failed = [{ round: 1 }, { round: 1 }];
     const failedChain = makeChain({ data: failed, error: null });
 
-    // april_hint_clicks: one click in round 2
+    // may_hint_clicks: one click in round 2
     const hints = [{ round: 2 }];
     const hintsChain = makeChain({ data: hints, error: null });
 
-    // april_tool_calls: one call in round 3
+    // may_tool_calls: one call in round 3
     const tools = [{ round: 3 }];
     const toolsChain = makeChain({ data: tools, error: null });
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
-        if (table === "april_chat_sessions") return sessionsChain;
-        if (table === "april_failed_attempts") return failedChain;
-        if (table === "april_hint_clicks") return hintsChain;
-        if (table === "april_tool_calls") return toolsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
+        if (table === "may_chat_sessions") return sessionsChain;
+        if (table === "may_failed_attempts") return failedChain;
+        if (table === "may_hint_clicks") return hintsChain;
+        if (table === "may_tool_calls") return toolsChain;
         return makeChain();
       }),
     };
@@ -281,8 +281,8 @@ describe("GET /api/solve-metrics", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return emptyChain;
       }),
     };

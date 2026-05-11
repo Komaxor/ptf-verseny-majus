@@ -171,8 +171,8 @@ describe("GET /api/game-state", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -215,9 +215,9 @@ describe("GET /api/game-state", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
-        if (table === "april_hint_clicks") return hintsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
+        if (table === "may_hint_clicks") return hintsChain;
         return makeChain();
       }),
     };
@@ -268,9 +268,9 @@ describe("GET /api/game-state", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
-        if (table === "april_hint_clicks") return hintsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
+        if (table === "may_hint_clicks") return hintsChain;
         return makeChain();
       }),
     };
@@ -372,8 +372,8 @@ describe("PATCH /api/game-state", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -414,8 +414,8 @@ describe("PATCH /api/game-state", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -459,8 +459,8 @@ describe("PATCH /api/game-state", () => {
 
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") return gsChain;
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") return gsChain;
         return makeChain();
       }),
     };
@@ -519,8 +519,8 @@ describe("PATCH /api/game-state", () => {
     let gsCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") {
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") {
           gsCallCount++;
           return gsCallCount === 1 ? gsChain : gsUpdateChain;
         }
@@ -579,8 +579,8 @@ describe("PATCH /api/game-state", () => {
     let gsCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") {
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") {
           gsCallCount++;
           return gsCallCount === 1 ? gsChain : gsUpdateChain;
         }
@@ -627,7 +627,7 @@ describe("PATCH /api/game-state", () => {
       Promise.resolve({ data: user, error: null }),
     );
 
-    // Track calls to april_competition_users for update calls
+    // Track calls to may_competition_users for update calls
     const userUpdateChain = makeChain({ data: null, error: null });
 
     const gsChain = makeChain({ data: gameState, error: null });
@@ -647,11 +647,11 @@ describe("PATCH /api/game-state", () => {
     let userCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") {
+        if (table === "may_competition_users") {
           userCallCount++;
           return userCallCount === 1 ? userChain : userUpdateChain;
         }
-        if (table === "april_game_state") {
+        if (table === "may_game_state") {
           gsCallCount++;
           return gsCallCount === 1 ? gsChain : gsUpdateChain;
         }
@@ -673,7 +673,7 @@ describe("PATCH /api/game-state", () => {
     expect(body.success).toBe(true);
     expect(body.gameState.current_phase).toBe("SUCCESS");
 
-    // is_solved update should have been called on april_competition_users
+    // is_solved update should have been called on may_competition_users
     // (at least one update call beyond the initial select)
     expect(userCallCount).toBeGreaterThan(1);
   });
@@ -716,8 +716,8 @@ describe("PATCH /api/game-state", () => {
     let gsCallCount = 0;
     const client = {
       from: vi.fn((table: string) => {
-        if (table === "april_competition_users") return userChain;
-        if (table === "april_game_state") {
+        if (table === "may_competition_users") return userChain;
+        if (table === "may_game_state") {
           gsCallCount++;
           return gsCallCount === 1 ? gsChain : gsUpdateChain;
         }

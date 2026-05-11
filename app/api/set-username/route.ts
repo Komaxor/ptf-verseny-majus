@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createServiceClient()
 
     const { data: user, error: findError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .select("id, is_solved")
       .eq("session_token", sessionToken)
       .single()
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { error: updateError } = await supabase
-      .from("april_competition_users")
+      .from("may_competition_users")
       .update({ username: trimmed })
       .eq("id", user.id)
 
