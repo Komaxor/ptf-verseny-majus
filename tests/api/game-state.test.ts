@@ -553,8 +553,8 @@ describe("PATCH /api/game-state", () => {
       id: "gs-1",
       user_id: "user-1",
       current_phase: "ROUND_1",
-      round1_started_at: "2026-04-25T13:00:00Z",
-      round1_completed_at: "2026-04-25T13:10:00Z",
+      round1_started_at: "2026-05-31T13:00:00Z",
+      round1_completed_at: "2026-05-31T13:10:00Z",
     };
     const updatedState = { ...gameState, current_phase: "VIDEO_1_2" };
 
@@ -613,12 +613,12 @@ describe("PATCH /api/game-state", () => {
       id: "gs-success",
       user_id: "user-success",
       current_phase: "VIDEO_OUTRO",
-      round1_started_at: "2026-04-25T13:00:00Z",
-      round1_completed_at: "2026-04-25T13:10:00Z",
-      round2_started_at: "2026-04-25T13:12:00Z",
-      round2_completed_at: "2026-04-25T13:25:00Z",
-      round3_started_at: "2026-04-25T13:27:00Z",
-      round3_completed_at: "2026-04-25T13:45:00Z",
+      round1_started_at: "2026-05-31T13:00:00Z",
+      round1_completed_at: "2026-05-31T13:10:00Z",
+      round2_started_at: "2026-05-31T13:12:00Z",
+      round2_completed_at: "2026-05-31T13:25:00Z",
+      round3_started_at: "2026-05-31T13:27:00Z",
+      round3_completed_at: "2026-05-31T13:45:00Z",
     };
     const updatedState = { ...gameState, current_phase: "SUCCESS" };
 

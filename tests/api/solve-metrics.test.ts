@@ -153,12 +153,12 @@ describe("GET /api/solve-metrics", () => {
 
     const gameState = {
       user_id: "user-1",
-      round1_started_at: "2026-04-25T13:00:00Z",
-      round1_completed_at: "2026-04-25T13:10:00Z",
-      round2_started_at: "2026-04-25T13:12:00Z",
-      round2_completed_at: "2026-04-25T13:22:00Z",
-      round3_started_at: "2026-04-25T13:24:00Z",
-      round3_completed_at: "2026-04-25T13:40:00Z",
+      round1_started_at: "2026-05-31T13:00:00Z",
+      round1_completed_at: "2026-05-31T13:10:00Z",
+      round2_started_at: "2026-05-31T13:12:00Z",
+      round2_completed_at: "2026-05-31T13:22:00Z",
+      round3_started_at: "2026-05-31T13:24:00Z",
+      round3_completed_at: "2026-05-31T13:40:00Z",
     };
     const gsChain = makeChain({ data: gameState, error: null });
     (gsChain as Record<string, unknown>).single = vi.fn(() =>
