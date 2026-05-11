@@ -138,7 +138,7 @@ export default function WaitingPage() {
         <div className="flex items-center justify-center mb-4">
           <SoundToggle />
         </div>
-        <p className="text-sm text-gray-400 text-center">Áprilisi promptverseny</p>
+        <p className="text-sm text-gray-400 text-center">Májusi promptverseny</p>
       </main>
     </div>
   )

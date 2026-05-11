@@ -66,8 +66,8 @@ export default function LoginPage() {
           <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4">
             <Image src="/promptverseny-logo.jpg" alt="Promptverseny logo" width={64} height={64} className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-2xl font-bold text-white">Áprilisi promptverseny</h1>
-          <p className="text-sm text-white/70">Promptverseny - Április 2026</p>
+          <h1 className="text-2xl font-bold text-white">Májusi promptverseny</h1>
+          <p className="text-sm text-white/70">Promptverseny - Május 2026</p>
         </div>
 
         {/* Login Card */}

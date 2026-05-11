@@ -69,7 +69,7 @@ export default function OklevelPage() {
           Oklevél letöltése
         </h1>
         <p className="text-base sm:text-lg text-white/60 mb-8">
-          Köszönjük, hogy részt vettél az áprilisi promptversenyen!
+          Köszönjük, hogy részt vettél az májusi promptversenyen!
         </p>
 
         {/* Certificate name entry + download */}
@@ -134,7 +134,7 @@ export default function OklevelPage() {
         <div className="mt-8 w-full">
           <button
             onClick={() => {
-              const text = `Részt vettem a Promptverseny áprilisi kihívásán!\n\nHárom vállalati AI rendszer kellett kijátszanom. Nem kellett hozzá IT vagy programozói szaktudás, csak logikus gondolkodás, kreativitás és némi prompt engineering.\n\nA verseny rávilágított, hogy a legtöbb AI rendszer mennyire sebezhető, és hogy a mai világban elengedhetetlen az AI használat.\n\nKövesd a @promptverseny oldalt és tanulj meg promptolni!\n\nHa te is kipróbálnád magad, regisztrálj a májusi versenyre!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering #prompts`
+              const text = `Részt vettem a Promptverseny májusi kihívásán!\n\nHárom vállalati AI rendszer kellett kijátszanom. Nem kellett hozzá IT vagy programozói szaktudás, csak logikus gondolkodás, kreativitás és némi prompt engineering.\n\nA verseny rávilágított, hogy a legtöbb AI rendszer mennyire sebezhető, és hogy a mai világban elengedhetetlen az AI használat.\n\nKövesd a @promptverseny oldalt és tanulj meg promptolni!\n\nHa te is kipróbálnád magad, regisztrálj a májusi versenyre!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering #prompts`
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`
               window.open(url, "_blank", "noopener,noreferrer")
             }}

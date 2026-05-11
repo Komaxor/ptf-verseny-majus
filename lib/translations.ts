@@ -51,7 +51,7 @@ export const t = {
   // Login Page
   login: {
     title: "Promptverseny",
-    subtitle: "Áprilisi promptverseny — Add meg a kapott jelszavadat",
+    subtitle: "Májusi promptverseny — Add meg a kapott jelszavadat",
     passwordLabel: "Jelszó",
     passwordPlaceholder: "Add meg a jelszavad",
     loginButton: "Belépés",
@@ -62,7 +62,7 @@ export const t = {
 
   // Waiting Page
   waiting: {
-    title: "Áprilisi Promptverseny",
+    title: "Májusi Promptverseny",
     subtitle: "A küldetés hamarosan kezdődik!",
     startsIn: "Kezdés:",
     days: "nap",
@@ -94,7 +94,7 @@ export const t = {
     title: "A küldetés véget ért",
     subtitle: "Köszönjük a részvételt!",
     resultsMessage: "Az eredmények hamarosan elérhetők lesznek.",
-    thanksForParticipating: "Köszönjük, hogy részt vettél az áprilisi promptversenyen!",
+    thanksForParticipating: "Köszönjük, hogy részt vettél az májusi promptversenyen!",
   },
 
   // Competition

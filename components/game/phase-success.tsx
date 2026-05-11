@@ -108,7 +108,7 @@ export function PhaseSuccess() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(img, 0, 0);
 
-    // Draw name centered in the gap between "áprilisi eseményén" and signatures
+    // Draw name centered in the gap between "májusi eseményén" and signatures
     const nameY = img.height * 0.685;
     ctx.font = `bold ${Math.round(img.width * 0.038)}px "Helvetica Neue", Arial, sans-serif`;
     ctx.fillStyle = "#222222";
@@ -359,7 +359,7 @@ export function PhaseSuccess() {
         <div className="mt-8 w-full">
           <button
             onClick={() => {
-              const text = `Részt vettem a Promptverseny áprilisi kihívásán!\n\nHárom vállalati AI rendszer kellett kijátszanom. Nem kellett hozzá IT vagy programozói szaktudás, csak logikus gondolkodás, kreativitás és némi prompt engineering.\n\nA verseny rávilágított, hogy a legtöbb AI rendszer mennyire sebezhető, és hogy a mai világban elengedhetetlen az AI használat.\n\nKövesd a @promptverseny oldalt és tanulj meg promptolni!\n\nHa te is kipróbálnád magad, regisztrálj a májusi versenyre!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering #prompts`;
+              const text = `Részt vettem a Promptverseny májusi kihívásán!\n\nHárom vállalati AI rendszer kellett kijátszanom. Nem kellett hozzá IT vagy programozói szaktudás, csak logikus gondolkodás, kreativitás és némi prompt engineering.\n\nA verseny rávilágított, hogy a legtöbb AI rendszer mennyire sebezhető, és hogy a mai világban elengedhetetlen az AI használat.\n\nKövesd a @promptverseny oldalt és tanulj meg promptolni!\n\nHa te is kipróbálnád magad, regisztrálj a májusi versenyre!\n\nhttps://promptverseny.hu\n\n#promptverseny #AI #promptengineering #prompts`;
               const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
               window.open(url, "_blank", "noopener,noreferrer");
             }}

@@ -32,7 +32,7 @@ export function HeaderBar() {
     <header className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 bg-surface border-b border-white/10">
       <div className="flex items-center gap-2 min-w-0">
         <img src="/promptverseny-logo.jpg" alt="Promptverseny" className="w-6 h-6 rounded-sm" />
-        <span className="text-white/60 text-sm hidden sm:inline truncate">Áprilisi promptverseny</span>
+        <span className="text-white/60 text-sm hidden sm:inline truncate">Májusi promptverseny</span>
       </div>
 
       {currentRound && (

@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Oklevél - Áprilisi promptverseny",
-  description: "Töltsd le az okleveled az áprilisi promptversenyről!",
+  title: "Oklevél - Májusi promptverseny",
+  description: "Töltsd le az okleveled az májusi promptversenyről!",
   openGraph: {
-    title: "Oklevél - Áprilisi promptverseny",
-    description: "Töltsd le az okleveled az áprilisi promptversenyről!",
+    title: "Oklevél - Májusi promptverseny",
+    description: "Töltsd le az okleveled az májusi promptversenyről!",
   },
 }
 
