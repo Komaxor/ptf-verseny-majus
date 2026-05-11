@@ -1,4 +1,4 @@
-// Hungarian translations for the April prompt engineering competition
+// Hungarian translations for the May prompt engineering competition
 // This file centralizes all UI text for easy localization
 
 export const t = {
