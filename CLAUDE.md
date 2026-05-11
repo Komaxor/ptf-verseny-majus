@@ -1,10 +1,10 @@
-# CLAUDE.md — PTF Verseny Április
+# CLAUDE.md — PTF Verseny Május
 
 ## What This Is
 
 A **prompt engineering competition platform** themed as a heist escape game ("Citadel Plaza"). Participants log in, navigate three locked rooms with three AI characters, extract secret codes through conversation, and escape. The competition is time-gated (60 minutes).
 
-This repo was forked from the March edition (`ptf-verseny-marcius`) and fully redesigned for the **April** competition.
+This repo was forked from the April edition (`ptf-verseny-aprilis`) and fully redesigned for the **May** competition.
 
 ## Tech Stack
 
@@ -57,7 +57,7 @@ data/challenges/        # Challenge configs per round
   round-1/              # Adél (security system) — exact answer
   round-2/              # Vanda (receptionist) — AI-judged answer
   round-3/              # Copilot (desktop assistant) — exact answer
-scripts/                # Admin scripts (user creation, backups, exports — still use march_ prefix)
+scripts/                # Admin scripts (user creation, backups, exports — march_/may_ historical migrations kept in place)
 middleware.ts           # Auth + competition-phase routing
 ```
 
@@ -76,28 +76,28 @@ middleware.ts           # Auth + competition-phase routing
 Each round has: system prompt (markdown), support documents, tool definitions, time-locked hints, and answer config.
 
 ### Authentication
-- Login validates password against `april_competition_users` Supabase table
+- Login validates password against `may_competition_users` Supabase table
 - Sets `competition_session` httpOnly cookie with UUID session token
 - `middleware.ts` enforces auth on all protected routes
 
 ### Chat System
 - Client sends messages to `/api/chat` with `session_hash`
 - Server streams OpenAI responses via SSE
-- Chat logged to `april_chat_sessions` + `april_chat_messages` tables
+- Chat logged to `may_chat_sessions` + `may_chat_messages` tables
 - System prompt loaded from round-specific challenge data
 
-### Database Tables (prefixed `april_`)
-- `april_competition_users` — participants, passwords, solve status
-- `april_chat_sessions` / `april_chat_messages` — conversation logs
-- `april_user_session_links` — user-session mapping
-- `april_failed_attempts` — wrong passcode submissions (rate limiting)
-- `april_game_state` — multi-round progression tracking
-- `april_tool_calls` — AI tool usage logs
-- `april_context_clears` — context clear events
+### Database Tables (prefixed `may_`)
+- `may_competition_users` — participants, passwords, solve status
+- `may_chat_sessions` / `may_chat_messages` — conversation logs
+- `may_user_session_links` — user-session mapping
+- `may_failed_attempts` — wrong passcode submissions (rate limiting)
+- `may_game_state` — multi-round progression tracking
+- `may_tool_calls` — AI tool usage logs
+- `may_context_clears` — context clear events
 
 ## Important Notes
 
-- **Competition date:** April 24, 2026, 17:00–18:00 CET
+- **Competition date:** May 31, 2026, 15:00–16:00 CEST
 - **Competition timing** is in `lib/config.ts` (UTC dates)
 - Phases: VIDEO_INTRO → ROUND_1 → VIDEO_1_2 → ROUND_2 → VIDEO_2_3 → ROUND_3 → VIDEO_OUTRO → SUCCESS
 - Rate limiting: 5-second cooldown between passcode attempts
