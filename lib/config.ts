@@ -17,10 +17,10 @@ export const PHASES = [
 export type Phase = (typeof PHASES)[number];
 
 export const PHASE_VIDEOS: Partial<Record<Phase, string>> = {
-  VIDEO_INTRO: "/videos/start.mp4",
-  VIDEO_1_2: "/videos/one.mp4",
-  VIDEO_2_3: "/videos/two.mp4",
-  VIDEO_OUTRO: "/videos/three.mp4",
+  VIDEO_INTRO: "/videos/intro.mp4",
+  VIDEO_1_2: "/videos/first-transition.mp4",
+  VIDEO_2_3: "/videos/second-transition.mp4",
+  VIDEO_OUTRO: "/videos/escape.mp4",
 };
 
 // Valid phase transitions (current → next)
