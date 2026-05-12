@@ -5,12 +5,7 @@ import { useRef, useEffect } from "react";
 import { User } from "lucide-react";
 import { useGame } from "@/components/game/game-provider";
 import type { ChatMessage as ChatMessageType } from "@/lib/types";
-
-const CHAT_AVATARS: Record<number, string> = {
-  1: "/images/adel-crop.png",
-  2: "/images/vanda-crop.png",
-  3: "/images/copilot-crop.png",
-};
+import { CHARACTERS, type RoundKey } from "@/lib/characters";
 
 export function ChatMessage({ message }: { message: ChatMessageType }) {
   const isUser = message.role === "user";
@@ -23,7 +18,7 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
     }
   }, [message.video]);
 
-  const avatarSrc = currentRound ? CHAT_AVATARS[currentRound] : null;
+  const avatarSrc = currentRound ? CHARACTERS[currentRound as RoundKey].crop : null;
 
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>

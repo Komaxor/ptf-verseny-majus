@@ -1,29 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import { CHARACTERS, type RoundKey } from "@/lib/characters";
 
 interface SceneVisualProps {
   round: number;
 }
 
-const SCENE_AVATARS: Record<number, string> = {
-  1: "/images/adel-avatar.png",
-  2: "/images/vanda-avatar.png",
-  3: "/images/copilot-avatar.png",
-};
-
-const SCENE_DESCRIPTIONS: Record<number, string> = {
-  1: "Adél, a Citadel Plaza virtuális portása a lobby portálján",
-  2: "Vanda, a Mase Capital recepciósa az iroda recepcióján",
-  3: "Copilot asztali asszisztens az ügyvezető számítógépén",
-};
-
 export function SceneVisual({ round }: SceneVisualProps) {
+  const character = CHARACTERS[round as RoundKey];
   return (
     <div className="flex-1 relative overflow-hidden bg-surface">
       <Image
-        src={SCENE_AVATARS[round]}
-        alt={SCENE_DESCRIPTIONS[round] ?? ""}
+        src={character.avatar}
+        alt={character.sceneDescription}
         fill
         className="object-cover"
         priority

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useCallback, useEffect, use
 import { toast } from "sonner";
 import type { Phase } from "@/lib/config";
 import { PHASE_ROUND, PHASE_VIDEOS, PHASES } from "@/lib/config";
+import { CHARACTERS } from "@/lib/characters";
 import type { GameState, ChatMessage } from "@/lib/types";
 
 interface GameContextType {
@@ -110,12 +111,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (video) assets.push(video);
     }
 
-    // Avatar images
-    assets.push(
-      "/images/adel-avatar.png",
-      "/images/vanda-avatar.png",
-      "/images/copilot-avatar.png",
-    );
+    // Character scene avatars (full-size, preloaded so round transitions don't flash)
+    for (const character of Object.values(CHARACTERS)) {
+      assets.push(character.avatar);
+    }
 
     let cancelled = false;
 

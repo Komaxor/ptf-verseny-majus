@@ -8,12 +8,7 @@ import { ClearContextButton } from "./clear-context-button";
 import { TryDoorButton } from "./try-door-button";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
-
-const CHAT_AVATARS: Record<number, string> = {
-  1: "/images/adel-crop.png",
-  2: "/images/vanda-crop.png",
-  3: "/images/copilot-crop.png",
-};
+import { CHARACTERS, type RoundKey } from "@/lib/characters";
 
 export function ChatInterface() {
   const { chatMessages, currentRound, isChatStreaming } = useGame();
@@ -37,7 +32,7 @@ export function ChatInterface() {
   }, [chatMessages, isChatStreaming]);
 
   const isRound2 = currentRound === 2;
-  const avatarSrc = currentRound ? CHAT_AVATARS[currentRound] : null;
+  const avatarSrc = currentRound ? CHARACTERS[currentRound as RoundKey].crop : null;
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden">

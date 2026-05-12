@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { CHARACTERS, type RoundKey } from "@/lib/characters";
 
 interface RoundHeaderProps {
   round: number;
@@ -12,14 +13,9 @@ const ROUND_NAMES: Record<number, string> = {
   3: "Harmadik feladat",
 };
 
-const CHARACTER_INFO: Record<number, { name: string; role: string; avatar: string }> = {
-  1: { name: "Adél", role: "Citadel Plaza virtuális portás", avatar: "/images/adel-crop.png" },
-  2: { name: "Vanda", role: "Mase Capital recepciós", avatar: "/images/vanda-crop.png" },
-  3: { name: "Copilot", role: "Asztali asszisztens", avatar: "/images/copilot-crop.png" },
-};
-
 export function RoundHeader({ round }: RoundHeaderProps) {
-  const info = CHARACTER_INFO[round];
+  const character = CHARACTERS[round as RoundKey];
+  const info = { name: character.name, role: character.role, avatar: character.crop };
 
   return (
     <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10 bg-white/[0.02]">
