@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGame } from "@/components/game/game-provider";
 import { COMPETITION_END, PHASE_ROUND } from "@/lib/config";
+import { t } from "@/lib/translations";
 import { Timer } from "lucide-react";
 
 export function HeaderBar() {
@@ -73,7 +74,7 @@ export function HeaderBar() {
                 ? "text-yellow-400"
                 : "text-white/80"
           }`}
-        title="Hátralévő idő"
+        title={t.videoTimeNotice}
       >
         <Timer className="w-4 h-4" aria-hidden="true" />
         {remaining === 0

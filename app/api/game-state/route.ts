@@ -113,13 +113,15 @@ export async function PATCH(_request: NextRequest) {
     }
   }
 
-  // Mark solved when reaching SUCCESS — only if within competition time
+  // Mark solved when reaching SUCCESS — gated on round3_completed_at
+  // (the actual solve moment), not now, so video-outro playback time
+  // can't push a player past the deadline.
   if (nextPhase === "SUCCESS") {
-    const now = new Date()
-    if (now <= COMPETITION_END) {
+    const r3CompletedAt = gameState.round3_completed_at
+    if (r3CompletedAt && new Date(r3CompletedAt) <= COMPETITION_END) {
       await supabase
         .from("may_competition_users")
-        .update({ is_solved: true, solved_at: now.toISOString() })
+        .update({ is_solved: true, solved_at: r3CompletedAt })
         .eq("id", user.id)
     }
 

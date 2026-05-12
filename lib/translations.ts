@@ -60,6 +60,9 @@ export const t = {
     loginFailed: "Bejelentkezés sikertelen. Próbáld újra.",
   },
 
+  // Shared rule text — same string surfaced on /waiting and in the header timer tooltip
+  videoTimeNotice: "Nyugodtan nézd végig a videókat, mert a lejátszási idő nem számít bele a megoldási idődbe.",
+
   // Waiting Page
   waiting: {
     title: "Májusi Promptverseny",

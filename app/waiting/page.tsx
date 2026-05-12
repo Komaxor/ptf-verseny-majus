@@ -123,6 +123,9 @@ export default function WaitingPage() {
           <p className="text-gray-400">
             {t.waiting.description(COMPETITION_START, COMPETITION_END)}
           </p>
+          <p className="text-gray-400 mt-3">
+            {t.videoTimeNotice}
+          </p>
         </div>
 
         {/* Refresh fallback when timer hits zero */}
