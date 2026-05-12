@@ -423,9 +423,9 @@ These rarely change month-to-month but worth a glance:
 
 ### 5.2 — Manual smoke test
 
-- [ ] Temporarily set `COMPETITION_START` to ~2 minutes in the future (UTC):
+- [ ] Temporarily set `COMPETITION_START` to a near-future timestamp (UTC) so the countdown clears during the test session:
   ```ts
-  export const COMPETITION_START = new Date("<now-ish-UTC>");
+  export const COMPETITION_START = new Date("<near-future-UTC>");
   ```
 - [ ] Create 20 test users:
   ```bash
