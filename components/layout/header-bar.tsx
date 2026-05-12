@@ -6,6 +6,7 @@ import { useGame } from "@/components/game/game-provider";
 import { COMPETITION_END, PHASE_ROUND } from "@/lib/config";
 import { t } from "@/lib/translations";
 import { Timer } from "lucide-react";
+import { SoundToggle } from "@/components/sound-toggle";
 
 export function HeaderBar() {
   const { gameState, phase } = useGame();
@@ -57,9 +58,11 @@ export function HeaderBar() {
         </div>
       )}
 
-      <div
-        role="timer"
-        aria-live={isUrgent ? "assertive" : "polite"}
+      <div className="flex items-center gap-2 sm:gap-3">
+        <SoundToggle />
+        <div
+          role="timer"
+          aria-live={isUrgent ? "assertive" : "polite"}
         aria-atomic="true"
         aria-label={
           remaining === 0
@@ -112,6 +115,7 @@ export function HeaderBar() {
           Feladom
         </button>
       )}
+      </div>
     </header>
   );
 }

@@ -139,7 +139,15 @@ export default function WaitingPage() {
         )}
 
         <div className="flex items-center justify-center mb-4">
-          <SoundToggle />
+          <div className="relative group">
+            <SoundToggle />
+            <span
+              role="tooltip"
+              className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-2 whitespace-nowrap rounded-md bg-black/90 border border-brand/30 px-3 py-1.5 text-xs text-white/90 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150 z-20"
+            >
+              A videók hanggal a legélvezetesebbek.
+            </span>
+          </div>
         </div>
         <p className="text-sm text-gray-400 text-center">Májusi promptverseny</p>
       </main>
