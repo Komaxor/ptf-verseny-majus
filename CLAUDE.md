@@ -104,4 +104,8 @@ Each round has: system prompt (markdown), support documents, tool definitions, t
 - Phases: VIDEO_INTRO → ROUND_1 → VIDEO_1_2 → ROUND_2 → VIDEO_2_3 → ROUND_3 → VIDEO_OUTRO → SUCCESS
 - Rate limiting: 5-second cooldown between passcode attempts
 - Hints are time-locked (revealed after X minutes into competition)
-- Scripts in `scripts/` still reference `march_` table names (old competition data exports)
+- Scripts in `scripts/` still reference `march_`/`april_` table names (historical migrations kept in place)
+
+## Forking for next month
+
+When you're about to fork this repo into next month's competition, follow [docs/forking-a-new-month.md](docs/forking-a-new-month.md) — a phase-by-phase playbook covering database, code rename, content writing, asset replacement, and verification. The previous fork (April→May) took half a day and seven commits using this exact playbook.
