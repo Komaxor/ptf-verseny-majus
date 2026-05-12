@@ -20,7 +20,7 @@ interface GameContextType {
   advancePhase: () => Promise<void>;
   sendMessage: (message: string) => Promise<void>;
   clearContext: () => Promise<void>;
-  submitAnswer: (answer: string) => Promise<{ success: boolean; error?: string; rateLimited?: boolean; waitTime?: number }>;
+  submitAnswer: (answer: string) => Promise<{ success: boolean; error?: string; rateLimited?: boolean; waitTime?: number; wrong_answer_video?: string }>;
   tryDoor: () => Promise<{ granted: boolean; error?: string }>;
   revealHint: (round: number, hintNumber: number) => Promise<void>;
   setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>;

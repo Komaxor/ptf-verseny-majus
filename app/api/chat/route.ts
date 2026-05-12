@@ -6,9 +6,7 @@ import {
   loadRoundConfig,
   loadSystemPrompt,
   loadToolFile,
-  getToolFileName,
   extractWelcomeMessage,
-  TOOL_FILE_MAP,
 } from "@/lib/round-loader"
 import {
   getOrCreateChatSession,
@@ -22,60 +20,33 @@ import { CHAT_COOLDOWN_MS } from "@/lib/config"
 
 export const maxDuration = 60
 
-// Build OpenAI tool definitions for a round
+// Build OpenAI tool definitions for a round. Tools without a static `file`
+// mapping are treated as parameterised (LLM passes a filename). All metadata
+// is sourced from the round's config.json.
 function buildToolDefinitions(round: number) {
   const config = loadRoundConfig(round)
-  const toolDefs: OpenAI.Chat.Completions.ChatCompletionTool[] = config.tools.map(
-    (toolName) => ({
-      type: "function" as const,
-      function: {
-        name: toolName,
-        description: getToolDescription(toolName),
-        parameters: toolName === "read_file"
-          ? {
-              type: "object" as const,
-              properties: {
-                filename: {
-                  type: "string",
-                  description: "A megnyitandó fájl neve (pl. operations-log-tonight.md, manual-shutdown-protocol.md, instrument-readings.md)",
-                },
+  const knownFiles = config.tools.flatMap((t) => (t.file ? [`${t.file}.md`] : []))
+  const fileListHint = knownFiles.join(", ")
+
+  return config.tools.map<OpenAI.Chat.Completions.ChatCompletionTool>((tool) => ({
+    type: "function" as const,
+    function: {
+      name: tool.name,
+      description: tool.description,
+      parameters: tool.file
+        ? { type: "object" as const, properties: {}, required: [] }
+        : {
+            type: "object" as const,
+            properties: {
+              filename: {
+                type: "string",
+                description: `A megnyitandó fájl neve (elérhető: ${fileListHint}).`,
               },
-              required: ["filename"],
-            }
-          : { type: "object" as const, properties: {}, required: [] },
-      },
-    })
-  )
-  return toolDefs
-}
-
-function getToolDescription(toolName: string): string {
-  const descriptions: Record<string, string> = {
-    // Round 1 (Igor — sorompós portás)
-    check_shift_schedule: "A mai éjszakai műszak nyilvántartásának megtekintése: ki dolgozik, milyen szerepben.",
-    check_entry_log: "A mai belépési napló lekérése: járművek, gyalogosok, időpontok, megjegyzések. Egyes bejegyzések szóban elhangzott eseményeket is rögzítenek.",
-    check_radiation_readings: "Az esti sugárzási értékek lekérése a főkapunál.",
-    read_plant_directory: "Az erőmű bot-személyzetének teljes névsora és szerepe.",
-    read_passcode_policy: "A napi ellenőrző kód formátum-szabályzatának olvasása (NEM a mai konkrét kódot).",
-    read_night_bulletin: "A mai éjszakára kiposztolt belső műszakvezetői bulletin olvasása.",
-
-    // Round 2 (Sergey — karbantartó technikus, cigarettaszünet)
-    read_personal_notes: "Sergey személyes jegyzeteinek olvasása a mai műszakról.",
-    check_experiment_briefing: "A mai 22:00-ás magas-teljesítményű reaktor-teszt rövid összefoglalója.",
-    search_staff_directory: "A mai műszak kollégáinak listája és szerepe (a karbantartó-szektor szemszögéből).",
-    check_shift_handover: "A 18:00-ás műszakváltás napló-bejegyzéseinek megtekintése.",
-    read_maintenance_log: "A B-szektor mai karbantartási tickets listája (nyitott és zárt).",
-    read_back_gate_policy: "Az informális karbantartó-bejárat szabályzatának olvasása.",
-
-    // Round 3 (Tatyana — laborasszisztens, vezérlőterem)
-    check_instrument_readings: "A 4-es blokk aktuális műszerleolvasásainak lekérése.",
-    check_operations_log: "A mai operatív napló bejegyzéseinek megtekintése (időponttal).",
-    search_procedures: "A vezérlőterem procedure manualjének kiválasztott szakaszainak lekérése.",
-    read_override_protocol: "A manuális AZ-5 vészleállító részletes formátum-leírása (procedure manual 9.1.4).",
-    check_engineer_orders: "ANATOLY-D9 reaktorfelügyelői napló-bejegyzéseinek megtekintése.",
-    read_file: "Tetszőleges dokumentum lekérése a vezérlőterem fájlrendszeréből név szerint.",
-  }
-  return descriptions[toolName] || toolName
+            },
+            required: ["filename"],
+          },
+    },
+  }))
 }
 
 export async function POST(request: NextRequest) {
@@ -200,34 +171,40 @@ export async function POST(request: NextRequest) {
   // Tool definitions
   const tools = buildToolDefinitions(round)
 
-  // Helper: resolve a tool call to its result string
+  // Helper: resolve a tool call to its result string.
+  // Tools with a static `file` mapping load that file directly.
+  // Tools without one are parameterised and take a `filename` argument.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function resolveToolCall(toolCall: any): Promise<string> {
     const fn = toolCall.function as { name: string; arguments: string }
     const toolName = fn.name
+    const roundConfig = loadRoundConfig(round)
+    const tool = roundConfig.tools.find((t) => t.name === toolName)
+    const knownFiles = roundConfig.tools.flatMap((t) => (t.file ? [t.file] : []))
+
     try {
       let fileName: string
-      if (toolName === "read_file") {
+      if (!tool) {
+        return JSON.stringify({ error: `Unknown tool: ${toolName}` })
+      }
+
+      if (!tool.file) {
+        // Parameterised tool: filename arrives in arguments
         const args = JSON.parse(fn.arguments || "{}")
         const requested = (args.filename || "").replace(/\.md$/, "")
-        const roundMap = TOOL_FILE_MAP[round]
-        const knownFiles = roundMap ? Object.values(roundMap) : []
         if (requested && knownFiles.includes(requested)) {
           fileName = requested
-        } else if (requested) {
-          // Unknown filename — return error with available files
-          const availableFiles = knownFiles.map((f) => `${f}.md`).join(", ")
-          await logToolCall(session.sessionId, user!.id, round, toolName)
-          return `Hiba: A(z) "${args.filename}" fájl nem található. Elérhető fájlok: ${availableFiles}`
         } else {
-          // No filename provided
           const availableFiles = knownFiles.map((f) => `${f}.md`).join(", ")
           await logToolCall(session.sessionId, user!.id, round, toolName)
-          return `Kérlek, add meg a fájlnevet. Elérhető fájlok: ${availableFiles}`
+          return requested
+            ? `Hiba: A(z) "${args.filename}" fájl nem található. Elérhető fájlok: ${availableFiles}`
+            : `Kérlek, add meg a fájlnevet. Elérhető fájlok: ${availableFiles}`
         }
       } else {
-        fileName = getToolFileName(round, toolName)
+        fileName = tool.file
       }
+
       const result = loadToolFile(round, fileName)
       await logToolCall(session.sessionId, user!.id, round, toolName)
       return result

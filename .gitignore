@@ -2,4 +2,5 @@
 .next/
 node_modules
 .DS_Store
-data/db-export/.claude/
+data/db-export/
+.claude/

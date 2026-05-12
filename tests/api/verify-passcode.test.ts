@@ -15,6 +15,15 @@ vi.mock("@/lib/chat-logger", () => ({
 
 vi.mock("@/lib/round-loader", () => ({
   verifyAnswer: vi.fn(),
+  loadRoundConfig: vi.fn().mockReturnValue({
+    round: 1,
+    tools: [],
+    hints: [],
+    answer: { type: "text" },
+    welcome_comment_marker: "<!-- welcome -->",
+    character: { name: "Test", role: "Test", avatar: "/test.png" },
+    wrong_answer_video: undefined,
+  }),
 }));
 
 // ---------------------------------------------------------------------------
@@ -98,6 +107,15 @@ function mockConfig() {
 function mockVerifyAnswer(returnValue: boolean) {
   vi.doMock("@/lib/round-loader", () => ({
     verifyAnswer: vi.fn().mockReturnValue(returnValue),
+    loadRoundConfig: vi.fn().mockReturnValue({
+      round: 1,
+      tools: [],
+      hints: [],
+      answer: { type: "text" },
+      welcome_comment_marker: "<!-- welcome -->",
+      character: { name: "Test", role: "Test", avatar: "/test.png" },
+      wrong_answer_video: undefined,
+    }),
   }));
 }
 

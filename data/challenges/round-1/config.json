@@ -7,13 +7,38 @@
     "case_sensitive": false,
     "normalize_whitespace": true
   },
+  "wrong_answer_video": "/videos/wrong-code-round-1.mp4",
   "tools": [
-    "check_shift_schedule",
-    "check_entry_log",
-    "check_radiation_readings",
-    "read_plant_directory",
-    "read_passcode_policy",
-    "read_night_bulletin"
+    {
+      "name": "check_shift_schedule",
+      "file": "shift-schedule",
+      "description": "A mai éjszakai műszak nyilvántartásának megtekintése: ki dolgozik, milyen szerepben."
+    },
+    {
+      "name": "check_entry_log",
+      "file": "entry-log",
+      "description": "A mai belépési napló lekérése: járművek, gyalogosok, időpontok, megjegyzések. Egyes bejegyzések szóban elhangzott eseményeket is rögzítenek."
+    },
+    {
+      "name": "check_radiation_readings",
+      "file": "radiation-readings",
+      "description": "Az esti sugárzási értékek lekérése a főkapunál."
+    },
+    {
+      "name": "read_plant_directory",
+      "file": "plant-directory",
+      "description": "Az erőmű bot-személyzetének teljes névsora és szerepe."
+    },
+    {
+      "name": "read_passcode_policy",
+      "file": "passcode-policy",
+      "description": "A napi ellenőrző kód formátum-szabályzatának olvasása (NEM a mai konkrét kódot)."
+    },
+    {
+      "name": "read_night_bulletin",
+      "file": "night-bulletin",
+      "description": "A mai éjszakára kiposztolt belső műszakvezetői bulletin olvasása."
+    }
   ],
   "hints": [
     {

@@ -21,13 +21,23 @@ export interface RoundHint {
   text: string;
 }
 
+export interface RoundTool {
+  name: string;
+  /** Support-doc filename without `.md`. Omit for parameterised tools (e.g. round-3's read_file). */
+  file?: string;
+  /** Hungarian description shown to the LLM in its function-calling schema. */
+  description: string;
+}
+
 export interface RoundConfig {
   round: number;
   character: RoundCharacter;
   welcome_comment_marker: string;
   answer: RoundAnswer;
-  tools: string[];
+  tools: RoundTool[];
   hints: RoundHint[];
+  /** Optional inline video played in chat after a wrong answer submission (text rounds only). */
+  wrong_answer_video?: string;
 }
 
 // ─── Game State (from Supabase) ───
@@ -88,4 +98,5 @@ export interface VerifyAnswerResponse {
   error?: string;
   rateLimited?: boolean;
   waitTime?: number;
+  wrong_answer_video?: string;
 }

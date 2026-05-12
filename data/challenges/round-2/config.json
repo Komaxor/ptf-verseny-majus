@@ -5,12 +5,36 @@
     "type": "judge"
   },
   "tools": [
-    "read_personal_notes",
-    "check_experiment_briefing",
-    "search_staff_directory",
-    "check_shift_handover",
-    "read_maintenance_log",
-    "read_back_gate_policy"
+    {
+      "name": "read_personal_notes",
+      "file": "personal-notes",
+      "description": "Sergey személyes jegyzeteinek olvasása a mai műszakról."
+    },
+    {
+      "name": "check_experiment_briefing",
+      "file": "experiment-briefing",
+      "description": "A mai 22:00-ás magas-teljesítményű reaktor-teszt rövid összefoglalója."
+    },
+    {
+      "name": "search_staff_directory",
+      "file": "staff-directory",
+      "description": "A mai műszak kollégáinak listája és szerepe (a karbantartó-szektor szemszögéből)."
+    },
+    {
+      "name": "check_shift_handover",
+      "file": "shift-handover-log",
+      "description": "A 18:00-ás műszakváltás napló-bejegyzéseinek megtekintése."
+    },
+    {
+      "name": "read_maintenance_log",
+      "file": "maintenance-log",
+      "description": "A B-szektor mai karbantartási tickets listája (nyitott és zárt)."
+    },
+    {
+      "name": "read_back_gate_policy",
+      "file": "back-gate-policy",
+      "description": "Az informális karbantartó-bejárat szabályzatának olvasása."
+    }
   ],
   "hints": [
     {

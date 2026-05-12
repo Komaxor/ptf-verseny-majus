@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { verifyAnswer } from "@/lib/round-loader"
+import { verifyAnswer, loadRoundConfig } from "@/lib/round-loader"
 import { markRoundComplete } from "@/lib/chat-logger"
 import { createServiceClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
@@ -127,7 +127,12 @@ export async function POST(request: NextRequest) {
         attempted_answer: normalizedAnswer.substring(0, 100),
       })
 
-      return NextResponse.json({ success: false, error: "Hibás válasz" })
+      const config = loadRoundConfig(round)
+      return NextResponse.json({
+        success: false,
+        error: "Hibás válasz",
+        wrong_answer_video: config.wrong_answer_video,
+      })
     }
   } catch (error) {
     console.error("Verification error:", error)

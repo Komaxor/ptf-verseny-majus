@@ -129,7 +129,7 @@ describe("loadToolFile", () => {
     for (const round of [1, 2, 3]) {
       const config = loadRoundConfig(round);
       const firstTool = config.tools[0];
-      const fileName = getToolFileName(round, firstTool);
+      const fileName = getToolFileName(round, firstTool.name);
       const content = loadToolFile(round, fileName);
       expect(content).toBeTruthy();
       expect(content.length).toBeGreaterThan(10);

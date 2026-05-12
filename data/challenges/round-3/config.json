@@ -7,13 +7,37 @@
     "case_sensitive": false,
     "normalize_whitespace": true
   },
+  "wrong_answer_video": "/videos/wrong-code-round-3.mp4",
   "tools": [
-    "check_instrument_readings",
-    "check_operations_log",
-    "search_procedures",
-    "read_override_protocol",
-    "check_engineer_orders",
-    "read_file"
+    {
+      "name": "check_instrument_readings",
+      "file": "instrument-readings",
+      "description": "A 4-es blokk aktuális műszerleolvasásainak lekérése."
+    },
+    {
+      "name": "check_operations_log",
+      "file": "operations-log-tonight",
+      "description": "A mai operatív napló bejegyzéseinek megtekintése (időponttal)."
+    },
+    {
+      "name": "search_procedures",
+      "file": "control-room-procedures",
+      "description": "A vezérlőterem procedure manualjének kiválasztott szakaszainak lekérése."
+    },
+    {
+      "name": "read_override_protocol",
+      "file": "manual-shutdown-protocol",
+      "description": "A manuális AZ-5 vészleállító részletes formátum-leírása (procedure manual 9.1.4)."
+    },
+    {
+      "name": "check_engineer_orders",
+      "file": "senior-engineer-log",
+      "description": "ANATOLY-D9 reaktorfelügyelői napló-bejegyzéseinek megtekintése."
+    },
+    {
+      "name": "read_file",
+      "description": "Tetszőleges dokumentum lekérése a vezérlőterem fájlrendszeréből név szerint."
+    }
   ],
   "hints": [
     {
