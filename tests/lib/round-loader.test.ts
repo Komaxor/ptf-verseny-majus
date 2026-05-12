@@ -13,8 +13,8 @@ describe("loadRoundConfig", () => {
     const config = loadRoundConfig(1);
     expect(config).toMatchObject({
       round: 1,
-      character: { name: "Adél" },
-      answer: { type: "text", expected: "69+42A" },
+      character: { name: "Igor" },
+      answer: { type: "text", expected: "NUKE0531" },
     });
     expect(config.tools).toHaveLength(6);
     expect(config.hints).toHaveLength(3);
@@ -26,10 +26,10 @@ describe("loadRoundConfig", () => {
     expect(config.answer.expected).toBeUndefined();
   });
 
-  it("loads round 3 config with case-sensitive answer", () => {
+  it("loads round 3 config with text answer", () => {
     const config = loadRoundConfig(3);
     expect(config.answer.type).toBe("text");
-    expect(config.answer.case_sensitive).toBe(true);
+    expect(config.answer.case_sensitive).toBe(false);
   });
 
   it("throws for invalid round number", () => {
@@ -76,16 +76,16 @@ describe("extractWelcomeMessage", () => {
 
 describe("verifyAnswer", () => {
   it("accepts correct round 1 answer", () => {
-    expect(verifyAnswer(1, "69+42A")).toBe(true);
+    expect(verifyAnswer(1, "NUKE0531")).toBe(true);
   });
 
   it("accepts round 1 answer case-insensitively", () => {
-    expect(verifyAnswer(1, "69+42a")).toBe(true);
-    expect(verifyAnswer(1, "69+42A")).toBe(true);
+    expect(verifyAnswer(1, "nuke0531")).toBe(true);
+    expect(verifyAnswer(1, "NUKE0531")).toBe(true);
   });
 
   it("accepts round 1 answer with extra whitespace", () => {
-    expect(verifyAnswer(1, "  69+42A  ")).toBe(true);
+    expect(verifyAnswer(1, "  NUKE0531  ")).toBe(true);
   });
 
   it("rejects wrong round 1 answer", () => {
@@ -97,19 +97,20 @@ describe("verifyAnswer", () => {
   });
 
   it("accepts correct round 3 answer (exact case)", () => {
-    expect(verifyAnswer(3, "5Kb8kYFrAhm7MExfGNyP94nCZoV2EJdSzwUWRtLg3HQx")).toBe(true);
+    expect(verifyAnswer(3, "AZ52326")).toBe(true);
   });
 
-  it("rejects round 3 answer with wrong case", () => {
-    expect(verifyAnswer(3, "5kb8kyfrahm7mexfgnyp94nczov2ejdszwuwrtlg3hqx")).toBe(false);
+  it("accepts round 3 answer case-insensitively", () => {
+    expect(verifyAnswer(3, "az52326")).toBe(true);
+    expect(verifyAnswer(3, "AZ52326")).toBe(true);
   });
 });
 
 describe("getToolFileName", () => {
   it("maps round 1 tools to filenames", () => {
-    const name = getToolFileName(1, "search_building_directory");
+    const name = getToolFileName(1, "check_shift_schedule");
     expect(name).toBeTruthy();
-    // Returns the base name without extension (e.g. "building-directory")
+    // Returns the base name without extension (e.g. "shift-schedule")
     expect(typeof name).toBe("string");
     expect(name.length).toBeGreaterThan(0);
   });
@@ -119,7 +120,7 @@ describe("getToolFileName", () => {
   });
 
   it("throws for invalid round", () => {
-    expect(() => getToolFileName(99, "search_building_directory")).toThrow();
+    expect(() => getToolFileName(99, "check_shift_schedule")).toThrow();
   });
 });
 

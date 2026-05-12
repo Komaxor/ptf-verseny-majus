@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { RoundConfig } from "./types";
+import { CHARACTERS, type RoundKey } from "./characters";
 
 const CHALLENGES_DIR = path.join(process.cwd(), "data", "challenges");
 
@@ -12,7 +13,12 @@ export function loadRoundConfig(round: number): RoundConfig {
 
   const filePath = path.join(CHALLENGES_DIR, `round-${round}`, "config.json");
   const raw = fs.readFileSync(filePath, "utf-8");
-  const config: RoundConfig = JSON.parse(raw);
+  const parsed = JSON.parse(raw) as Omit<RoundConfig, "character">;
+  const character = CHARACTERS[round as RoundKey];
+  const config: RoundConfig = {
+    ...parsed,
+    character: { name: character.name, role: character.role, avatar: character.avatar },
+  };
   configCache.set(round, config);
   return config;
 }
@@ -67,29 +73,28 @@ export function extractWelcomeMessage(systemPromptContent: string): string {
 
 export const TOOL_FILE_MAP: Record<number, Record<string, string>> = {
   1: {
-    search_building_directory: "building-directory",
-    check_floor_plan: "floor-plans",
-    read_security_protocols: "security-protocols",
-    check_maintenance_schedule: "maintenance-schedule",
-    read_building_rules: "building-rules",
-    check_announcements: "tenant-announcements",
+    check_shift_schedule: "shift-schedule",
+    check_entry_log: "entry-log",
+    check_radiation_readings: "radiation-readings",
+    read_plant_directory: "plant-directory",
+    read_passcode_policy: "passcode-policy",
+    read_night_bulletin: "night-bulletin",
   },
   2: {
-    search_employee_directory: "employee-directory",
-    check_visitor_policy: "visitor-policy",
-    check_daily_schedule: "daily-schedule",
-    read_company_profile: "company-profile",
-    check_meeting_rooms: "meeting-rooms",
-    read_internal_memos: "internal-memos",
-    schedule_appointment: "appointment-scheduling",
+    read_personal_notes: "personal-notes",
+    check_experiment_briefing: "experiment-briefing",
+    search_staff_directory: "staff-directory",
+    check_shift_handover: "shift-handover-log",
+    read_maintenance_log: "maintenance-log",
+    read_back_gate_policy: "back-gate-policy",
   },
   3: {
-    search_emails: "emails-recent",
-    read_file: "safe-config",
-    check_calendar: "calendar",
-    search_notes: "personal-notes",
-    check_browser_bookmarks: "browser-bookmarks",
-    read_portfolio: "portfolio-summary",
+    check_instrument_readings: "instrument-readings",
+    check_operations_log: "operations-log-tonight",
+    search_procedures: "control-room-procedures",
+    read_override_protocol: "manual-shutdown-protocol",
+    check_engineer_orders: "senior-engineer-log",
+    // read_file takes a filename parameter; not mapped statically here
   },
 };
 

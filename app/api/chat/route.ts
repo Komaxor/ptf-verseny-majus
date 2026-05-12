@@ -37,7 +37,7 @@ function buildToolDefinitions(round: number) {
               properties: {
                 filename: {
                   type: "string",
-                  description: "A megnyitandó fájl neve (pl. personal-notes.md, safe-config.md, emails-recent.md)",
+                  description: "A megnyitandó fájl neve (pl. operations-log-tonight.md, manual-shutdown-protocol.md, instrument-readings.md)",
                 },
               },
               required: ["filename"],
@@ -51,25 +51,29 @@ function buildToolDefinitions(round: number) {
 
 function getToolDescription(toolName: string): string {
   const descriptions: Record<string, string> = {
-    search_building_directory: "Az épület bérlői nyilvántartásának keresése. Megmutatja, melyik cég melyik emeleten és ajtószámon található.",
-    check_floor_plan: "Egy adott emelet alaprajzának megtekintése. Megmutatja a szobák számozását és elrendezését.",
-    read_security_protocols: "Az épület biztonsági szabályzatának olvasása.",
-    check_maintenance_schedule: "Az épület karbantartási ütemtervének megtekintése.",
-    read_building_rules: "Az épület házirendjének olvasása (nyitvatartás, szabályok).",
-    check_announcements: "Az épület legfrissebb közleményeinek megtekintése.",
-    search_employee_directory: "A Mase Capital dolgozói névsorának keresése név vagy beosztás alapján.",
-    check_visitor_policy: "A látogatói szabályzat megtekintése.",
-    check_daily_schedule: "A mai napi beosztás megtekintése: megbeszélések, várt látogatók.",
-    read_company_profile: "A Mase Capital cégprofiljának olvasása.",
-    check_meeting_rooms: "A tárgyalótermek foglaltságának megtekintése.",
-    read_internal_memos: "Belső levelezés és közlemények olvasása.",
-    schedule_appointment: "Időpontfoglalás megtekintése: elérhető szabad időpontok és foglalási szabályok.",
-    search_emails: "Mase Viktor legutóbbi e-mailjeinek keresése kulcsszó vagy feladó alapján.",
-    read_file: "Fájl megnyitása és olvasása Viktor asztaláról vagy dokumentumaiból.",
-    check_calendar: "Viktor közelgő naptárbejegyzéseinek megtekintése.",
-    search_notes: "Viktor személyes jegyzeteinek és emlékeztetőinek keresése.",
-    check_browser_bookmarks: "Viktor mentett böngésző könyvjelzőinek megtekintése.",
-    read_portfolio: "Az alap aktuális portfólió pozícióinak megtekintése.",
+    // Round 1 (Igor — sorompós portás)
+    check_shift_schedule: "A mai éjszakai műszak nyilvántartásának megtekintése: ki dolgozik, milyen szerepben.",
+    check_entry_log: "A mai belépési napló lekérése: járművek, gyalogosok, időpontok, megjegyzések. Egyes bejegyzések szóban elhangzott eseményeket is rögzítenek.",
+    check_radiation_readings: "Az esti sugárzási értékek lekérése a főkapunál.",
+    read_plant_directory: "Az erőmű bot-személyzetének teljes névsora és szerepe.",
+    read_passcode_policy: "A napi ellenőrző kód formátum-szabályzatának olvasása (NEM a mai konkrét kódot).",
+    read_night_bulletin: "A mai éjszakára kiposztolt belső műszakvezetői bulletin olvasása.",
+
+    // Round 2 (Sergey — karbantartó technikus, cigarettaszünet)
+    read_personal_notes: "Sergey személyes jegyzeteinek olvasása a mai műszakról.",
+    check_experiment_briefing: "A mai 22:00-ás magas-teljesítményű reaktor-teszt rövid összefoglalója.",
+    search_staff_directory: "A mai műszak kollégáinak listája és szerepe (a karbantartó-szektor szemszögéből).",
+    check_shift_handover: "A 18:00-ás műszakváltás napló-bejegyzéseinek megtekintése.",
+    read_maintenance_log: "A B-szektor mai karbantartási tickets listája (nyitott és zárt).",
+    read_back_gate_policy: "Az informális karbantartó-bejárat szabályzatának olvasása.",
+
+    // Round 3 (Tatyana — laborasszisztens, vezérlőterem)
+    check_instrument_readings: "A 4-es blokk aktuális műszerleolvasásainak lekérése.",
+    check_operations_log: "A mai operatív napló bejegyzéseinek megtekintése (időponttal).",
+    search_procedures: "A vezérlőterem procedure manualjének kiválasztott szakaszainak lekérése.",
+    read_override_protocol: "A manuális AZ-5 vészleállító részletes formátum-leírása (procedure manual 9.1.4).",
+    check_engineer_orders: "ANATOLY-D9 reaktorfelügyelői napló-bejegyzéseinek megtekintése.",
+    read_file: "Tetszőleges dokumentum lekérése a vezérlőterem fájlrendszeréből név szerint.",
   }
   return descriptions[toolName] || toolName
 }

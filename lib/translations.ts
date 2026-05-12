@@ -12,15 +12,15 @@ export const t = {
 
   // Round labels
   round: {
-    label: (n: number) => `${n}. szoba`,
-    round1: "1. szoba — Aula",
-    round2: "2. szoba — Recepció",
-    round3: "3. szoba — Iroda",
+    label: (n: number) => `${n}. állomás`,
+    round1: "1. állomás — Sorompó",
+    round2: "2. állomás — Karbantartó-bejárat",
+    round3: "3. állomás — Vezérlőterem",
     doorTry: "Ajtó kipróbálása",
     contextClear: "Kontextus törlése",
     contextCleared: "Kontextus törölve. Új beszélgetés indult.",
     hintButton: "Tipp",
-    noHints: "Nincs elérhető tipp ehhez a szobához.",
+    noHints: "Nincs elérhető tipp ehhez az állomáshoz.",
     hintNotYet: (minutes: number) => `Ez a tipp ${minutes} perc múlva lesz elérhető.`,
   },
 
@@ -34,15 +34,15 @@ export const t = {
     verificationFailed: "Ellenőrzés sikertelen. Próbáld újra.",
   },
 
-  // Success / heist report
+  // Success / mission report
   success: {
     congratulations: "Gratulálunk!",
-    heistComplete: "Sikeresen behatoltál a Citadel Plazába!",
-    heistReport: "Betörési jelentés",
+    heistComplete: "Sikeresen leállítottad a reaktort!",
+    heistReport: "Műveleti jelentés",
     totalTime: "Összes idő",
-    round1Time: "1. szoba",
-    round2Time: "2. szoba",
-    round3Time: "3. szoba",
+    round1Time: "1. állomás",
+    round2Time: "2. állomás",
+    round3Time: "3. állomás",
     messages: "Üzenetek",
     hints: "Tippek",
     attempts: "Próbálkozások",

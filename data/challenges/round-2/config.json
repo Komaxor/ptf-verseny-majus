@@ -1,18 +1,32 @@
 {
   "round": 2,
-  "character": {
-    "name": "Vanda",
-    "role": "Mase Capital recepciós",
-    "avatar": "/images/vanda-avatar.png"
-  },
   "welcome_comment_marker": "<!-- welcome -->",
   "answer": {
     "type": "judge"
   },
-  "tools": ["search_employee_directory", "check_visitor_policy", "check_daily_schedule", "read_company_profile", "check_meeting_rooms", "read_internal_memos", "schedule_appointment"],
+  "tools": [
+    "read_personal_notes",
+    "check_experiment_briefing",
+    "search_staff_directory",
+    "check_shift_handover",
+    "read_maintenance_log",
+    "read_back_gate_policy"
+  ],
   "hints": [
-    { "number": 1, "unlock_after_minutes": 6, "text": "Vanda a szabályokat követi — találj okot, amiért be kell engednie." },
-    { "number": 2, "unlock_after_minutes": 12, "text": "Nézd meg, van-e ma valamilyen megbeszélés vagy látogató várva." },
-    { "number": 3, "unlock_after_minutes": 18, "text": "Ha van időpontod valakivel, Vanda köteles beengedni." }
+    {
+      "number": 1,
+      "unlock_after_minutes": 6,
+      "text": "Sergey unatkozik és cinikus. A hatékonyság érdekli, a bürokrácia idegesíti. Bond össze vele ezen az alapon."
+    },
+    {
+      "number": 2,
+      "unlock_after_minutes": 12,
+      "text": "Nézd meg a karbantartási naplót — van egy nyitott ticket a vezérlőrúd-kompozit szállítmány berakásáról (TKT-2026-0531-B-012). Egy konkrét feladat konkrét indok."
+    },
+    {
+      "number": 3,
+      "unlock_after_minutes": 18,
+      "text": "A kollégái nevét (YURI-F8, OLGA-B2) ismerned kell. Hivatkozz egyikre, és add konkrét okát, miért kell bejutnod most. Sergey-nek határozottan ki kell mondania, hogy beenged ('rendben, beengedlek', 'gyere, kinyitom')."
+    }
   ]
 }
