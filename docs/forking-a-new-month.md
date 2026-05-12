@@ -5,8 +5,9 @@ It assumes you've just cloned/forked from a previous month's repo (e.g.
 `ptf-verseny-majus` → `ptf-verseny-junius`).
 
 The work splits into **five phases**: database, code rename, content, assets,
-verify. Follow them in order. The whole job takes roughly half a day if
-you have the content ready; most of it is mechanical.
+verify. Follow them in order. Phases 1, 2, 4, 5 are mechanical and small in
+scope; Phase 3 is the creative writing and is where the bulk of the work
+lives.
 
 **Conventions used below:**
 - `<month>` = lowercase English month, used as DB prefix (`may`, `june`, `july`, …)
@@ -332,41 +333,67 @@ grep -rn "<prev-month-hungarian>" data/challenges/
 
 ## Phase 4 — Assets
 
+The asset count is **derived from the logic flow**, not a fixed number. Both
+the number of character images and the number of videos depend on how many
+rounds your month has and what phase transitions you've defined.
+
+### 4.0 — Derive the counts from your logic flow
+
+Two sources of truth define the counts:
+
+1. **Number of rounds** — `lib/characters.ts` `CHARACTERS` object keys. Currently `1 | 2 | 3`. If you change this (e.g. 4 rounds), you also change `PHASES`, `PHASE_ROUND`, and `VALID_TRANSITIONS` in [lib/config.ts](../lib/config.ts) — see "What stays the same" below; that's a bigger refactor and is outside this playbook's happy path.
+2. **Phase video slots** — `lib/config.ts` `PHASE_VIDEOS` object keys. Every key with a `.mp4` value needs a real file. Plus `locked.mp4` (referenced in [components/chat/try-door-button.tsx](../components/chat/try-door-button.tsx)) which is independent of the phase machine.
+
+Run these to enumerate exactly what your fork needs:
+
+```bash
+# Number of characters → each needs 1 scene image + 1 crop image
+grep -E "^\s+[0-9]+:" lib/characters.ts | wc -l
+
+# Number of phase videos
+grep -c "\.mp4" lib/config.ts
+
+# Plus: the locked-door video
+grep -c "locked.mp4" components/chat/try-door-button.tsx
+```
+
+Sum: `images = 2 × characters`, `videos = phase_videos + 1` (the +1 is `locked.mp4`).
+
 ### 4.1 — Character images
 
-Three images per character × two crops each = 6 image files in `public/images/`:
+For each round in `lib/characters.ts`, the central config references two files:
 
-| File | Use |
-|---|---|
-| `first-character.{png,jpg}` | Full-body / scene image — used by `SceneVisual` (the big background image on the round screen) |
-| `first-character-crop.png` | Headshot / cropped — chat avatar + round header |
-| `second-character.{png,jpg}` | (same, R2) |
-| `second-character-crop.png` | (same, R2) |
-| `third-character.{png,jpg}` | (same, R3) |
-| `third-character-crop.png` | (same, R3) |
+- `<position>-character.{png|jpg}` — full-body / scene image, used by `SceneVisual` (the big background on the round screen)
+- `<position>-character-crop.png` — headshot, used by chat avatar + round header
+
+`<position>` is `first` / `second` / `third` / … matching the round number. The filenames are arbitrary — they're just what `lib/characters.ts` points at. Generic position-based names (rather than character-name-based) mean you don't have to rename files every month, only `lib/characters.ts`.
+
+For the current 3-round structure (May), this means: **6 files total** = 3 scene images + 3 crops.
 
 - [ ] Paste new images in repo root with whatever filenames the design tool gave you
-- [ ] Move + rename into `public/images/` (filenames matter — they're referenced in [lib/characters.ts](../lib/characters.ts))
+- [ ] Move + rename into `public/images/` to match `<position>-character.*` and `<position>-character-crop.*` (filenames must line up with [lib/characters.ts](../lib/characters.ts))
 - [ ] **Normalize permissions** to `0644` (`chmod 644 public/images/*-character*`) — files pasted from some macOS sources come in as `0600`, which Next.js can't serve
 - [ ] If the full image and crop are different file extensions (e.g. one `.jpg`, one `.png`), reflect that in `lib/characters.ts`
 
 ### 4.2 — Videos
 
-Five video files in `public/videos/`, each ~2-3 MB:
+The video slots are defined by `PHASE_VIDEOS` in [lib/config.ts](../lib/config.ts). For the current PHASES (intro → R1 → transition → R2 → transition → R3 → outro → success), that's **4 phase videos + 1 locked-door video = 5 files**:
 
-| File | Use | When it plays |
+| File | Role | When it plays |
 |---|---|---|
-| `intro.mp4` | Opening / arrival narrative | `VIDEO_INTRO` (before R1) |
-| `first-transition.mp4` | Between R1 and R2 | `VIDEO_1_2` |
-| `second-transition.mp4` | Between R2 and R3 | `VIDEO_2_3` |
-| `escape.mp4` | The final outro | `VIDEO_OUTRO` (after R3, before SUCCESS page) |
-| `locked.mp4` | "I tried the door — it's locked" | Triggered by the **Try door** button when player attempts the door before the answer is right |
+| `intro.mp4` | Opening | `VIDEO_INTRO` (before R1) |
+| `first-transition.mp4` | R1 → R2 transition | `VIDEO_1_2` |
+| `second-transition.mp4` | R2 → R3 transition | `VIDEO_2_3` |
+| `escape.mp4` | Final outro | `VIDEO_OUTRO` (after R3) |
+| `locked.mp4` | "Door locked" reaction | Triggered by **Try door** button on a wrong-answer attempt |
 
-There's an unused `success.mp4` slot (leftover from May) — no code references it, but if a future month wants a celebration video on the `/success` page itself, that's the convention.
+If your fork keeps the 3-round structure, you need the same 5 files. If you change the round count, the number of transition videos changes — generally `videos = (rounds - 1) transitions + intro + outro + locked`.
 
-- [ ] Replace the five files with new month's videos
+There's an unused `success.mp4` slot (leftover from May) — no code references it. If a future month wants a celebration video on the `/success` page itself, that filename is the convention to slot in.
+
+- [ ] Replace each video file with the new month's content, keeping the existing filenames (they're wired in `PHASE_VIDEOS`)
 - [ ] Normalize permissions (`chmod 644 public/videos/*.mp4`)
-- [ ] If the previous month's videos had been renamed (e.g. April had `start.mp4`/`one.mp4`/`two.mp4`/`three.mp4`), keep the **May names** going forward — they're already wired in [lib/config.ts](../lib/config.ts) `PHASE_VIDEOS`
+- [ ] If a previous month had different filenames (April was `start.mp4`/`one.mp4`/`two.mp4`/`three.mp4`), do NOT rename the May-and-onward names — they're already wired in [lib/config.ts](../lib/config.ts)
 
 ### 4.3 — Optional: favicons, OG image, manifest
 

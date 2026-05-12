@@ -108,4 +108,4 @@ Each round has: system prompt (markdown), support documents, tool definitions, t
 
 ## Forking for next month
 
-When you're about to fork this repo into next month's competition, follow [docs/forking-a-new-month.md](docs/forking-a-new-month.md) — a phase-by-phase playbook covering database, code rename, content writing, asset replacement, and verification. The previous fork (April→May) took half a day and seven commits using this exact playbook.
+When you're about to fork this repo into next month's competition, follow [docs/forking-a-new-month.md](docs/forking-a-new-month.md) — a phase-by-phase playbook covering database, code rename, content writing, asset replacement, and verification. The previous fork (April→May) landed in seven commits using this exact playbook.
