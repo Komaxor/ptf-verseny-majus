@@ -8,6 +8,7 @@ CREATE TABLE may_competition_users (
   session_token TEXT,
   first_login_at TIMESTAMPTZ,
   solved_at TIMESTAMPTZ,
+  gave_up_at TIMESTAMPTZ,
   is_solved BOOLEAN DEFAULT false,
   total_passcode_attempts INTEGER DEFAULT 0,
   total_chat_messages INTEGER DEFAULT 0,
@@ -21,6 +22,7 @@ CREATE TABLE may_competition_users (
 CREATE INDEX idx_may_users_password ON may_competition_users(generated_password);
 CREATE INDEX idx_may_users_session ON may_competition_users(session_token);
 CREATE INDEX idx_may_users_solved ON may_competition_users(is_solved, solved_at) WHERE is_solved = true;
+CREATE INDEX idx_may_users_gave_up ON may_competition_users(gave_up_at) WHERE gave_up_at IS NOT NULL;
 
 CREATE TABLE may_game_state (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

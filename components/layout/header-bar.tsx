@@ -59,7 +59,15 @@ export function HeaderBar() {
       )}
 
       <div className="flex items-center gap-2 sm:gap-3">
-        <SoundToggle />
+        <div className="relative group">
+          <SoundToggle />
+          <span
+            role="tooltip"
+            className="pointer-events-none absolute right-0 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 top-full mt-2 whitespace-nowrap rounded-md bg-black/90 border border-brand/30 px-3 py-1.5 text-xs text-white/90 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150 z-20"
+          >
+            A videók hanggal a legélvezetesebbek.
+          </span>
+        </div>
         <div
           role="timer"
           aria-live={isUrgent ? "assertive" : "polite"}

@@ -7,6 +7,7 @@ import {
   loadSystemPrompt,
   loadToolFile,
   extractWelcomeMessage,
+  answerAppearsInMessage,
 } from "@/lib/round-loader"
 import {
   getOrCreateChatSession,
@@ -132,6 +133,42 @@ export async function POST(request: NextRequest) {
 
   // Log user message
   await logChatMessage(session.sessionId, user.id, round, "user", message)
+
+  // If the user pasted the round's exact answer code into chat, redirect them
+  // to the answer form instead of forwarding to OpenAI. Backend-only — the
+  // frontend sees a normal streamed assistant message.
+  if (answerAppearsInMessage(round, message)) {
+    const interceptMessage = "Ezt ne ide írd, hanem a megoldás mezőbe!"
+    const encoder = new TextEncoder()
+    const { readable, writable } = new TransformStream<Uint8Array>()
+    const writer = writable.getWriter()
+
+    ;(async () => {
+      try {
+        await writer.write(
+          encoder.encode(`data: ${JSON.stringify({ content: interceptMessage })}\n\n`)
+        )
+        await writer.write(encoder.encode(`data: [DONE]\n\n`))
+        await writer.close()
+
+        const responseTimeMs = Date.now() - requestStartTime
+        await logChatMessage(
+          session.sessionId, user.id, round, "assistant", interceptMessage,
+          responseTimeMs
+        )
+      } catch (err) {
+        await writer.abort(err instanceof Error ? err : new Error(String(err)))
+      }
+    })().catch(() => {})
+
+    return new Response(readable, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
+    })
+  }
 
   // Build conversation history
   const systemPrompt = loadSystemPrompt(round)

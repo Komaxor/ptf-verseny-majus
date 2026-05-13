@@ -24,8 +24,11 @@ export function loadRoundConfig(round: number): RoundConfig {
 }
 
 export function loadSystemPrompt(round: number): string {
-  const filePath = path.join(CHALLENGES_DIR, `round-${round}`, "system-prompt.md");
-  return fs.readFileSync(filePath, "utf-8");
+  const masterPath = path.join(CHALLENGES_DIR, "_shared", "master-system-prompt.md");
+  const roundPath = path.join(CHALLENGES_DIR, `round-${round}`, "system-prompt.md");
+  const master = fs.readFileSync(masterPath, "utf-8");
+  const roundPrompt = fs.readFileSync(roundPath, "utf-8");
+  return `${master}\n\n${roundPrompt}`;
 }
 
 export function loadToolFile(round: number, filename: string): string {
@@ -71,6 +74,21 @@ export function getToolFileName(round: number, toolName: string): string {
     throw new Error(`Tool ${toolName} for round ${round} has no static file mapping (parameterised?)`);
   }
   return tool.file;
+}
+
+export function answerAppearsInMessage(round: number, message: string): boolean {
+  const config = loadRoundConfig(round);
+  if (config.answer.type !== "text" || !config.answer.expected) return false;
+
+  let expected = config.answer.expected.replace(/\s+/g, "");
+  let haystack = message.replace(/\s+/g, "");
+
+  if (!config.answer.case_sensitive) {
+    expected = expected.toLowerCase();
+    haystack = haystack.toLowerCase();
+  }
+
+  return haystack.includes(expected);
 }
 
 export function verifyAnswer(round: number, submittedAnswer: string): boolean {

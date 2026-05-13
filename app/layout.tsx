@@ -10,7 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Májusi promptverseny",
   description:
-    "Három AI-karakter, három szoba, egy kulcs. Prompt engineering verseny.",
+    "Három AI-karakter, három állomás, egy kulcs. Prompt engineering verseny.",
   authors: [{ name: "Promptverseny" }],
   creator: "Promptverseny",
   publisher: "Promptverseny",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Májusi promptverseny",
-    description: "Harom AI-karakter, harom szoba, egy kulcs. Prompt engineering verseny.",
+    description: "Harom AI-karakter, harom allomas, egy kulcs. Prompt engineering verseny.",
     type: "website",
     locale: "hu_HU",
   },

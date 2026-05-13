@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGame } from "@/components/game/game-provider";
 import { ANSWER_COOLDOWN_MS } from "@/lib/config";
 
@@ -16,12 +16,26 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
   const [cooldownEnd, setCooldownEnd] = useState<number>(0);
+  const [now, setNow] = useState<number>(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (cooldownEnd <= Date.now()) return;
+    setNow(Date.now());
+    const id = setInterval(() => {
+      const current = Date.now();
+      setNow(current);
+      if (current >= cooldownEnd) clearInterval(id);
+    }, 200);
+    return () => clearInterval(id);
+  }, [cooldownEnd]);
 
   // Round 2 has no answer entry — the judge button handles it.
   if (round === 2) return null;
 
-  const isCoolingDown = Date.now() < cooldownEnd;
+  const remainingMs = Math.max(0, cooldownEnd - now);
+  const isCoolingDown = remainingMs > 0;
+  const remainingSec = Math.ceil(remainingMs / 1000);
   const canSubmit = answer.trim().length > 0;
 
   const handleChange = (value: string) => {
@@ -35,27 +49,32 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
     setIsSubmitting(true);
     setError("");
 
-    const result = await submitAnswer(answer.trim());
+    try {
+      const result = await submitAnswer(answer.trim());
 
-    if (result.success) {
-      await advancePhase();
-    } else {
-      setError(result.error || "Hibás válasz");
-      setCooldownEnd(Date.now() + ANSWER_COOLDOWN_MS);
-      if (result.wrong_answer_video) {
-        setChatMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            role: "assistant" as const,
-            content: result.error || "Hibás válasz",
-            created_at: new Date().toISOString(),
-            video: result.wrong_answer_video,
-          },
-        ]);
+      if (result.success) {
+        await advancePhase();
+      } else {
+        setError(result.error || "Hibás válasz");
+        setCooldownEnd(Date.now() + ANSWER_COOLDOWN_MS);
+        if (result.wrong_answer_video) {
+          setChatMessages((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              role: "assistant" as const,
+              content: result.error || "Hibás válasz",
+              created_at: new Date().toISOString(),
+              video: result.wrong_answer_video,
+            },
+          ]);
+        }
       }
+    } catch {
+      setError("Hálózati hiba — próbáld újra.");
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
@@ -81,9 +100,10 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || isCoolingDown || !canSubmit}
-          className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          aria-live={isCoolingDown ? "polite" : "off"}
+          className="px-4 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black text-sm font-medium rounded-lg transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface tabular-nums"
         >
-          Beküldés
+          {isCoolingDown ? `Várj ${remainingSec} mp` : "Beküldés"}
         </button>
       </div>
       {error && <p role="alert" className="text-red-400 text-xs mt-2">{error}</p>}
