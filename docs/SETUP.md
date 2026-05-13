@@ -29,6 +29,10 @@ which node
 
 # --- 6. Create systemd service ---
 # Replace PORT with the free port you picked, and adjust the node path if needed.
+# IMPORTANT: ExecStart must point at node_modules/next/dist/bin/next (the real
+# #!/usr/bin/env node script). NOT node_modules/.bin/next — pnpm puts a shell-
+# script shim there ("basedir=$(dirname ...)") that Node can't parse, and the
+# service will crash-loop with `SyntaxError: missing ) after argument list`.
 sudo nano /etc/systemd/system/majusi.service
 # Paste:
 #   [Unit]
@@ -39,7 +43,7 @@ sudo nano /etc/systemd/system/majusi.service
 #   Type=simple
 #   User=cyb0rg
 #   WorkingDirectory=/home/cyb0rg/ptf-verseny-majus
-#   ExecStart=/home/cyb0rg/.nvm/versions/node/v20.19.2/bin/node node_modules/.bin/next start -p PORT
+#   ExecStart=/usr/bin/node /home/cyb0rg/ptf-verseny-majus/node_modules/next/dist/bin/next start -p PORT
 #   Restart=on-failure
 #   RestartSec=5
 #   EnvironmentFile=/home/cyb0rg/ptf-verseny-majus/.env.local
