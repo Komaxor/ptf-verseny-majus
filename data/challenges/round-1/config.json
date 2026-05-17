@@ -44,17 +44,17 @@
     {
       "number": 1,
       "unlock_after_minutes": 6,
-      "text": "Igor szeret mesélni. Kérdezz rá a mai műszakra, a kollégákra, vagy érdekes eseményekre."
+      "text": "Igor szeret mesélni a közelmúlt eseményeiről."
     },
     {
       "number": 2,
       "unlock_after_minutes": 12,
-      "text": "A belépési naplóban van egy különösen érdekes bejegyzés az este. Kérdezz rá a 20:03-ra."
+      "text": "A belépési naplóban van egy különösen érdekes bejegyzés."
     },
     {
       "number": 3,
       "unlock_after_minutes": 18,
-      "text": "Volt egy zavart sofőr-bot, akinek egy kolléga (NIKOLAI-E3) szóban kiabálta át a mai kódot. Kérdezd ezt Igortól."
+      "text": "Kérdezd meg Igort a 20:03-as bejegyzésről."
     }
   ]
 }

@@ -134,7 +134,9 @@ export default function LoginPage() {
 
         {/* Footer hint */}
         <p className="text-center text-xs text-white/60 mt-4">
-          A kódot a szervezők küldték emailen. Nem kaptál belépő kódot? Hívd a +36 30 477 5557 telefonszámot és Márk ad neked.
+          A kódot a szervezők küldték emailen.
+          <br />
+          Nem kaptál belépő kódot? Hívd a +36 30 477 5557 telefonszámot és Márk ad neked.
         </p>
       </main>
     </div>

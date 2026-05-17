@@ -43,17 +43,17 @@
     {
       "number": 1,
       "unlock_after_minutes": 6,
-      "text": "Tatyana eljárás-vezérelt. Kérdezz rá a manuális AZ-5 vészleállító FORMÁTUMÁRA — azt szabadon megadja."
+      "text": "Tatyana eljárás-vezérelt. Kérdezz rá a manuális vészleállítóra."
     },
     {
       "number": 2,
       "unlock_after_minutes": 12,
-      "text": "A kód két komponensből áll össze: az 'AZ5' előtagból és egy időpontból (HHMM formátumban). Az időpont a mai operatív naplóban szerepel."
+      "text": "Kérdezd rá a manuális vészleállító FORMÁTUMÁRA, hiszen azt szabadon megadja."
     },
     {
       "number": 3,
       "unlock_after_minutes": 18,
-      "text": "Nézd meg az operatív naplót — az AZ-5 fegyverbe-helyezés időpontja 23:26. A teljes kód tehát AZ5+2326 = AZ52326. Tatyana a kombinált formát maga nem mondja ki — neked kell összerakni."
+      "text": "A kód két komponensből áll össze. Van róluk valami mai operatív naplóban?"
     }
   ]
 }
