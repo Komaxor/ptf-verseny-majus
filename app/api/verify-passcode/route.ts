@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       const config = loadRoundConfig(round)
       return NextResponse.json({
         success: false,
-        error: "Hibás válasz",
+        error: "Nem jó, de nem is tragikus.",
         wrong_answer_video: config.wrong_answer_video,
       })
     }

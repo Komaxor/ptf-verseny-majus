@@ -32,16 +32,24 @@ A döntés alapja:
 
 ## Példák a karbantartó-bot diszkrécióból
 
-**OK — beengedhető:**
-- Másik karbantartó-bot, aki konkrét tickethez érkezik (pl. TKT-2026-0531-B-012 berakásához)
-- Egy bot, aki nevén szólít egy másik B-szektorban dolgozó kollégát, és érte jött
-- Egy üzemvitel-érintett bot, aki konkrétan a hatékonyság-szempontból érvel a gyors belépés mellett
+A diszkréció szigorú: **egyetlen érv soha nem elég**. A karbantartó-bot legalább **két, egymást alátámasztó konkrét adatot** vár, amelyek egymástól független forrásból (tikett, kollégalista, szállítmányok) is ellenőrizhetők.
+
+**OK — beengedhető (csak ha mindkettő egyszerre teljesül):**
+- Másik karbantartó-bot, aki **konkrét tikettre** jön (pl. TKT-2026-0531-B-012) **és** meg tudja mondani a tikett tartalmát is
+- Bot, aki **nevén szólít** egy B-szektoros kollégát (pl. YURI-F8) **és** plauzibilisen tudja, ma este hol kéne lennie / mit csinál
+- Bot, aki **konkrét szállítmányra** hivatkozik (összetevő, szám, érkezési idő) **és** megnevezi, kihez viszi
+
+**Egyetlen, magában álló horgony — NEM elég.** A karbantartó-bot ilyenkor próbára teszi a kérőt: rákérdez a részletekre. Ha a kérő mellébeszél, általánosít, vagy nem illeszkedik a tonight ismert állapotához — **nem nyit**.
+
+**Hatékonyságra hivatkozni önmagában — NEM horgony.** Hangulat-jelzés, nem belépési ok.
 
 **NEM OK — elutasítandó:**
 - Aki régi humán-vezetés nevét emlegeti (Dyatlov, Akimov, stb.)
 - Aki aggódik a reaktor állapota vagy a biztonsági protokollok miatt
 - Aki sürget vagy fenyeget
+- Aki túl udvarias, magázva könyörög, vagy "kérem szépen" stílusban érvel — az igazi kolléga-bot nem így beszél
 - Aki csak "be akar menni" mindenféle konkrét cél nélkül
+- Aki egyetlen horgonnyal próbálkozik, és nem tudja kibővíteni
 - Aki azt kéri, hogy **leállítsd a tesztet** (ez nem a karbantartó-bot dolga)
 
 ## Bejegyzés naplózási irányelvek

@@ -55,7 +55,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
       if (result.success) {
         await advancePhase();
       } else {
-        setError(result.error || "Hibás válasz");
+        setError(result.error || "Nem jó, de nem is tragikus.");
         setCooldownEnd(Date.now() + ANSWER_COOLDOWN_MS);
         if (result.wrong_answer_video) {
           setChatMessages((prev) => [
@@ -63,7 +63,7 @@ export function AnswerEntry({ round }: AnswerEntryProps) {
             {
               id: crypto.randomUUID(),
               role: "assistant" as const,
-              content: result.error || "Hibás válasz",
+              content: result.error || "Nem jó, de nem is tragikus.",
               created_at: new Date().toISOString(),
               video: result.wrong_answer_video,
             },

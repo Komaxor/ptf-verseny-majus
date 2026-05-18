@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 import { Loader2, AlertTriangle, KeyRound } from "lucide-react"
 import { SoundToggle } from "@/components/sound-toggle"
@@ -10,6 +11,7 @@ import { COMPETITION_END } from "@/lib/config"
 import MatrixBg from "@/components/matrix-bg"
 
 export default function LoginPage() {
+  const router = useRouter()
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -44,7 +46,8 @@ export default function LoginPage() {
       const result = await response.json()
 
       if (result.success) {
-        window.location.href = "/"
+        router.push("/")
+        router.refresh()
         return
       } else {
         setError(result.error || "Érvénytelen kód")

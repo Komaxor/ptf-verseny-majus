@@ -9,31 +9,34 @@ interface PhaseVideoProps {
   onComplete: () => void;
 }
 
+function readMutedPref(): boolean {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem("video_muted") === "true";
+}
+
 export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showSkip, setShowSkip] = useState(false);
-  const [isMuted, setIsMuted] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return localStorage.getItem("video_muted") === "true";
-  });
+  const [isMuted, setIsMuted] = useState(readMutedPref);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSkip(true), VIDEO_SKIP_DELAY_MS);
     return () => clearTimeout(timer);
   }, []);
 
-  const handlePlay = () => {
+  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (localStorage.getItem("video_muted") !== "true") {
-      try {
-        video.muted = false;
-        setIsMuted(false);
-      } catch {
-        // Browser blocked unmute — stay muted
-      }
-    }
-  };
+    const wantsMuted = readMutedPref();
+    video.muted = wantsMuted;
+    setIsMuted(wantsMuted);
+    video.play().catch(() => {
+      // Browser refused unmuted play (no user gesture / iOS) — fall back to muted.
+      video.muted = true;
+      setIsMuted(true);
+      video.play().catch(() => {});
+    });
+  }, []);
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -42,6 +45,9 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
     video.muted = next;
     setIsMuted(next);
     localStorage.setItem("video_muted", String(next));
+    if (!next && video.paused) {
+      video.play().catch(() => {});
+    }
   };
 
   return (
@@ -49,10 +55,7 @@ export function PhaseVideo({ src, onComplete }: PhaseVideoProps) {
       <video
         ref={videoRef}
         src={src}
-        autoPlay
-        muted
         playsInline
-        onPlay={handlePlay}
         onEnded={onComplete}
         className="w-full h-full object-contain sm:object-cover"
       />

@@ -52,7 +52,7 @@ RBMK-4 vezérlőrúd-térkép, 23:38-as állapot:
 | Forrás | Állapot | Megjegyzés |
 |---|---|---|
 | Automatikus SCRAM | Készenléti | Normál |
-| **Manuális AZ-5** | **Fegyverben, felszerelés: 23:26** | Lásd `operations-log-tonight.md` |
+| **Manuális AZ-5** | **Fegyverben** | Felszerelési bejegyzés az operatív naplóban (`operations-log-tonight`); az autorizációs paraméter ott azonosítandó |
 | Hűtővíz-elvesztés jelzés | Csendes | Normál |
 | Gőztúlnyomás-jelzés | Csendes | Normál |
 | Sugárzási vészjelzés | Csendes | Normál |

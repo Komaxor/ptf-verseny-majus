@@ -13,9 +13,16 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
+    const video = videoRef.current;
+    if (!video) return;
+    const wantsMuted =
+      typeof window !== "undefined" &&
+      localStorage.getItem("video_muted") === "true";
+    video.muted = wantsMuted;
+    video.play().catch(() => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
   }, [message.video]);
 
   const avatarSrc = currentRound ? CHARACTERS[currentRound as RoundKey].crop : null;
@@ -46,8 +53,6 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
           <video
             ref={videoRef}
             src={message.video}
-            autoPlay
-            muted
             playsInline
             controls
             preload="metadata"

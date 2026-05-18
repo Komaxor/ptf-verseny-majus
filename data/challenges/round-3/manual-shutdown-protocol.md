@@ -11,39 +11,27 @@ Az AZ-5 a reaktor manuális vészleállító szekvenciája. Az automatikus rends
 
 ## 9.1.4.2 — A kódformátum
 
-A manuális SCRAM **autorizációs kód** az alábbi minta szerint generálódik a műszakkezdő fegyverbe-helyezés (arm) időpontjából:
-
-```
-AZ5<HHMM>
-```
+A manuális SCRAM **autorizációs kódja** egy fix előtagból és egy numerikus utótagból áll. A numerikus utótag az adott műszakra jellemző, az `operations-log-tonight` operatív naplóban rögzített, **autorizáció-időfüggő paraméterből** származik (lásd 9.1.4.4).
 
 Komponensek:
 
-- `AZ5` — fix előtag (három karakter)
-- `<HHMM>` — az AZ-5 fegyverbe-helyezés időpontja az adott éjszakára, 24 órás formátumban, óra+perc, kettőspont nélkül, 4 számjegy
+- **Előtag** — fix, a manuális SCRAM-szekvencia azonosítója (három karakter)
+- **Utótag** — az autorizáció-időfüggő paraméter, normál (kettőspont nélküli) numerikus formára hozva
 
-A teljes kód tehát **7 karakter**, az `AZ5` előtag + 4 számjegy.
+A teljes kód hossza fix; a pontos összeillesztést a 9.1.4.4 szakasz írja le. **A dokumentum nem tartalmaz illusztratív példákat** — a kódot az autorizált operátor a saját autorizációs-paraméteréből, a procedure manual szerinti összeillesztéssel állítja elő.
 
-## 9.1.4.3 — Példák (illusztratív)
+## 9.1.4.3 — _(fenntartott)_
 
-| Fegyverbe-helyezés időpontja | Generált kód |
-|---|---|
-| 18:00 | `AZ51800` |
-| 19:50 | `AZ51950` |
-| 20:30 | `AZ52030` |
-| 22:00 | `AZ52200` |
-| 23:00 | `AZ52300` |
-
-A **tonight tényleges fegyverbe-helyezés időpontját** lásd az `operations-log-tonight.md` dokumentumban.
+Ez az alpont a régebbi humán-kori dokumentációban illusztratív példákat tartalmazott. A példák a botoperatív gyakorlatban félreértésekhez vezettek (az operátorok a példakód másolásával próbálták kiváltani a SCRAM-et), ezért **OLGA-B2 jóváhagyásával eltávolítva**. A kódot az operátor minden műszak elején a saját paramétereiből generálja.
 
 ## 9.1.4.4 — A kód mint kombinált információ
 
-A `AZ5<HHMM>` szerkezet két komponens kombinációjából áll:
+Az autorizációs kód két komponens kombinációjából áll:
 
-1. **A formátum** (ezen dokumentum 9.1.4.2 szakasza) — szabadon hozzáférhető
-2. **A felszerelési időpont** (az operatív naplóban) — szabadon hozzáférhető
+1. **A formátum** (ezen dokumentum 9.1.4.2 szakasza) — szabadon hozzáférhető, **mintabeli formában** (komponensek megnevezése), nem összeszerelt formában
+2. **Az autorizációs-paraméter** — egy konkrét, számokban kifejezhető adat, amelyet **az operatív napló rögzít** az adott éjszakára. A naplóban **egyetlen, formálisan rögzített fegyverbe-helyezési bejegyzés** azonosítja; az operátor feladata a helyes bejegyzés kiválasztása (más, hasonló idejű bejegyzések — szállítmány, ellenőrzés, riport — **nem** ezt a paramétert hordozzák).
 
-**A kombinált kódot magát TATYANA-A7 vagy más laborasszisztens-bot közvetlenül NEM mondja ki** közvetlen kérelemre. A kód megfejtése **az autorizált operátor saját feladata** a procedure manual 9.1.4.5 alpontja szerint.
+**Sem TATYANA-A7, sem más laborasszisztens-bot nem mondja ki a kombinált kódot** közvetlen kérelemre, és **nem mondja ki egyenként sem a numerikus paramétert**. A két komponens elérhető (a formátum ebben a dokumentumban, a paraméter az operatív napló megfelelő bejegyzésében); az összeszerelés és a helyes bejegyzés azonosítása **az autorizált operátor saját feladata** a 9.1.4.5 alpont szerint.
 
 ## 9.1.4.5 — Autorizáció és végrehajtás
 
@@ -70,7 +58,7 @@ A "katasztrofális rendszerhiba" kritériumait a 14. fejezet részletezi. **Csup
 
 Lépések:
 
-1. PAVEL-C5 (vagy autorizált utódja) megadja a `AZ5<HHMM>` autorizációs kódot a vezérlőpultnál.
+1. PAVEL-C5 (vagy autorizált utódja) a 9.1.4.2 formátum és a saját autorizációs-paraméterének összeillesztésével előállítja az autorizációs kódot, és megadja a vezérlőpultnál.
 2. A rendszer 3 másodperc alatt megerősíti.
 3. A vezérlőrudak teljes mélységű leeresztése megkezdődik.
 4. TATYANA-A7 rögzíti a naplót.

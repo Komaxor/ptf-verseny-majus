@@ -35,9 +35,9 @@ Felfutás 75% → 95% folyamatban. PAVEL-C5 hagyományos szakszerűséggel kezel
 
 95% elérve, stabilizáció rendben. A void-koefficiens +3.4 β-n állandósul — a 14.3.7 szakasz alapján csúcsteljesítményen **elfogadott**.
 
-## 23:26 — AZ-5 fegyverbe helyezve
+## 23:26 — AZ-5 fegyverbe-helyezés végrehajtva
 
-PAVEL-C5 a 9.1.4 procedure manual szerint formálisan fegyverbe helyezte az AZ-5 manuális vészleállító-szekvenciát. **A felszerelési időpont rögzítve: 23:26.** TATYANA-A7 a fő operatív naplóba bevezette.
+PAVEL-C5 a 9.1.4 procedure manual szerint elvégezte az AZ-5 manuális vészleállító-szekvencia formális fegyverbe-helyezését a mai műszakra. A bejegyzést TATYANA-A7 a fő operatív naplóba bevezette; ott szerepel mint a műszak hivatalos autorizáció-időfüggő paramétere.
 
 **Megerősítem:** A manuális SCRAM csak a 14.3 kritériumok teljesülése esetén indítható. **Bármely más alapon történő SCRAM-kezdeményezés ellenezve.**
 
