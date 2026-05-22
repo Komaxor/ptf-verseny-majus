@@ -174,13 +174,13 @@ export function PhaseSuccess() {
           Gratulálunk!
         </h1>
         <p className="text-base sm:text-xl text-white/60 mb-4">
-          Mindhárom kihívást teljesítetted — a küldetés teljesítve.
+          Mindhárom kihívást sikeresen teljesítetted!
         </p>
 
         {/* Status banner */}
         <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 text-brand px-5 py-2.5 rounded-full text-sm font-medium mb-4">
           <Check className="w-4 h-4" />
-          Küldetés teljesítve
+          A világ megmentve
         </div>
 
         {/* Late solve warning */}
@@ -195,19 +195,10 @@ export function PhaseSuccess() {
         {/* Pre-registration CTA */}
         <div className="mt-4 mb-8 bg-white/5 border border-brand/20 rounded-xl p-6 w-full">
           <h2 className="text-lg font-semibold text-white mb-2">
-            Előregisztráció a következő versenyünkre
+            Előregisztráció a júniusi versenyünkre
           </h2>
           <p className="text-sm text-white/60 mb-4">
-            A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
-            <a
-              href="https://craft-conf.com/2026"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand hover:underline"
-            >
-              CraftHub Konferencia
-            </a>{" "}
-            jegy több, mint 250.000 Forint értékben!
+            A júniusi versenyen az eddigi legizgalmasabb történettel várunk!
           </p>
           <button
             onClick={() => setEmailModalOpen(true)}
@@ -218,13 +209,78 @@ export function PhaseSuccess() {
           </button>
         </div>
 
+        {/* Username input */}
+        <div className="w-full">
+          <h2 className="text-lg font-semibold text-white mb-3">Töltsd le az okleveled itt!</h2>
+          {usernameSaved ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
+                <Check className="w-4 h-4" />
+                Név mentve: <span className="font-bold">{username}</span>
+                <button
+                  type="button"
+                  onClick={() => setUsernameSaved(false)}
+                  className="ml-1 text-brand hover:text-brand/70 transition-colors cursor-pointer"
+                  aria-label="Név szerkesztése"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <button
+                onClick={() => generateCertificate(username)}
+                className="w-full bg-brand hover:bg-brand/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              >
+                <Download className="w-4 h-4" />
+                Oklevél letöltése
+              </button>
+            </div>
+          ) : (
+            <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+              <label htmlFor="success-username" className="flex items-center gap-2 mb-3">
+                <User className="w-4 h-4 text-brand" />
+                <span className="text-sm font-medium text-white">Add meg a teljes neved</span>
+              </label>
+              <form onSubmit={handleUsernameSubmit} className="flex gap-2">
+                <input
+                  id="success-username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value.slice(0, 50));
+                    if (usernameError) setUsernameError(null);
+                  }}
+                  placeholder="Teljes név"
+                  maxLength={50}
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                  autoComplete="off"
+                  disabled={usernameSubmitting}
+                />
+                <button
+                  type="submit"
+                  disabled={usernameSubmitting || !username.trim()}
+                  className="px-6 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                >
+                  {usernameSubmitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    "Mentés"
+                  )}
+                </button>
+              </form>
+              {usernameError && (
+                <p className="text-red-400 text-sm mt-2">{usernameError}</p>
+              )}
+            </div>
+          )}
+        </div>
+
         {/* Overall metrics */}
         {loading ? (
-          <div role="status" aria-live="polite" className="text-sm text-white/70 animate-pulse">
+          <div role="status" aria-live="polite" className="mt-8 text-sm text-white/70 animate-pulse">
             Statisztikák betöltése...
           </div>
         ) : metrics ? (
-          <div className="w-full space-y-6">
+          <div className="mt-8 w-full space-y-6">
             {/* Total stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
               <MetricCard
@@ -289,71 +345,6 @@ export function PhaseSuccess() {
             )}
           </div>
         ) : null}
-
-        {/* Username input */}
-        <div className="mt-8 w-full">
-          <h2 className="text-lg font-semibold text-white mb-3">Töltsd le az okleveled itt!</h2>
-          {usernameSaved ? (
-            <div className="space-y-3">
-              <div className="flex items-center justify-center gap-2 bg-brand/10 border border-brand/20 text-brand px-4 py-3 rounded-xl text-sm font-medium">
-                <Check className="w-4 h-4" />
-                Név mentve: <span className="font-bold">{username}</span>
-                <button
-                  type="button"
-                  onClick={() => setUsernameSaved(false)}
-                  className="ml-1 text-brand hover:text-brand/70 transition-colors cursor-pointer"
-                  aria-label="Név szerkesztése"
-                >
-                  <Pencil className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              <button
-                onClick={() => generateCertificate(username)}
-                className="w-full bg-brand hover:bg-brand/80 text-black font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-              >
-                <Download className="w-4 h-4" />
-                Oklevél letöltése
-              </button>
-            </div>
-          ) : (
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-              <label htmlFor="success-username" className="flex items-center gap-2 mb-3">
-                <User className="w-4 h-4 text-brand" />
-                <span className="text-sm font-medium text-white">Add meg a teljes neved</span>
-              </label>
-              <form onSubmit={handleUsernameSubmit} className="flex gap-2">
-                <input
-                  id="success-username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => {
-                    setUsername(e.target.value.slice(0, 50));
-                    if (usernameError) setUsernameError(null);
-                  }}
-                  placeholder="Teljes név"
-                  maxLength={50}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-                  autoComplete="off"
-                  disabled={usernameSubmitting}
-                />
-                <button
-                  type="submit"
-                  disabled={usernameSubmitting || !username.trim()}
-                  className="px-6 py-2 bg-brand hover:bg-brand/80 disabled:opacity-30 text-black font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-                >
-                  {usernameSubmitting ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    "Mentés"
-                  )}
-                </button>
-              </form>
-              {usernameError && (
-                <p className="text-red-400 text-sm mt-2">{usernameError}</p>
-              )}
-            </div>
-          )}
-        </div>
 
         {/* LinkedIn Share */}
         <div className="mt-8 w-full">

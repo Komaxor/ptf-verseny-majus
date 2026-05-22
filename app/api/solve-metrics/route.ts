@@ -45,11 +45,17 @@ export async function GET(_request: NextRequest) {
       return { round: r, timeMs }
     })
 
-    // Message counts per round
-    const { data: sessions } = await supabase
-      .from("may_chat_sessions")
-      .select("round, message_count")
+    // Message counts per round — count user messages directly from
+    // may_chat_messages. We can't sum may_chat_sessions.message_count because
+    // session rows are keyed by (session_hash, round) globally: if a
+    // session_hash is reused across logins, the session row stays owned by its
+    // original creator while a later user's messages still carry that user's
+    // own user_id here. may_chat_messages is the only per-user-accurate source.
+    const { data: userMessages } = await supabase
+      .from("may_chat_messages")
+      .select("round")
       .eq("user_id", user.id)
+      .eq("role", "user")
 
     // Failed attempts per round
     const { data: failed } = await supabase
@@ -70,7 +76,7 @@ export async function GET(_request: NextRequest) {
       .eq("user_id", user.id)
 
     const totalTimeMs = rounds.reduce((sum, r) => sum + (r.timeMs || 0), 0)
-    const totalMessages = sessions?.reduce((sum, s) => sum + s.message_count, 0) || 0
+    const totalMessages = userMessages?.length || 0
     const totalHints = hints?.length || 0
     const totalFailedAttempts = failed?.length || 0
 
@@ -82,7 +88,7 @@ export async function GET(_request: NextRequest) {
       rounds: rounds.map((r) => ({
         round: r.round,
         timeSeconds: r.timeMs ? Math.round(r.timeMs / 1000) : 0,
-        messageCount: sessions?.filter((s) => s.round === r.round).reduce((sum, s) => sum + s.message_count, 0) || 0,
+        messageCount: userMessages?.filter((m) => m.round === r.round).length || 0,
         hintClicks: hints?.filter((h) => h.round === r.round).length || 0,
         failedAttempts: failed?.filter((f) => f.round === r.round).length || 0,
       })),
