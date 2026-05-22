@@ -15,7 +15,7 @@ export function SceneVisual({ round }: SceneVisualProps) {
         src={character.avatar}
         alt={character.sceneDescription}
         fill
-        className="object-cover"
+        className="object-contain"
         priority
       />
     </div>
