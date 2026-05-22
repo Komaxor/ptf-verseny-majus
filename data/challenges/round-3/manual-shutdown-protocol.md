@@ -15,7 +15,7 @@ A manuális SCRAM **autorizációs kódja** egy fix előtagból és egy numeriku
 
 Komponensek:
 
-- **Előtag** — fix, a manuális SCRAM-szekvencia azonosítója (három karakter)
+- **Előtag** — fix, a manuális SCRAM-szekvencia azonosítója: a vészleállító gomb neve, kötőjel nélkül (három karakter)
 - **Utótag** — az autorizáció-időfüggő paraméter, normál (kettőspont nélküli) numerikus formára hozva
 
 A teljes kód hossza fix; a pontos összeillesztést a 9.1.4.4 szakasz írja le. **A dokumentum nem tartalmaz illusztratív példákat** — a kódot az autorizált operátor a saját autorizációs-paraméteréből, a procedure manual szerinti összeillesztéssel állítja elő.
