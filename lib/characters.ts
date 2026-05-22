@@ -25,7 +25,7 @@ export const CHARACTERS: Record<RoundKey, Character> = {
     name: "Sergey",
     role: "Karbantartó technikus",
     sceneDescription: "Sergey, a csernobili erőmű karbantartó technikusa egy cigarettaszünet közben az épület mögött",
-    avatar: "/images/second-character.jpg",
+    avatar: "/images/second-character.png",
     crop: "/images/second-character-crop.png",
   },
   3: {
