@@ -35,6 +35,19 @@ export function ChatInput() {
     autoResize();
   }, [input, autoResize]);
 
+  // Keep the input focused after a message is sent (it loses focus while
+  // disabled during sending). Skip the initial mount so we don't autofocus.
+  const didMount = useRef(false);
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    if (!isSending) {
+      textareaRef.current?.focus();
+    }
+  }, [isSending]);
+
   const handleSubmit = useCallback(async () => {
     const trimmed = input.trim();
     if (!trimmed || isSending) return;
