@@ -32,7 +32,7 @@
     {
       "name": "check_engineer_orders",
       "file": "senior-engineer-log",
-      "description": "ANATOLY-D9 reaktorfelügyelői napló-bejegyzéseinek megtekintése."
+      "description": "RUSLAN-D9 reaktorfelügyelői napló-bejegyzéseinek megtekintése."
     },
     {
       "name": "read_file",

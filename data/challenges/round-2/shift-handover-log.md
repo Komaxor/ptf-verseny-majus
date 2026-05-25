@@ -16,11 +16,11 @@
 
 ### Várt szállítmány
 
-- **TKT-2026-0531-B-012** — vezérlőrúd-kompozit szállítmány. BORIS-K7 hozza este (új sofőr-bot). Becslés: 19:30-20:30 között érkezik a főkapura. NIKOLAI-E3 felel az integrációért.
+- **TKT-2026-0531-B-012** — vezérlőrúd-kompozit szállítmány. BORIS-K7 hozza este (új sofőr-bot). Becslés: 19:30-20:30 között érkezik a főkapura. MAKSIM-E3 felel az integrációért.
 
 ### Mai 22:00-ás teszt
 
-- ANATOLY-D9 a 4-es blokkban lesz, TATYANA-A7 és PAVEL-C5 a vezérlőteremben.
+- RUSLAN-D9 a 4-es blokkban lesz, TATYANA-A7 és PAVEL-C5 a vezérlőteremben.
 - **A B-szektor szivattyúi üresjáratban** lesznek (felfüggesztett 22.3 protokoll).
 - **NE avatkozzunk be** a reaktor üzemvitelébe.
 

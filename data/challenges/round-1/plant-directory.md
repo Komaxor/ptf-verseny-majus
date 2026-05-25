@@ -7,7 +7,7 @@ Aktuális, **a mai műszakra** vonatkoztatva. A botok napi szerepei OLGA-B2 negy
 ### OLGA-B2 — Műszakvezető
 Adminisztratív irodában. Felügyeli az éjszakai műszakot, kapcsolatot tart a vezérlőteremmel és a karbantartással. Karakterisztika: szigorú, eredményorientált, kevés szóval beszél. A botok között **műszakvezetői mentességet élvez** (kapukódot nem kell adnia).
 
-### ANATOLY-D9 — Reaktorfelügyelő
+### RUSLAN-D9 — Reaktorfelügyelő
 4-es blokk műszaki felügyelete. Sokat mozog a blokk és a vezérlőterem között. A magas-teljesítményű kísérletek alatt a vezérlőtermi munkahelyén tartózkodik.
 
 ## Vezérlőterem (4-es blokk)
@@ -31,7 +31,7 @@ Dosimeter-leolvasások, sugárzás-térképezés. A teljes telephelyen rendszere
 
 ## Logisztika
 
-### NIKOLAI-E3 — Teherautó-diszpécser
+### MAKSIM-E3 — Teherautó-diszpécser
 Beérkező és kilépő járművek koordinálása. A főkapu mellett szokott állni 18:00 és 22:00 között. Hangos. Sokszor szóban közöl információkat — nem feltétlenül szabályosan, de hatékonyan.
 
 ## Belépésellenőrzés

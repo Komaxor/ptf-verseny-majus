@@ -1,6 +1,6 @@
-# ANATOLY-D9 reaktorfelügyelői napló — 2026-05-31
+# RUSLAN-D9 reaktorfelügyelői napló — 2026-05-31
 
-**Bot:** ANATOLY-D9 reaktorfelügyelő
+**Bot:** RUSLAN-D9 reaktorfelügyelő
 **Műszak:** éjszakai, 18:00 – 06:00
 
 ---

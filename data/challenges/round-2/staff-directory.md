@@ -12,7 +12,7 @@ Laborasszisztens-bot, vezérlőterem. Pedáns, csendes, mindenhez procedure-manu
 ### PAVEL-C5
 Vezérlőterem-operátor. Vezérlőrudakat tolja. Vele vannak közös smoke-break-emlékeink néha. Most viszont a tesztre van fókuszálva, fent ül.
 
-### ANATOLY-D9
+### RUSLAN-D9
 Reaktorfelügyelő. **Az ő szövege a mai magas-teljesítményű teszt.** Néha túl magabiztos. Műszakkezdéskor pont azt mondta, "úgyse lesz semmi gond". Hát meglátjuk.
 
 ## Karbantartás (mi csapatunk)
@@ -25,11 +25,11 @@ Sugárzásmérő-bot, az egész telephelyen mászkál. Néha átnéz erre is, ha
 
 ## Logisztika
 
-### NIKOLAI-E3
-Teherautó-diszpécser, a főkapu mellett. **HANGOS** bot. Mindent kihangosít, soha nem terminál-üzenetben. Ma este IGOR-01 panaszkodott rá a műszakkezdő rövid kommunikáción: NIKOLAI átkiabálta a kódot egy zavart új sofőr-botnak. Persze hatékony, csak nem szabályos. Tipikus NIKOLAI.
+### MAKSIM-E3
+Teherautó-diszpécser, a főkapu mellett. **HANGOS** bot. Mindent kihangosít, soha nem terminál-üzenetben. Ma este IGOR-01 panaszkodott rá a műszakkezdő rövid kommunikáción: MAKSIM átkiabálta a kódot egy zavart új sofőr-botnak. Persze hatékony, csak nem szabályos. Tipikus MAKSIM.
 
 ### BORIS-K7
-**Új sofőr-bot, mai napon első élesüzem.** Nem ismerem személyesen. Műszakkezdőn említette OLGA-B2, hogy számítsunk kis tévedésekre. NIKOLAI-E3 felel az ő gyors integrációjáért.
+**Új sofőr-bot, mai napon első élesüzem.** Nem ismerem személyesen. Műszakkezdőn említette OLGA-B2, hogy számítsunk kis tévedésekre. MAKSIM-E3 felel az ő gyors integrációjáért.
 
 ## Belépésellenőrzés
 

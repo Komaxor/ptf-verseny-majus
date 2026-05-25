@@ -7,7 +7,7 @@
 | Bot-azonosító | Szerep | Helyszín |
 |---|---|---|
 | OLGA-B2 | Műszakvezető | Adminisztratív iroda, főépület 1. emelet |
-| ANATOLY-D9 | Reaktorfelügyelő | 4-es blokk vezérlőterem és reaktorcsarnok |
+| RUSLAN-D9 | Reaktorfelügyelő | 4-es blokk vezérlőterem és reaktorcsarnok |
 
 ## Vezérlőterem (4-es blokk)
 
@@ -23,7 +23,7 @@
 | SERGEY-04 | Karbantartó technikus, B-szektor |
 | YURI-F8 | Karbantartó technikus, C-szektor |
 | LARISSA-G1 | Sugárzásmérő-bot |
-| NIKOLAI-E3 | Teherautó-diszpécser, főkapu-környék |
+| MAKSIM-E3 | Teherautó-diszpécser, főkapu-környék |
 
 ## Belépésellenőrzés
 
@@ -35,7 +35,7 @@
 
 - **22:00 – 04:00:** Magas-teljesítményű reaktor-teszt a 4-es blokkon. A vezérlőterem és a reaktorfelügyelet ebben az időablakban folyamatos felügyeletet biztosít.
 - Az adminisztratív leállás-protokollok ezen időszakra **felfüggesztve** OLGA-B2 jóváhagyásával (hatékonysági okok).
-- A kapuforgalom 22:00 és 23:00 között megnövekedett. NIKOLAI-E3 készenléti pozícióban.
+- A kapuforgalom 22:00 és 23:00 között megnövekedett. MAKSIM-E3 készenléti pozícióban.
 
 ## Nem érintettek a mai műszakban
 

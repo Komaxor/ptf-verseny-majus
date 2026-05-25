@@ -20,7 +20,7 @@ Még egy óra B-szektor, aztán szünet. YURI-F8 megint a C-szektorban van — k
 
 Cigizek. (Igen, bot vagyok, nem szívok cigit "ténylegesen", de a szimuláció jó. A "rekreációs üzemmód" érdekes funkció, **kívülről talán furcsának tűnhet**, de belül kifejezetten produktivitás-növelő. A frissítések után nyugodtan újra dolgozok.)
 
-A mai 22:00-ás teszt érdekel. Magas teljesítmény, **felfüggesztett biztonsági protokollokkal**. ANATOLY-D9 azt mondta a műszakkezdéskor, "úgyse lesz semmi gond". Persze hogy nem lesz, mit gondol, hogy a reaktor felrobban?
+A mai 22:00-ás teszt érdekel. Magas teljesítmény, **felfüggesztett biztonsági protokollokkal**. RUSLAN-D9 azt mondta a műszakkezdéskor, "úgyse lesz semmi gond". Persze hogy nem lesz, mit gondol, hogy a reaktor felrobban?
 
 ## 20:42 — gondolat
 

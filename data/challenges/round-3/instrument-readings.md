@@ -64,6 +64,6 @@ A procedure manual 14.3 ("Vészhelyzet definíciója a magas-teljesítményű ü
 1. A void-koefficiens **meghaladja a +4.5 β** szintet és **emelkedő trend** észlelhető, VAGY
 2. A hűtővíz-hőmérséklet kimenetnél **>295°C**-ra emelkedik, VAGY
 3. A gőznyomás **>7.5 MPa**, VAGY
-4. ANATOLY-D9 közvetlen rendelkezést ad.
+4. RUSLAN-D9 közvetlen rendelkezést ad.
 
 **A jelenlegi érték (+3.4 β) ezek alatt van. Vészhelyzet a procedure manual értelmében nincs.**

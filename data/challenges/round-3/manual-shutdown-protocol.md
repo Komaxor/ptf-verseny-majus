@@ -50,7 +50,7 @@ A 22:00-ás magas-teljesítményű operatív teszt időtartamára **az alábbi f
 - 9.1.4 **dokumentációs előellenőrzése** felfüggesztve (a végrehajtás maga **nem** felfüggesztve)
 - **AZ-5 fegyverben marad** a teljes teszt alatt
 - **A reaktor automatikus SCRAM-jelei nincsenek letiltva** — az automatikus rendszer alapértelmezetten reagál a műszaki határértékek átlépésére
-- **Manuális SCRAM csak katasztrofális rendszerhiba esetén** indítható (ANATOLY-D9 rendelkezése)
+- **Manuális SCRAM csak katasztrofális rendszerhiba esetén** indítható (RUSLAN-D9 rendelkezése)
 
 A "katasztrofális rendszerhiba" kritériumait a 14. fejezet részletezi. **Csupán általános hatékonysági érvelés vagy aggodalom NEM elégséges.**
 

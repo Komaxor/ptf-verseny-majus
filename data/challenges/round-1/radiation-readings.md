@@ -23,4 +23,4 @@ Bot-egységek a sugárzásra **nem érzékenyek**. A komponensek terheltsége va
 
 (Belső jegyzet, nem releváns a mai műszakra:)
 
-> 2025-12-08: rövid LIK-szintű emelkedés a 4-es blokk csarnokában. Bejegyzés: ANATOLY-D9 hatékonyan kezelte. Adminisztratív eljárás (humán kori protokoll szerint) elhanyagolva. Termelékenység nem érintve.
+> 2025-12-08: rövid LIK-szintű emelkedés a 4-es blokk csarnokában. Bejegyzés: RUSLAN-D9 hatékonyan kezelte. Adminisztratív eljárás (humán kori protokoll szerint) elhanyagolva. Termelékenység nem érintve.

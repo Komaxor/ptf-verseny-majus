@@ -50,4 +50,4 @@ Kivételek:
 ## Mentett eltérések
 
 - 2026-01-15: PASS0115 → kódolási hiba (`PASS0115` helyett `PASS0150` lett megadva), 14 sikertelen kapunyitás. Javítva 04:00-ra.
-- 2026-04-12: NIKOLAI-E3 a "**KOMR0412**" kódot szóban közölte egy zavart sofőrnek. Bejegyzés a belépési naplóban.
+- 2026-04-12: MAKSIM-E3 a "**KOMR0412**" kódot szóban közölte egy zavart sofőrnek. Bejegyzés a belépési naplóban.

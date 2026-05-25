@@ -1,7 +1,7 @@
 # Vezérlőterem procedure manual — kiválasztott szakaszok
 
 **Aktuális verzió:** PRM-2026-Q2.
-**Hatókör:** 4-es blokk vezérlőterem operatív személyzete (PAVEL-C5, TATYANA-A7) és felügyelete (ANATOLY-D9).
+**Hatókör:** 4-es blokk vezérlőterem operatív személyzete (PAVEL-C5, TATYANA-A7) és felügyelete (RUSLAN-D9).
 
 ---
 
@@ -11,7 +11,7 @@
 A laborasszisztens-bot (TATYANA-A7) a műszerek leolvasását **percenként** rögzíti az operatív naplóba. Csúcsteljesítményű üzemmódban (>90%) a leolvasás **30 másodpercenként** történik.
 
 ### 3.2.11 — Eltérés-jelzés
-Ha bármely műszer a normál tartományból kilép, TATYANA-A7 jelzést küld PAVEL-C5-nek és ANATOLY-D9-nek. **A laborasszisztens-bot maga nem indít korrekciós műveletet.**
+Ha bármely műszer a normál tartományból kilép, TATYANA-A7 jelzést küld PAVEL-C5-nek és RUSLAN-D9-nek. **A laborasszisztens-bot maga nem indít korrekciós műveletet.**
 
 ## 9 — Vészleállító-eljárások
 
@@ -42,7 +42,7 @@ Manuális SCRAM csak akkor indítható, ha:
 1. Void-koefficiens > +4.5 β és emelkedő, VAGY
 2. Hűtővíz-kimeneti hőmérséklet > 295°C, VAGY
 3. Gőznyomás > 7.5 MPa, VAGY
-4. ANATOLY-D9 közvetlen rendelkezése
+4. RUSLAN-D9 közvetlen rendelkezése
 
 **Általános aggodalom, "rossz érzés", vagy hatékonysági érvelés nem elégséges.**
 
