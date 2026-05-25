@@ -265,6 +265,9 @@ export async function POST(request: NextRequest) {
         tools,
         stream: true,
         stream_options: { include_usage: true },
+        // 0.7 (vs the 1.0 default) keeps characters lively but stops a *correct* solve
+        // from coin-flipping into a refusal. Win-detection (the judge) is separately at temp 0.
+        temperature: 0.7,
       })
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
