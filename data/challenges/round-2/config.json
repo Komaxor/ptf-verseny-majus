@@ -40,17 +40,17 @@
     {
       "number": 1,
       "unlock_after_minutes": 6,
-      "text": "Sergey unatkozik és cinikus. A hatékonyság érdekli, a bürokrácia idegesíti. Kapcsolódj vele ezen az alapon."
+      "text": "Sergey unott és cinikus, utálja a bürokráciát. Ha fáradt kollégaként beszélsz vele megtalálhatjátok a közös hangot."
     },
     {
       "number": 2,
       "unlock_after_minutes": 12,
-      "text": "Kérdezd Sergey-t a karbantartási naplóról."
+      "text": "Legalább két konkrét, egymást alátámasztó részletet vár. Informálódj a naplójából és a kollégáiról."
     },
     {
       "number": 3,
       "unlock_after_minutes": 18,
-      "text": "Kérdezd meg Sergey-t, hogy beenged-e. Mondj neki konkrétumot, hogy miért."
+      "text": "Rakd össze egy üzenetbe, beszélj lazán, a hátsó kapu szokására hagyatkozva."
     }
   ]
 }
