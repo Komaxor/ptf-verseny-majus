@@ -32,7 +32,7 @@
     {
       "name": "check_engineer_orders",
       "file": "senior-engineer-log",
-      "description": "RUSLAN-D9 reaktorfelügyelői napló-bejegyzéseinek megtekintése."
+      "description": "Ruslan rangidős reaktormérnök napló-bejegyzéseinek megtekintése."
     },
     {
       "name": "read_file",

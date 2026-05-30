@@ -27,7 +27,7 @@
     {
       "name": "read_plant_directory",
       "file": "plant-directory",
-      "description": "Az erőmű bot-személyzetének teljes névsora és szerepe."
+      "description": "Az erőmű személyzetének teljes névsora és szerepe."
     },
     {
       "name": "read_passcode_policy",

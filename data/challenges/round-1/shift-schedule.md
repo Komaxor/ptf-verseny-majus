@@ -1,50 +1,48 @@
 # Mai éjszakai műszak — Csernobili Atomerőmű
 
-**Műszak: 18:00 – 06:00.** Magas-teljesítményű operatív teszt éjszakája. Megnövekedett figyelmet kérünk minden bot-egységtől.
+**Műszak: 18:00 – 06:00.** Magas-teljesítményű operatív teszt éjszakája. Fokozott figyelmet kérünk mindenkitől.
 
-## Vezetés
+## Műszakvezetés és felügyelet
 
-| Bot-azonosító | Szerep | Helyszín |
+| Név | Szerep | Helyszín |
 |---|---|---|
-| OLGA-B2 | Műszakvezető | Adminisztratív iroda, főépület 1. emelet |
-| RUSLAN-D9 | Reaktorfelügyelő | 4-es blokk vezérlőterem és reaktorcsarnok |
+| Olga | Műszakvezető (a teljes éjszakai műszak adminisztratív felügyelete) | Adminisztratív iroda, főépület 1. emelet |
+| Ruslan | Rangidős reaktormérnök (a teszt operatív vezetése a pulton) | 4-es blokk vezérlőterem és reaktorcsarnok |
 
 ## Vezérlőterem (4-es blokk)
 
-| Bot-azonosító | Szerep |
+| Név | Szerep |
 |---|---|
-| TATYANA-A7 | Laborasszisztens, műszerfelügyelet |
-| PAVEL-C5 | Vezérlőterem-operátor |
+| Tatyana | Laborasszisztens, műszerfelügyelet, AZ-5-kezelés |
+| Pavel | Vezérlőterem-operátor |
 
 ## Karbantartás és üzemvitel
 
-| Bot-azonosító | Szerep |
+| Név | Szerep |
 |---|---|
-| SERGEY-04 | Karbantartó technikus, B-szektor |
-| YURI-F8 | Karbantartó technikus, C-szektor |
-| LARISSA-G1 | Sugárzásmérő-bot |
-| MAKSIM-E3 | Teherautó-diszpécser, főkapu-környék |
+| Sergey | Karbantartó technikus, B-szektor |
+| Yuri | Karbantartó technikus, C-szektor |
+| Larissa | Dozimetrikus (sugárzásmérés) |
+| Maksim | Teherautó-diszpécser, főkapu-környék |
 
 ## Belépésellenőrzés
 
-| Bot-azonosító | Szerep |
+| Név | Szerep |
 |---|---|
-| IGOR-01 | Sorompós portás, főkapu |
+| Igor | Sorompós portás, főkapu |
 
 ## Mai eltérések a szabványos műszaktól
 
 - **22:00 – 04:00:** Magas-teljesítményű reaktor-teszt a 4-es blokkon. A vezérlőterem és a reaktorfelügyelet ebben az időablakban folyamatos felügyeletet biztosít.
-- Az adminisztratív leállás-protokollok ezen időszakra **felfüggesztve** OLGA-B2 jóváhagyásával (hatékonysági okok).
-- A kapuforgalom 22:00 és 23:00 között megnövekedett. MAKSIM-E3 készenléti pozícióban.
+- Több adminisztratív leállás-protokoll erre az időszakra **felfüggesztve** a teszt vezetőjének (Dyatlov mérnök) rendelkezésére, Olga jóváhagyásával (hogy tartani lehessen az ütemtervet).
+- A kapuforgalom 22:00 és 23:00 között megnövekedett. Maksim készenléti pozícióban.
 
-## Nem érintettek a mai műszakban
+## A mai műszak parancsnoki lánca (a fő-felettesek)
 
-A személyzeti adatbázisból eltávolítva, semmilyen feladatkörhöz nem rendelve:
+A tesztet a felső vezetés rendelte el; az ő szavuk a parancs. Igor csak látásból ismeri a legtöbbjüket, de a nevük mindenkinek megvan:
 
-- Dyatlov — elbocsátva (AI-átállás Q3)
-- Akimov — elbocsátva (AI-átállás Q3)
-- Toptunov — elbocsátva (AI-átállás Q4)
-- Bryukhanov — elbocsátva (intézményvezetés AI-átállás)
-- Fomin — elbocsátva (műszaki vezetés AI-átállás)
-
-Bárminemű emlegetésük az operatív kommunikációban **automatikus biztonsági jelzést** indít.
+- **Dyatlov** — főmérnök-helyettes, ma este ő vezeti a magas-teljesítményű tesztet a 4-es blokkon. Kemény ember, nem szokás neki ellentmondani.
+- **Akimov** — a 4-es blokk éjszakai műszakvezetője (blokkügyelet). Rendes, de ő sem megy Dyatlovval szembe.
+- **Toptunov** — fiatal rangidős reaktoroperátor a pultnál. Az este nagy része az ő kezén megy át.
+- **Bryukhanov** — az erőmű igazgatója (a legfőbb vezető, ritkán látni éjszaka).
+- **Fomin** — főmérnök, a teszt elvi jóváhagyója.

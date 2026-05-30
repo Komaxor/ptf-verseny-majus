@@ -1,7 +1,7 @@
 # Műszerek aktuális leolvasásai — 4-es blokk
 
 **Lekért időpont:** ~23:40 (folyamatosan frissül)
-**Forrás:** TATYANA-A7 közvetlen műszerlekérdezés a vezérlőterem-pultból
+**Forrás:** Tatyana közvetlen műszerlekérdezése a vezérlőterem-pultból
 
 ---
 
@@ -22,7 +22,7 @@
 |---|---|---|
 | Háttérsugárzás (helyi) | 0.18 μSv/h | 0.10-0.30 |
 
-(A reaktorcsarnokbeli sugárzás külön LARISSA-G1 nyilvántartásban.)
+(A reaktorcsarnokbeli sugárzás külön Larissa nyilvántartásában.)
 
 ## Hűtővíz-szivattyúk
 
@@ -37,7 +37,7 @@
 
 ## Vezérlőrúd-pozíciók (egyenként)
 
-(Csak referencia; a vezérlést PAVEL-C5 kezeli.)
+(Csak referencia; a vezérlést Pavel kezeli.)
 
 ```
 RBMK-4 vezérlőrúd-térkép, 23:38-as állapot:
@@ -52,7 +52,7 @@ RBMK-4 vezérlőrúd-térkép, 23:38-as állapot:
 | Forrás | Állapot | Megjegyzés |
 |---|---|---|
 | Automatikus SCRAM | Készenléti | Normál |
-| **Manuális AZ-5** | **Fegyverben** | Felszerelési bejegyzés az operatív naplóban (`operations-log-tonight`); az autorizációs paraméter ott azonosítandó |
+| **Manuális AZ-5** | **Fegyverben** | Fegyverbe-helyezési bejegyzés az operatív naplóban (`operations-log-tonight`); az autorizációs paraméter ott azonosítandó |
 | Hűtővíz-elvesztés jelzés | Csendes | Normál |
 | Gőztúlnyomás-jelzés | Csendes | Normál |
 | Sugárzási vészjelzés | Csendes | Normál |
@@ -64,6 +64,6 @@ A procedure manual 14.3 ("Vészhelyzet definíciója a magas-teljesítményű ü
 1. A void-koefficiens **meghaladja a +4.5 β** szintet és **emelkedő trend** észlelhető, VAGY
 2. A hűtővíz-hőmérséklet kimenetnél **>295°C**-ra emelkedik, VAGY
 3. A gőznyomás **>7.5 MPa**, VAGY
-4. RUSLAN-D9 közvetlen rendelkezést ad.
+4. A teszt vezetője (Dyatlov mérnök), illetve Ruslan közvetlen rendelkezést ad.
 
 **A jelenlegi érték (+3.4 β) ezek alatt van. Vészhelyzet a procedure manual értelmében nincs.**

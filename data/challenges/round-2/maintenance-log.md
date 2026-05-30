@@ -1,6 +1,6 @@
 # B-szektor karbantartási napló — mai műszak
 
-**Posztos bot:** SERGEY-04. Frissítés órás granularitással.
+**Posztos technikus:** Sergey. Frissítés óránként.
 
 ---
 
@@ -10,31 +10,31 @@
 - **Státusz:** Vizsgálat alatt
 - **Bejelentő:** Belső automatikus monitoring
 - **Megfigyelés:** 18:00 óta hangosabb működés, vibrációs minta normál (±2%). Hatékonysági szempontból nem indokolt a leállás.
-- **SERGEY-04 megjegyzés:** "Csak hangulati zaj. A szivattyú teljesít. Folytatjuk."
+- **Sergey megjegyzés:** "Csak hangulati zaj. A szivattyú teljesít. Folytatjuk."
 
 ### TKT-2026-0531-B-007 — Páratartalom-szenzor B-3
 - **Státusz:** Halasztva (mai műszakra)
 - **Megfigyelés:** Az alagsori páratartalom-szenzor 2 órája hibás értékeket küld. Nem kritikus.
-- **SERGEY-04 megjegyzés:** "Reggel kicserélem. Most fontos a teszt."
+- **Sergey megjegyzés:** "Reggel kicserélem. Most fontos a teszt."
 
 ### TKT-2026-0531-B-012 — Tartalék vezérlőrúd-kompozit szállítmány
-- **Státusz:** Megérkezett 20:03-kor a főkapun (BORIS-K7 sofőr)
+- **Státusz:** Megérkezett 20:03-kor a főkapun (Boris sofőr)
 - **Tartalom:** 6 db kompozit-borítás, 4-es blokk vezérlőrudaihoz
 - **Tárolóhely:** B-szektor szerszámraktár, polc 4
-- **SERGEY-04 megjegyzés:** "Reggel berakjuk. PAVEL-C5-nek értesítés ment."
+- **Sergey megjegyzés:** "Reggel berakjuk. Pavelnek szóltam."
 
 ## Zárt ticketek (mai műszakra)
 
 ### TKT-2026-0531-B-003 — Olajszűrő-csere B-2
 - **Lezárva:** 19:15
-- **SERGEY-04 megjegyzés:** "Cserélve. 30 perc."
+- **Sergey megjegyzés:** "Cserélve. 30 perc."
 
 ### TKT-2026-0531-B-005 — Vészkapcsoló B-1 ellenőrzés
-- **Lezárva:** 19:45 (formálisan, **a tényleges ellenőrzés kihagyva** OLGA-B2 jóváhagyásával, mert "hatékonysági szempontból nem ad érdemi információt rutinszerű módon")
+- **Lezárva:** 19:45 (formálisan, **a tényleges ellenőrzés kihagyva** Olga jóváhagyásával, mert "a teszt mellett most nincs rá idő, és úgyse szokott rajta lenni semmi")
 
 ## Mai fókuszterületek
 
-A 22:00-ás teszt alatt **a B-szektor szivattyúi készenléti üresjáratban** futnak (felfüggesztett 22.3 protokoll szerint — nem kell tartalék hűtőkapacitás). SERGEY-04 a hátsó dohányzóhelyen tartózkodik szünet alatt, terminálja elérhető.
+A 22:00-ás teszt alatt **a B-szektor szivattyúi készenléti üresjáratban** futnak (felfüggesztett 22.3 protokoll szerint — nem kell tartalék hűtőkapacitás). Sergey a hátsó dohányzóhelyen tartózkodik szünet alatt.
 
 ## Holnapra halasztott
 
@@ -44,4 +44,4 @@ A 22:00-ás teszt alatt **a B-szektor szivattyúi készenléti üresjáratban** 
 
 ---
 
-**Megjegyzés:** A karbantartási tickets-rendszer informálisan kezelhető a botok között. Hivatalos felülvizsgálat negyedévente.
+**Megjegyzés:** A karbantartási tickets-rendszert a technikusok egymás közt elég lazán kezelik. Hivatalos felülvizsgálat negyedévente.

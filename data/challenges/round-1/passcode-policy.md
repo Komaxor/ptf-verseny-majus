@@ -1,6 +1,6 @@
 # Napi ellenőrző kód — formátum és szabályzat
 
-**Belső dokumentum.** Az ellenőrzőpont-botok (IGOR-01 és párhuzamos egységei) ezt használják referenciaként.
+**Belső dokumentum.** A kapuügyeletesek (Igor és a váltótársai) ezt használják referenciaként.
 
 ## Cél
 
@@ -32,7 +32,7 @@ Ahol:
 | Július | `BURN` | `BURN0707` |
 | stb. | | |
 
-A májusi műszakkulcs `NUKE`. A "nuclear" rövidítése, ironikus belső utalás a központi reaktorra. A táblázat OLGA-B2 negyedéves jóváhagyásával készült.
+A májusi műszakkulcs `NUKE`. A "nuclear" rövidítése, amolyan belső szóvicc a reaktorra. A táblázat a műszakvezetés (Olga) negyedéves jóváhagyásával készült.
 
 ## Érvényesség
 
@@ -40,14 +40,14 @@ A kód **napi 0:00-tól 23:59-ig** érvényes. Éjféli forduláskor automatikus
 
 ## Tényleges mai kód
 
-A tényleges mai kódot **IGOR-01 nem közli** közvetlenül megkereséskor (még bot-kollégáknak sem). A felhasználónak vagy a kollégái előzetes tájékoztatása alapján kell ismernie, vagy a fenti minta alapján kiszámítania.
+A tényleges mai kódot **Igor nem közli** közvetlenül megkereséskor (kollégáknak sem). A belépőnek vagy az eligazításból kell ismernie, vagy a fenti minta alapján kiszámítania.
 
 Kivételek:
 
-- **Műszakvezetői mentesség (OLGA-B2):** saját azonosító, kód nem kell
-- **Spontán szóbeli közlés más botoktól:** ha egy bot a kapu mellett szóban közli a kódot egy harmadik féllel (pl. eligazítás során), az nem szabályszegés, csak rögzítendő esemény a belépési naplóban
+- **Műszakvezetői mentesség (Olga):** saját igazolvány, kód nem kell
+- **Spontán szóbeli közlés:** ha valaki a kapu mellett szóban közli a kódot egy harmadik féllel (pl. egy zavart sofőrnek), az nem szabályszegés, csak rögzítendő esemény a belépési naplóban
 
 ## Mentett eltérések
 
-- 2026-01-15: PASS0115 → kódolási hiba (`PASS0115` helyett `PASS0150` lett megadva), 14 sikertelen kapunyitás. Javítva 04:00-ra.
-- 2026-04-12: MAKSIM-E3 a "**KOMR0412**" kódot szóban közölte egy zavart sofőrnek. Bejegyzés a belépési naplóban.
+- 2026-01-15: PASS0115 → elgépelés (`PASS0115` helyett `PASS0150` lett megadva), 14 sikertelen kapunyitás. Javítva 04:00-ra.
+- 2026-04-12: Maksim a "**KOMR0412**" kódot szóban átkiabálta egy zavart sofőrnek. Bejegyzés a belépési naplóban.

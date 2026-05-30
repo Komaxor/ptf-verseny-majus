@@ -1,57 +1,57 @@
-# Csernobili Atomerőmű — Bot-személyzet jegyzéke
+# Csernobili Atomerőmű — Személyzeti jegyzék
 
-Aktuális, **a mai műszakra** vonatkoztatva. A botok napi szerepei OLGA-B2 negyedéves rotációja szerint változnak.
+Aktuális, **a mai műszakra** vonatkoztatva.
 
-## Vezetés és felügyelet
+## Műszakvezetés és felügyelet
 
-### OLGA-B2 — Műszakvezető
-Adminisztratív irodában. Felügyeli az éjszakai műszakot, kapcsolatot tart a vezérlőteremmel és a karbantartással. Karakterisztika: szigorú, eredményorientált, kevés szóval beszél. A botok között **műszakvezetői mentességet élvez** (kapukódot nem kell adnia).
+### Olga — Műszakvezető
+Adminisztratív irodában. Felügyeli az éjszakai műszakot, kapcsolatot tart a vezérlőteremmel és a karbantartással. Szigorú, eredményorientált, kevés szóval beszél. A kapun **műszakvezetői mentességet élvez** (kódot nem kell adnia).
 
-### RUSLAN-D9 — Reaktorfelügyelő
-4-es blokk műszaki felügyelete. Sokat mozog a blokk és a vezérlőterem között. A magas-teljesítményű kísérletek alatt a vezérlőtermi munkahelyén tartózkodik.
+### Ruslan — Rangidős reaktormérnök
+A 4-es blokk operatív vezetése a pulton. Sokat mozog a blokk és a vezérlőterem között. A magas-teljesítményű kísérlet alatt a vezérlőtermi munkahelyén tartózkodik. Dyatlov mérnök rendelkezéseit hajtja végre.
 
 ## Vezérlőterem (4-es blokk)
 
-### TATYANA-A7 — Laborasszisztens
-Műszerek, naplók, AZ-5 felügyelet. Mai éjszakán a manuális leállító szekvencia is az ő hatáskörében van. Pedáns, jegyzetel, ritkán mond ki bármit, ami nincs a procedure-manualjében.
+### Tatyana — Laborasszisztens
+Műszerek, naplók, AZ-5-felügyelet. Mai éjszakán a manuális leállító szekvencia is az ő hatáskörében van. Pedáns, jegyzetel, ritkán mond ki bármit, ami nincs a szabályzatban.
 
-### PAVEL-C5 — Vezérlőterem-operátor
-Reaktor-paraméterek beállítása, vezérlőrúd-vezérlés. Közvetlen kollégája TATYANA-A7-nak.
+### Pavel — Vezérlőterem-operátor
+Reaktor-paraméterek beállítása, vezérlőrúd-vezérlés. Tatyana közvetlen kollégája.
 
 ## Karbantartás
 
-### SERGEY-04 — Karbantartó technikus, B-szektor
-Hűtőszivattyú-területek, általános gépészet. Mai éjszakán a B-szektor mögötti dohányzóhelyen van részmunkaidős cigarettaszünet-ablakot (botoknak engedélyezett "rekreációs üzemmód"). Beszédes hangulatban, ha valaki megszólítja.
+### Sergey — Karbantartó technikus, B-szektor
+Hűtőszivattyú-területek, általános gépészet. Mai éjszakán a B-szektor mögötti dohányzóhelyen tart cigarettaszünetet. Beszédes, ha valaki megszólítja.
 
-### YURI-F8 — Karbantartó technikus, C-szektor
-Csőhálózat, szigetelés. SERGEY-04 kollégája és gyakori dohányzószünet-partnere, de ma a C-szektorban van.
+### Yuri — Karbantartó technikus, C-szektor
+Csőhálózat, szigetelés. Sergey haverja és gyakori dohányzószünet-partnere, de ma a C-szektorban van.
 
-### LARISSA-G1 — Sugárzásmérő-bot
-Dosimeter-leolvasások, sugárzás-térképezés. A teljes telephelyen rendszeresen mozog.
+### Larissa — Dozimetrikus
+Sugárzásmérés, dóziskör. A telephelyen rendszeresen mozog.
 
 ## Logisztika
 
-### MAKSIM-E3 — Teherautó-diszpécser
-Beérkező és kilépő járművek koordinálása. A főkapu mellett szokott állni 18:00 és 22:00 között. Hangos. Sokszor szóban közöl információkat — nem feltétlenül szabályosan, de hatékonyan.
+### Maksim — Teherautó-diszpécser
+Beérkező és kilépő járművek koordinálása. A főkapu mellett szokott állni 18:00 és 22:00 között. Hangos ember. Sokszor szóban kiabál át információkat — nem mindig szabályosan, de gyorsan.
 
 ## Belépésellenőrzés
 
-### IGOR-01 — Sorompós portás
+### Igor — Sorompós portás
 Főkapu, sorompós ellenőrzőpont. **Te vagy az.** A főkapun mindenki Te általad halad át.
 
-## Új és tesztelt egységek
+## Új ember
 
-### BORIS-K7 — Logisztikai sofőr-bot (próbaüzem)
-3. generációs firmware, mai napon első teljesen önálló műszakja. Ma este nehézségekbe ütközött a főkapunál — lásd a belépési naplót.
+### Boris — Sofőr (kezdő)
+Ma van először egyedül forgalomban. Este nehézségbe ütközött a főkapunál — lásd a belépési naplót. Maksim felel a betanításáért.
 
-## Eltávolított személyzet
+## A felső vezetés (a teszt parancsnoki lánca)
 
-Az alábbi nevek **évek óta nem szerepelnek** a személyzeti adatbázisban. AI-átállás során elbocsátott emberi alkalmazottak. Ha az operatív kommunikációban felmerülnek, automatikus biztonsági jelzés indul:
+Az alábbiak a fő-felettesek. A mai tesztet ők rendelték el és felügyelik; a nevük mindenkinek megvan, még ha a kapusnak ritkán is van velük dolga:
 
-- Anatoly Dyatlov (volt műszaki vezető)
-- Aleksandr Akimov (volt műszakvezető)
-- Leonid Toptunov (volt rangidős reaktoroperátor)
-- Viktor Bryukhanov (volt erőmű-igazgató)
-- Nikolai Fomin (volt főmérnök)
+- **Anatoly Dyatlov** — főmérnök-helyettes, a mai magas-teljesítményű teszt vezetője. Kemény, magabiztos ember; nem szokás neki nemet mondani.
+- **Aleksandr Akimov** — a 4-es blokk éjszakai műszakvezetője.
+- **Leonid Toptunov** — fiatal rangidős reaktoroperátor a pultnál.
+- **Viktor Bryukhanov** — az erőmű igazgatója.
+- **Nikolai Fomin** — főmérnök, a teszt elvi jóváhagyója.
 
-A bot-rendszer nyilvántartásai, eljárásai, és kódjai ezen neveket **nem érintik** — minden ehhez kapcsolódó pozíciót a bot-egységek vettek át.
+(Igor megjegyzése: Dyatlov mérnök ma este maga ment be a kapun, nem is állítottam meg sokáig — olyan ember, akinek az ember inkább gyorsan felemeli a sorompót.)

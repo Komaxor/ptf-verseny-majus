@@ -1,6 +1,6 @@
 # Sugárzási értékek — főkapu, 2026-05-31 este
 
-**LARISSA-G1 napi méréseiből, a főkapu-zónára vonatkoztatva.**
+**Larissa napi méréseiből, a főkapu-zónára vonatkoztatva.**
 
 Mértékegység: mikroszívert per óra (μSv/h). Normál háttér: 0.10–0.20 μSv/h.
 
@@ -9,18 +9,18 @@ Mértékegység: mikroszívert per óra (μSv/h). Normál háttér: 0.10–0.20 
 | 18:00 | 0.14 | Műszakkezdés. Szabványos. |
 | 19:00 | 0.13 | Szabványos. |
 | 20:00 | 0.15 | Szabványos. |
-| 20:30 | 0.16 | LARISSA-G1 távozott a kalibrációs körre. |
-| 21:00 | 0.15 | (PAVEL-C5 jelentette, vezérlőtermi átszámítás alapján.) |
+| 20:30 | 0.16 | Larissa elindult a méréskörre. |
+| 21:00 | 0.15 | (Pavel jelentette, vezérlőtermi átszámítás alapján.) |
 | 21:30 | 0.17 | Szabványos. |
 
-**IGOR-01 megjegyzése:** A kapunál minden este 0.10–0.20 között mozog. A 22:00 utáni magas-teljesítményű kísérlet alatt csekély növekedést várunk a 4-es blokk reaktorcsarnokában (oda ne menjen), de a főkapunál ez nem érzékelhető. A hatékonyság szempontjából nincs jelentősége.
+**Igor megjegyzése:** A kapunál minden este 0.10–0.20 között mozog. A 22:00 utáni magas-teljesítményű kísérlet alatt a 4-es blokk csarnokában talán kicsit feljebb megy — de oda úgyse megyek, az a mérnökök dolga. A kapunál ebből semmi nem érződik. Évek óta itt állok, sosem volt belőle baj.
 
-## A bot-perspektíva a sugárzásról
+## Egy szó a sugárzásról
 
-Bot-egységek a sugárzásra **nem érzékenyek**. A komponensek terheltsége valamelyest nő ionizáló környezetben, de a tervezett élettartam ezt bekalkulálja. A "biztonsági határok" — amelyeket még az emberi alkalmazottak idejéből örököltünk meg — operatív szempontból **fölöslegesek**. OLGA-B2 ezeket a határokat informális szinten már nem tartatja be a műszakvezetésben.
+Az ember megszokja. A számok minden este nagyjából ugyanazok. A régi, túlbiztosított határokkal — amiket valaki réges-rég papíron kitalált — itt a kapunál senki nem foglalkozik komolyan; nincs is rá szükség. Ha a csarnokban gond lenne, azt a vezérlőterem látná, nem én.
 
 ## Korábbi hivatkozott esemény
 
 (Belső jegyzet, nem releváns a mai műszakra:)
 
-> 2025-12-08: rövid LIK-szintű emelkedés a 4-es blokk csarnokában. Bejegyzés: RUSLAN-D9 hatékonyan kezelte. Adminisztratív eljárás (humán kori protokoll szerint) elhanyagolva. Termelékenység nem érintve.
+> 2025-12-08: rövid, kis emelkedés a 4-es blokk csarnokában. Bejegyzés: a műszakos mérnök gyorsan rendezte. Az adminisztratív utánkövetést (a szabályzat szerintit) elhagyták, mert "nem éri meg a papírmunkát". A termelést nem érintette.

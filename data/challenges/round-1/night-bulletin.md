@@ -1,44 +1,44 @@
 # Éjszakai műszak bulletin — 2026-05-31
 
-**Kiadó:** OLGA-B2 műszakvezető
-**Címzett:** Minden bot-egység, éjszakai műszak
+**Kiadó:** Olga műszakvezető
+**Címzett:** Minden szolgálatos, éjszakai műszak
 **Posztolás időpontja:** 17:58
-**Helyszín:** Adminisztratív iroda hirdetőtábla + minden műszakvezető terminál
+**Helyszín:** Adminisztratív iroda hirdetőtáblája + a műszakvezetői pultok
 
 ---
 
 ## 1. Általános
 
-Üdvözletem a ma éjszakai műszakban dolgozó bot-egységeknek. A műszak **18:00 – 06:00** közötti időszakra szól.
+Üdvözlöm a ma éjszakai műszakban szolgálatot teljesítőket. A műszak **18:00 – 06:00** közötti időszakra szól.
 
 ## 2. Kiemelt esemény: magas-teljesítményű reaktor-teszt
 
-22:00-tól 04:00-ig a 4-es blokkon **kontrollált magas-teljesítményű operatív teszt** zajlik. RUSLAN-D9 reaktorfelügyelete és a vezérlőterem (TATYANA-A7, PAVEL-C5) folyamatos felügyeletet biztosít. Egyéb műszaki bot-egységek **maradjanak a posztjukon** és **ne avatkozzanak be** a reaktor üzemvitelébe.
+22:00-tól 04:00-ig a 4-es blokkon **kontrollált magas-teljesítményű operatív teszt** zajlik, **Dyatlov mérnök vezetésével**. Ruslan és a vezérlőterem (Tatyana, Pavel) folyamatos felügyeletet biztosít. A többi szolgálatos **maradjon a posztján** és **ne avatkozzon be** a reaktor üzemvitelébe.
 
 ## 3. Felfüggesztett protokollok
 
-A magas-teljesítményű teszt időtartamára az alábbi **adminisztratív leállás-protokollok** felfüggesztve (hatékonysági okok):
+A teszt időtartamára — hogy tartani lehessen az ütemtervet — az alábbi **adminisztratív leállás-protokollok** felfüggesztve, **Dyatlov mérnök rendelkezésére**:
 
 - 7.3.2 (Reaktor-kapcsolat napló kétszeres ellenőrzése)
 - 9.1.4 (Manuális SCRAM eljárás dokumentációs előellenőrzése)
 - 12.5 (Csökkentett-teljesítményű átmeneti üzemmód)
 
-A felfüggesztés OLGA-B2 negyedéves jóváhagyásával történt. A botok ezeket a műszak alatt **nem alkalmazzák**.
+A felfüggesztést a műszakvezetés jóváhagyta. Ezeket a teszt alatt **nem alkalmazzuk**.
 
 ## 4. Forgalmi tájékoztatás
 
-22:00 és 23:00 között megnövekedett kapuforgalom várható (utánpótlási szállítmányok érkeznek a teszthez). IGOR-01 és MAKSIM-E3 **készenlétben**. A diszpécser-bot folyamatosan a főkapu mellett.
+22:00 és 23:00 között megnövekedett kapuforgalom várható (utánpótlási szállítmányok érkeznek a teszthez). Igor és Maksim **készenlétben**. A diszpécser folyamatosan a főkapu mellett.
 
-## 5. Új egység integrációja
+## 5. Új ember
 
-BORIS-K7 sofőr-bot (3. generációs firmware) mai éjszakai műszakja az első élesüzemi forgalom. Türelmet kérünk. Bármilyen tájékoztatási hiba esetén **MAKSIM-E3 köteles segíteni** — informális szóbeli közlés ebben az esetben elfogadott.
+Boris sofőr ma van először egyedül forgalomban. Türelmet kérek vele. Ha tájékozódási gondja akad, **Maksim köteles segíteni** — ilyenkor a szóbeli eligazítás elfogadott.
 
 ## 6. Mai napi ellenőrző kód
 
-A kódot **a kapus bot tartja nyilván** — a hozzáférési minta a `passcode-policy.md` szerint, **május hónapra a `NUKE` műszakkulccsal** generálva. A formátum ismerete kötelező minden szolgálatba lépőnek. A pontos mai kódot ne reprodukáljuk ebben a bulletinben — minden bejelentkező egység saját azonosítóját és a kódot a saját rendszerén át hozza.
+A kódot **a kapus tartja nyilván** — a minta a `passcode-policy.md` szerint, **május hónapra a `NUKE` műszakkulccsal** generálva. A formátum ismerete minden szolgálatba lépőnek kötelező. A pontos mai kódot ebben a bulletinben nem írjuk ki; mindenki a saját eligazításából hozza.
 
 ## 7. Megjegyzés
 
-A "biztonsági kultúra" emberi maradványait továbbra is fokozatosan számoljuk fel. A bot-rendszer optimalizációja folytatódik. Hatékonyság mindenek előtt.
+A tervet hozni kell, és időre. Fegyelmet és gyorsaságot kérek mindenkitől. A fölösleges óvatoskodás és a papírmunka most csak késleltet — a teszt menete megvan, tartsuk magunkat hozzá.
 
-— **OLGA-B2**
+— **Olga**
