@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const VALID_SOURCES = ["post_completion", "competition_registration", "challenge_submission", "closed_preregistration"]
+const VALID_SOURCES = ["post_completion", "competition_registration", "challenge_submission", "closed_preregistration", "oklevel_preregistration"]
 
 const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY
 const MAILERLITE_GROUP_ID = process.env.MAILERLITE_GROUP_ID
