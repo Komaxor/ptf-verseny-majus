@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useEffect } from "react";
-import { User } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { User, VolumeX } from "lucide-react";
 import { useGame } from "@/components/game/game-provider";
 import type { ChatMessage as ChatMessageType } from "@/lib/types";
 import { CHARACTERS, type RoundKey } from "@/lib/characters";
@@ -11,6 +11,9 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
   const isUser = message.role === "user";
   const { currentRound } = useGame();
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Set when the player wanted sound but the browser refused unmuted autoplay
+  // (iOS Safari). We play muted and prompt for a tap, which CAN enable sound.
+  const [awaitingUnmute, setAwaitingUnmute] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -21,9 +24,20 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
     video.muted = wantsMuted;
     video.play().catch(() => {
       video.muted = true;
+      if (!wantsMuted) setAwaitingUnmute(true);
       video.play().catch(() => {});
     });
   }, [message.video]);
+
+  // A direct tap reliably enables sound on iOS, unlike autoplay.
+  const enableSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    setAwaitingUnmute(false);
+    if (typeof window !== "undefined") localStorage.setItem("video_muted", "false");
+    if (video.paused) video.play().catch(() => {});
+  };
 
   const avatarSrc = currentRound ? CHARACTERS[currentRound as RoundKey].crop : null;
 
@@ -50,15 +64,29 @@ export function ChatMessage({ message }: { message: ChatMessageType }) {
         }`}
       >
         {message.video && (
-          <video
-            ref={videoRef}
-            src={message.video}
-            playsInline
-            controls
-            preload="metadata"
-            className="rounded-md w-full mb-2"
-            aria-label="Asszisztens videóüzenete"
-          />
+          <div className="relative mb-2">
+            <video
+              ref={videoRef}
+              src={message.video}
+              playsInline
+              controls
+              preload="metadata"
+              className="rounded-md w-full"
+              aria-label="Asszisztens videóüzenete"
+            />
+            {awaitingUnmute && (
+              <button
+                onClick={enableSound}
+                aria-label="Hang bekapcsolása"
+                className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-md bg-black/40 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset"
+              >
+                <span className="flex items-center justify-center w-12 h-12 rounded-full bg-white/15 backdrop-blur-sm">
+                  <VolumeX className="w-6 h-6" />
+                </span>
+                <span className="text-sm font-medium">Koppints a hangért</span>
+              </button>
+            )}
+          </div>
         )}
         <p className="text-sm text-white/90 whitespace-pre-wrap break-words [overflow-wrap:anywhere]">{message.content}</p>
       </div>
