@@ -202,10 +202,10 @@ export function PhaseSuccess() {
         {/* Pre-registration CTA */}
         <div className="mt-4 mb-8 bg-white/5 border border-brand/20 rounded-xl p-6 w-full">
           <h2 className="text-lg font-semibold text-white mb-2">
-            Előregisztráció a júniusi versenyünkre
+            Előregisztráció a következő versenyünkre
           </h2>
           <p className="text-sm text-white/60 mb-4">
-            A júniusi versenyen az eddigi legizgalmasabb történettel várunk!
+            A júniusi versenyen már térképpel fogsz tudni navigálni a szobák között. Lesz hátizsákod, amibe tudsz gyűjtögetni tárgyakat, hogy azokat használd, vagy odaadd az AI karaktereknek, pénz, amivel tudsz vásárolni, és még sokminden más.
           </p>
           <button
             onClick={() => setEmailModalOpen(true)}

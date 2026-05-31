@@ -160,7 +160,7 @@ export default function OklevelPage() {
             Előregisztráció a következő versenyünkre
           </h2>
           <p className="text-sm text-gray-400 mb-4">
-            A júniusi versenyben már 7 szint lesz, térképpel fogsz tudni navigálni a szobák között, lesz hátizsákod, amibe tudsz gyűjtögetni tárgyakat, amiket oda tudsz adni az AI karaktereknek, és még sokminden más.
+            A júniusi versenyen már térképpel fogsz tudni navigálni a szobák között. Lesz hátizsákod, amibe tudsz gyűjtögetni tárgyakat, hogy azokat használd, vagy odaadd az AI karaktereknek, pénz, amivel tudsz vásárolni, és még sokminden más.
           </p>
           <button
             onClick={() => setEmailModalOpen(true)}
