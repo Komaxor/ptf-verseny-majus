@@ -1,6 +1,7 @@
 .env.local
 .next/
 node_modules
+*.tsbuildinfo
 .DS_Store
 data/db-export/
 # Participant credential lists (emails + login codes) — never commit
