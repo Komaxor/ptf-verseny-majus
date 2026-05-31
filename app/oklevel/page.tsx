@@ -160,16 +160,7 @@ export default function OklevelPage() {
             Előregisztráció a következő versenyünkre
           </h2>
           <p className="text-sm text-gray-400 mb-4">
-            A májusi versenyen már több nyereményt fogunk kiosztani, a főnyereményen kívül egy{" "}
-            <a
-              href="https://craft-conf.com/2026"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand hover:underline"
-            >
-              CraftHub Konferencia
-            </a>{" "}
-            jegy több, mint 250.000 Forint értékben!
+            A júniusi versenyben már 7 szint lesz, térképpel fogsz tudni navigálni a szobák között, lesz hátizsákod, amibe tudsz gyűjtögetni tárgyakat, amiket oda tudsz adni az AI karaktereknek, és még sokminden más.
           </p>
           <button
             onClick={() => setEmailModalOpen(true)}
