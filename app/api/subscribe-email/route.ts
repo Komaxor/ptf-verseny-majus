@@ -14,24 +14,60 @@ async function addToMailerLite(email: string) {
     return
   }
 
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${MAILERLITE_API_KEY}`,
+  }
+
   try {
-    const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
+    // Upsert the subscriber. IMPORTANT: MailerLite's create/upsert endpoint only
+    // applies `groups` when the subscriber is NEW — for an already-existing
+    // subscriber the `groups` field is silently ignored. So we capture the id
+    // and assign the group explicitly below (works for new and existing alike).
+    const upsert = await fetch("https://connect.mailerlite.com/api/subscribers", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${MAILERLITE_API_KEY}`,
-      },
+      headers,
       body: JSON.stringify({
         email,
         groups: [MAILERLITE_GROUP_ID],
       }),
     })
 
-    if (response.ok || response.status === 409) {
-      console.log("[MailerLite] Subscriber added/exists:", email)
+    const upsertData = await upsert.json().catch(() => null)
+
+    if (!upsert.ok && upsert.status !== 409) {
+      console.error(`[MailerLite] FAILED to upsert ${email}:`, upsert.status, upsertData)
+      return
+    }
+
+    // Resolve the subscriber id (fall back to a lookup if the upsert didn't return one).
+    let subscriberId = upsertData?.data?.id
+    if (!subscriberId) {
+      const lookup = await fetch(
+        `https://connect.mailerlite.com/api/subscribers/${encodeURIComponent(email)}`,
+        { headers },
+      )
+      const lookupData = await lookup.json().catch(() => null)
+      subscriberId = lookupData?.data?.id
+    }
+
+    if (!subscriberId) {
+      console.error(`[MailerLite] Could not resolve subscriber id for ${email}`)
+      return
+    }
+
+    // Explicitly assign the subscriber to the group.
+    const assign = await fetch(
+      `https://connect.mailerlite.com/api/subscribers/${subscriberId}/groups/${MAILERLITE_GROUP_ID}`,
+      { method: "POST", headers },
+    )
+
+    if (assign.ok) {
+      console.log(`[MailerLite] ${email} assigned to group ${MAILERLITE_GROUP_ID}`)
     } else {
-      const data = await response.json()
-      console.error(`[MailerLite] FAILED to add ${email}:`, response.status, data)
+      const assignData = await assign.json().catch(() => null)
+      console.error(`[MailerLite] FAILED to assign ${email} to group:`, assign.status, assignData)
     }
   } catch (error) {
     console.error(`[MailerLite] FAILED to add ${email}:`, error)
