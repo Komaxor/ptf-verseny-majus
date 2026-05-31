@@ -21,11 +21,11 @@ RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
 END:DAYLIGHT
 END:VTIMEZONE
 BEGIN:VEVENT
-UID:promptverseny-20260531T150000-europebudapest@promptverseny.hu
-DTSTAMP:20260425T000000Z
+UID:promptverseny-20260627T150000-europebudapest@promptverseny.hu
+DTSTAMP:20260531T000000Z
 SUMMARY:Promptverseny
-DTSTART;TZID=Europe/Budapest:20260531T150000
-DTEND;TZID=Europe/Budapest:20260531T160000
+DTSTART;TZID=Europe/Budapest:20260627T150000
+DTEND;TZID=Europe/Budapest:20260627T160000
 LOCATION:Online
 URL:https://promptverseny.hu
 DESCRIPTION:Promptverseny (online)\nWeb: https://promptverseny.hu
