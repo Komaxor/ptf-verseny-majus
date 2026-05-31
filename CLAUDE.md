@@ -13,7 +13,7 @@ This repo was forked from the April edition (`ptf-verseny-aprilis`) and fully re
 - **Database:** Supabase (PostgreSQL)
 - **AI:** OpenAI API (gpt-4.1-mini), streamed via SSE
 - **Package manager:** pnpm
-- **Deployment:** Vercel
+- **Deployment:** Self-hosted on the user's Ubuntu server (Hetzner VPS, systemd + pnpm) — NOT Vercel
 - **Language:** Hungarian (all UI text in `lib/translations.ts`)
 
 ## Commands
