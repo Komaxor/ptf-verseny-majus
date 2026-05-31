@@ -1,5 +1,5 @@
 // May 2026 Heist Competition
-export const COMPETITION_START = new Date("2026-05-22T16:10:48Z"); // 18:10 CEST
+export const COMPETITION_START = new Date("2026-05-31T09:00:00Z"); // 11:00 CEST
 export const COMPETITION_LENGTH_MINUTES = 60;
 export const COMPETITION_END = new Date(COMPETITION_START.getTime() + COMPETITION_LENGTH_MINUTES * 60_000);
 
@@ -22,6 +22,14 @@ export const PHASE_VIDEOS: Partial<Record<Phase, string>> = {
   VIDEO_2_3: "/videos/second-transition.mp4",
   VIDEO_OUTRO: "/videos/escape.mp4",
 };
+
+// Reaction videos not tied to a phase (wrong-answer clips, locked door).
+// Shown conditionally, so preloaded after the phase videos at lower priority.
+export const REACTION_VIDEOS: string[] = [
+  "/videos/locked.mp4",
+  "/videos/wrong-code-round-1.mp4",
+  "/videos/wrong-code-round-3.mp4",
+];
 
 // Valid phase transitions (current → next)
 export const VALID_TRANSITIONS: Record<Phase, Phase | null> = {
