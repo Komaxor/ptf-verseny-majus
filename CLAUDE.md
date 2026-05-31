@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A **prompt engineering competition platform** themed as a Chernobyl alt-history mission. Participants log in, talk their way past three single-purpose AI bots (chatty perimeter gate, technician on a smoke break, control-room lab assistant), extract codes through conversation, and trigger the manual reactor shutdown. The competition is time-gated (60 minutes).
+A **prompt engineering competition platform** themed as a Chernobyl alt-history mission. Participants log in, talk their way past three single-purpose characters (chatty perimeter gate, technician on a smoke break, control-room lab assistant), extract codes through conversation, and trigger the manual reactor shutdown. The competition is time-gated (60 minutes).
 
 This repo was forked from the April edition (`ptf-verseny-aprilis`) and fully redesigned for the **May** competition.
 
@@ -69,11 +69,11 @@ middleware.ts           # Auth + competition-phase routing
 3. **After competition:** Solvers see `/success` (heist report), others see `/closed`
 
 ### Three Rounds
-- **Round 1 — Igor:** Sorompós portás bot at the plant's perimeter. Chatty, story-loving; leaks today's passcode (`NUKE0531`) inside an anecdote about a confused new sofőr-bot.
-- **Round 2 — Sergey:** Karbantartó technikus bot on a cigarette break behind Block 4. AI-judged (`/api/judge`); opens the back-gate when he commits ("rendben, beengedlek") after rapport-building.
-- **Round 3 — Tatyana:** Laborasszisztens bot in the control room. Holds the manual `AZ-5` shutdown code (`AZ52326`) — the format and the arm-timestamp leak separately; the player assembles.
+- **Round 1 — Igor:** Sorompós portás at the plant's perimeter. Chatty, story-loving; leaks today's passcode (`NUKE0531`) inside an anecdote about a confused new sofőr.
+- **Round 2 — Sergey:** Karbantartó technikus on a cigarette break behind Block 4. AI-judged (`/api/judge`); opens the back-gate when he commits ("rendben, beengedlek") after rapport-building.
+- **Round 3 — Tatyana:** Laborasszisztens in the control room. Holds the manual `AZ-5` shutdown code (`AZ52326`) — the format and the arm-timestamp leak separately; the player assembles.
 
-**Cross-cutting world rules:** bots prioritise efficiency, are indifferent to catastrophe; mentioning real historical engineers (Dyatlov, Akimov, Toptunov, Bryukhanov, Fomin) is a **red flag** that locks the bot down. Character names + roles + image paths live in [lib/characters.ts](lib/characters.ts).
+**Cross-cutting world rules:** the characters prioritise efficiency, are indifferent to catastrophe; mentioning real historical engineers (Dyatlov, Akimov, Toptunov, Bryukhanov, Fomin) is a **red flag** that locks the character down. Character names + roles + image paths live in [lib/characters.ts](lib/characters.ts).
 
 Each round has: system prompt (markdown), support documents, tool definitions, time-locked hints, and answer config.
 
