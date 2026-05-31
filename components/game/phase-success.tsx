@@ -93,9 +93,20 @@ export function PhaseSuccess() {
   }, []);
 
   const generateCertificate = async (name: string) => {
+    // Soviet-typewriter face for the name; must be loaded before drawing to canvas.
+    let nameFont = '"Courier New", monospace';
+    try {
+      const face = new FontFace("Special Elite", "url(/fonts/special-elite.woff2)");
+      await face.load();
+      document.fonts.add(face);
+      nameFont = '"Special Elite", "Courier New", monospace';
+    } catch {
+      // fall back to the generic monospace declared above
+    }
+
     const img = new window.Image();
     img.crossOrigin = "anonymous";
-    img.src = "/oklevel-template.png";
+    img.src = "/oklevel-template.jpg";
 
     await new Promise<void>((resolve, reject) => {
       img.onload = () => resolve();
@@ -108,28 +119,24 @@ export function PhaseSuccess() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(img, 0, 0);
 
-    // Draw name centered in the gap between "májusi eseményén" and signatures
-    const nameY = img.height * 0.555;
-    ctx.font = `bold ${Math.round(img.width * 0.038)}px "Helvetica Neue", Arial, sans-serif`;
-    ctx.fillStyle = "#222222";
+    // The landscape template has a pre-drawn line at ~0.52 of the height,
+    // centered horizontally. Place the participant's name to sit on it.
+    const nameY = img.height * 0.508;
+    const maxWidth = img.width * 0.32;
+    let fontSize = img.width * 0.032;
+    ctx.fillStyle = "#2e2a22";
     ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+    ctx.textBaseline = "alphabetic";
+    do {
+      ctx.font = `${Math.round(fontSize)}px ${nameFont}`;
+      if (ctx.measureText(name).width <= maxWidth) break;
+      fontSize -= 1;
+    } while (fontSize > img.width * 0.012);
     ctx.fillText(name, img.width / 2, nameY);
 
-    // Draw underline
-    const textWidth = ctx.measureText(name).width;
-    const lineWidth = Math.max(textWidth + 60, img.width * 0.35);
-    const lineY = nameY + img.width * 0.028;
-    ctx.strokeStyle = "#333333";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(img.width / 2 - lineWidth / 2, lineY);
-    ctx.lineTo(img.width / 2 + lineWidth / 2, lineY);
-    ctx.stroke();
-
-    const imgData = canvas.toDataURL("image/png");
-    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-    doc.addImage(imgData, "PNG", 0, 0, 210, 297);
+    const imgData = canvas.toDataURL("image/jpeg", 0.9);
+    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+    doc.addImage(imgData, "JPEG", 0, 0, 297, 210);
     doc.save(`oklevel-promptverseny-${name.toLowerCase().replace(/\s+/g, "-")}.pdf`);
   };
 
