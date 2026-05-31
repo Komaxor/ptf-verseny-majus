@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import type { Phase } from "@/lib/config";
-import { PHASE_ROUND, PHASE_VIDEOS, PHASES } from "@/lib/config";
+import { PHASE_ROUND, PHASE_VIDEOS, PHASES, REACTION_VIDEOS } from "@/lib/config";
 import { CHARACTERS } from "@/lib/characters";
 import type { GameState, ChatMessage } from "@/lib/types";
 
@@ -114,6 +114,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     // Character scene avatars (full-size, preloaded so round transitions don't flash)
     for (const character of Object.values(CHARACTERS)) {
       assets.push(character.avatar);
+    }
+
+    // Reaction videos (wrong answer / locked door) — only shown conditionally,
+    // so preloaded last once the guaranteed-path assets are in cache.
+    for (const video of REACTION_VIDEOS) {
+      assets.push(video);
     }
 
     let cancelled = false;

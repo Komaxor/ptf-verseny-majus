@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { Loader2, AlertTriangle, KeyRound } from "lucide-react"
 import { SoundToggle } from "@/components/sound-toggle"
 import Image from "next/image"
-import { COMPETITION_END } from "@/lib/config"
+import { COMPETITION_END, PHASE_VIDEOS } from "@/lib/config"
 import MatrixBg from "@/components/matrix-bg"
 
 export default function LoginPage() {
@@ -27,6 +27,17 @@ export default function LoginPage() {
       window.location.href = "/closed"
     }, ms)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Warm the cache with the first video the player will see (the intro plays
+  // immediately after login), so the post-login transition starts instantly.
+  useEffect(() => {
+    const intro = PHASE_VIDEOS.VIDEO_INTRO
+    if (!intro) return
+    const video = document.createElement("video")
+    video.preload = "auto"
+    video.src = intro
+    video.load()
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
