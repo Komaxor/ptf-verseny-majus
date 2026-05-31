@@ -109,7 +109,7 @@ export function PhaseSuccess() {
     ctx.drawImage(img, 0, 0);
 
     // Draw name centered in the gap between "májusi eseményén" and signatures
-    const nameY = img.height * 0.685;
+    const nameY = img.height * 0.555;
     ctx.font = `bold ${Math.round(img.width * 0.038)}px "Helvetica Neue", Arial, sans-serif`;
     ctx.fillStyle = "#222222";
     ctx.textAlign = "center";
