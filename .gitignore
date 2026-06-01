@@ -6,4 +6,11 @@ node_modules
 data/db-export/
 # Participant credential lists (emails + login codes) — never commit
 data/*users*.csv
+# Result-analysis outputs contain participant PII (emails, names, passwords) — never commit
+data/solvers.csv
+data/metrics.json
+data/evaluations.json
+data/evaluations_raw.json
+data/leaderboard_*.csv
+scripts/__pycache__/
 .claude/
