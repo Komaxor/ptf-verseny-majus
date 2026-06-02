@@ -110,6 +110,14 @@ The four lexical variants:
   export const COMPETITION_START = new Date("<UTC-ISO-timestamp>"); // <local time + zone>
   ```
 
+- [ ] Edit `MAILERLITE_GROUP_ID` in the same file to the new month's MailerLite list:
+  ```ts
+  export const MAILERLITE_GROUP_ID = "<new-list-id>"; // <month> list
+  ```
+  This used to live in the server's `.env.local` and was easy to forget on deploy. It's
+  now version-controlled (it's just a routing ID, not a secret), so updating it here is the
+  whole job — `git pull` + rebuild carries it to the server. The API key stays in env.
+
 ### 2.4 — `package.json` name
 
 - [ ] Edit [package.json:2](../package.json#L2):

@@ -1,12 +1,13 @@
 import { createServiceClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
+import { MAILERLITE_GROUP_ID } from "@/lib/config"
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const VALID_SOURCES = ["post_completion", "competition_registration", "challenge_submission", "closed_preregistration", "oklevel_preregistration"]
 
 const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY
-const MAILERLITE_GROUP_ID = process.env.MAILERLITE_GROUP_ID
+// MAILERLITE_GROUP_ID is version-controlled in lib/config.ts (per-month, not a secret).
 
 async function addToMailerLite(email: string) {
   if (!MAILERLITE_API_KEY || !MAILERLITE_GROUP_ID) {
